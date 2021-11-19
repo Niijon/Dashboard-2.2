@@ -75,8 +75,8 @@ all: main-build
 main-build: ws2812b.elf secondary-outputs
 
 # Tool invocations
-ws2812b.elf: $(OBJS) $(USER_OBJS) N:\PUTSolarDynamics\Klara\Dashboard\ws2812b/LinkerScript.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-g++ -o "ws2812b.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m0 -T"N:\PUTSolarDynamics\Klara\Dashboard\ws2812b/LinkerScript.ld" --specs=nosys.specs -Wl,-Map="ws2812b.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+ws2812b.elf: $(OBJS) $(USER_OBJS) /home/skw/Repositories/solary/Dashboard-2.2/ws2812b/LinkerScript.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-g++ -o "ws2812b.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m0 -T"/home/skw/Repositories/solary/Dashboard-2.2/ws2812b/LinkerScript.ld" --specs=nosys.specs -Wl,-Map="ws2812b.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
