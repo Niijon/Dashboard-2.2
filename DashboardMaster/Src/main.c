@@ -110,6 +110,10 @@ int main(void)
   MX_TIM3_Init();
   MX_USART1_UART_Init();
   MX_USART2_UART_Init();
+
+  //CAN peripherial initialized
+  CanConfigFilter(hcan, 1);
+  CanInit(&hcan);
   /* USER CODE BEGIN 2 */
 
   gui_init();
