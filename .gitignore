@@ -51,3 +51,11 @@ Module.symvers
 Mkfile.old
 dkms.conf
 Dashboard_1.1
+
+# Ignore for STM32 project with non Makefile toolchain(for VSCode editing)
+/.vscode
+/DashboardMaster/.vscode
+/DashboardMaster/Dashboard_1.1.ioc
+/DashboardMaster/mx.scratch
+/DashboardMaster/Dashboard_1.1 Run.cfg
+/Makefile
