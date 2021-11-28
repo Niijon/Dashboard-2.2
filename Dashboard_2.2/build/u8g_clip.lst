@@ -1,0 +1,438 @@
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccwHFtDQ.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.arch armv7-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"u8g_clip.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.u8g_IsBBXIntersection,"ax",%progbits
+  18              		.align	1
+  19              		.global	u8g_IsBBXIntersection
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  24              	u8g_IsBBXIntersection:
+  25              	.LVL0:
+  26              	.LFB1:
+  27              		.file 1 "Drivers/u8glib/src/u8g_clip.c"
+   1:Drivers/u8glib/src/u8g_clip.c **** /*
+   2:Drivers/u8glib/src/u8g_clip.c **** 
+   3:Drivers/u8glib/src/u8g_clip.c ****   u8g_clip.c
+   4:Drivers/u8glib/src/u8g_clip.c ****   
+   5:Drivers/u8glib/src/u8g_clip.c ****   procedures for clipping
+   6:Drivers/u8glib/src/u8g_clip.c ****   taken over from procs in u8g_pb.c
+   7:Drivers/u8glib/src/u8g_clip.c **** 
+   8:Drivers/u8glib/src/u8g_clip.c ****   Universal 8bit Graphics Library
+   9:Drivers/u8glib/src/u8g_clip.c ****   
+  10:Drivers/u8glib/src/u8g_clip.c ****   Copyright (c) 2012, olikraus@gmail.com
+  11:Drivers/u8glib/src/u8g_clip.c ****   All rights reserved.
+  12:Drivers/u8glib/src/u8g_clip.c **** 
+  13:Drivers/u8glib/src/u8g_clip.c ****   Redistribution and use in source and binary forms, with or without modification, 
+  14:Drivers/u8glib/src/u8g_clip.c ****   are permitted provided that the following conditions are met:
+  15:Drivers/u8glib/src/u8g_clip.c **** 
+  16:Drivers/u8glib/src/u8g_clip.c ****   * Redistributions of source code must retain the above copyright notice, this list 
+  17:Drivers/u8glib/src/u8g_clip.c ****     of conditions and the following disclaimer.
+  18:Drivers/u8glib/src/u8g_clip.c ****     
+  19:Drivers/u8glib/src/u8g_clip.c ****   * Redistributions in binary form must reproduce the above copyright notice, this 
+  20:Drivers/u8glib/src/u8g_clip.c ****     list of conditions and the following disclaimer in the documentation and/or other 
+  21:Drivers/u8glib/src/u8g_clip.c ****     materials provided with the distribution.
+  22:Drivers/u8glib/src/u8g_clip.c **** 
+  23:Drivers/u8glib/src/u8g_clip.c ****   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND 
+  24:Drivers/u8glib/src/u8g_clip.c ****   CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, 
+  25:Drivers/u8glib/src/u8g_clip.c ****   INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF 
+  26:Drivers/u8glib/src/u8g_clip.c ****   MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE 
+  27:Drivers/u8glib/src/u8g_clip.c ****   DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR 
+  28:Drivers/u8glib/src/u8g_clip.c ****   CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, 
+  29:Drivers/u8glib/src/u8g_clip.c ****   SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT 
+  30:Drivers/u8glib/src/u8g_clip.c ****   NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; 
+  31:Drivers/u8glib/src/u8g_clip.c ****   LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER 
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccwHFtDQ.s 			page 2
+
+
+  32:Drivers/u8glib/src/u8g_clip.c ****   CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, 
+  33:Drivers/u8glib/src/u8g_clip.c ****   STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+  34:Drivers/u8glib/src/u8g_clip.c ****   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF 
+  35:Drivers/u8glib/src/u8g_clip.c ****   ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.  
+  36:Drivers/u8glib/src/u8g_clip.c ****   
+  37:Drivers/u8glib/src/u8g_clip.c ****   Notes
+  38:Drivers/u8glib/src/u8g_clip.c ****   
+  39:Drivers/u8glib/src/u8g_clip.c ****   This is one of the most critical parts of u8glib. It must be fast, but still reliable.
+  40:Drivers/u8glib/src/u8g_clip.c ****   Based on the intersection program (see tools folder), there is minimized version of
+  41:Drivers/u8glib/src/u8g_clip.c ****   the condition for the intersaction test:
+  42:Drivers/u8glib/src/u8g_clip.c ****     minimized version
+  43:Drivers/u8glib/src/u8g_clip.c ****     ---1----0 1             b1 <= a2 && b1 > b2
+  44:Drivers/u8glib/src/u8g_clip.c ****     -----1--0 1             b2 >= a1 && b1 > b2
+  45:Drivers/u8glib/src/u8g_clip.c ****     ---1-1--- 1             b1 <= a2 && b2 >= a1
+  46:Drivers/u8glib/src/u8g_clip.c ****   It includes the assumption, that a1 <= a2 is always true (correct, because
+  47:Drivers/u8glib/src/u8g_clip.c ****   a1, a2 are the page dimensions.
+  48:Drivers/u8glib/src/u8g_clip.c **** 
+  49:Drivers/u8glib/src/u8g_clip.c ****   The direct implementation of the above result is done in:
+  50:Drivers/u8glib/src/u8g_clip.c ****   uint8_t u8g_is_intersection_boolean(u8g_uint_t a0, u8g_uint_t a1, u8g_uint_t v0, u8g_uint_t v1)
+  51:Drivers/u8glib/src/u8g_clip.c ****   However, this is slower than a decision tree version:  
+  52:Drivers/u8glib/src/u8g_clip.c ****   static uint8_t u8g_is_intersection_decision_tree(u8g_uint_t a0, u8g_uint_t a1, u8g_uint_t v0, u8g
+  53:Drivers/u8glib/src/u8g_clip.c ****   Also suprising is, that the macro implementation is slower than the inlined version.
+  54:Drivers/u8glib/src/u8g_clip.c ****   
+  55:Drivers/u8glib/src/u8g_clip.c ****   The decision tree is based on the expansion of the truth table.
+  56:Drivers/u8glib/src/u8g_clip.c ****   
+  57:Drivers/u8glib/src/u8g_clip.c **** */
+  58:Drivers/u8glib/src/u8g_clip.c **** 
+  59:Drivers/u8glib/src/u8g_clip.c **** #include "../Drivers/u8glib/inc/u8g.h"
+  60:Drivers/u8glib/src/u8g_clip.c **** 
+  61:Drivers/u8glib/src/u8g_clip.c **** #ifdef __GNUC__
+  62:Drivers/u8glib/src/u8g_clip.c **** #define U8G_ALWAYS_INLINE __inline__ __attribute__((always_inline))
+  63:Drivers/u8glib/src/u8g_clip.c **** #else
+  64:Drivers/u8glib/src/u8g_clip.c **** #define U8G_ALWAYS_INLINE
+  65:Drivers/u8glib/src/u8g_clip.c ****  #endif 
+  66:Drivers/u8glib/src/u8g_clip.c **** 
+  67:Drivers/u8glib/src/u8g_clip.c **** /*
+  68:Drivers/u8glib/src/u8g_clip.c ****   intersection assumptions:
+  69:Drivers/u8glib/src/u8g_clip.c ****     a1 <= a2 is always true    
+  70:Drivers/u8glib/src/u8g_clip.c ****     
+  71:Drivers/u8glib/src/u8g_clip.c ****     minimized version
+  72:Drivers/u8glib/src/u8g_clip.c ****     ---1----0 1             b1 <= a2 && b1 > b2
+  73:Drivers/u8glib/src/u8g_clip.c ****     -----1--0 1             b2 >= a1 && b1 > b2
+  74:Drivers/u8glib/src/u8g_clip.c ****     ---1-1--- 1             b1 <= a2 && b2 >= a1
+  75:Drivers/u8glib/src/u8g_clip.c ****   */
+  76:Drivers/u8glib/src/u8g_clip.c **** 
+  77:Drivers/u8glib/src/u8g_clip.c **** #ifdef OLD_CODE_WHICH_IS_TOO_SLOW
+  78:Drivers/u8glib/src/u8g_clip.c **** static uint8_t u8g_is_intersection_boolean(u8g_uint_t a0, u8g_uint_t a1, u8g_uint_t v0, u8g_uint_t 
+  79:Drivers/u8glib/src/u8g_clip.c **** {
+  80:Drivers/u8glib/src/u8g_clip.c ****   uint8_t c1, c2, c3, tmp;
+  81:Drivers/u8glib/src/u8g_clip.c ****   c1 = v0 <= a1;
+  82:Drivers/u8glib/src/u8g_clip.c ****   c2 = v1 >= a0;
+  83:Drivers/u8glib/src/u8g_clip.c ****   c3 = v0 > v1;
+  84:Drivers/u8glib/src/u8g_clip.c ****   
+  85:Drivers/u8glib/src/u8g_clip.c ****   tmp = c1;
+  86:Drivers/u8glib/src/u8g_clip.c ****   c1 &= c2;
+  87:Drivers/u8glib/src/u8g_clip.c ****   c2 &= c3;
+  88:Drivers/u8glib/src/u8g_clip.c ****   c3 &= tmp;
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccwHFtDQ.s 			page 3
+
+
+  89:Drivers/u8glib/src/u8g_clip.c ****   c1 |= c2;
+  90:Drivers/u8glib/src/u8g_clip.c ****   c1 |= c3;
+  91:Drivers/u8glib/src/u8g_clip.c ****   return c1 & 1;
+  92:Drivers/u8glib/src/u8g_clip.c **** }
+  93:Drivers/u8glib/src/u8g_clip.c **** #endif
+  94:Drivers/u8glib/src/u8g_clip.c **** 
+  95:Drivers/u8glib/src/u8g_clip.c **** #define U8G_IS_INTERSECTION_MACRO(a0,a1,v0,v1) ((uint8_t)( (v0) <= (a1) ) ? ( ( (v1) >= (a0) ) ? ( 
+  96:Drivers/u8glib/src/u8g_clip.c **** 
+  97:Drivers/u8glib/src/u8g_clip.c **** //static uint8_t u8g_is_intersection_decision_tree(u8g_uint_t a0, u8g_uint_t a1, u8g_uint_t v0, u8g
+  98:Drivers/u8glib/src/u8g_clip.c **** static uint8_t U8G_ALWAYS_INLINE u8g_is_intersection_decision_tree(u8g_uint_t a0, u8g_uint_t a1, u8
+  99:Drivers/u8glib/src/u8g_clip.c **** {
+ 100:Drivers/u8glib/src/u8g_clip.c ****   /* surprisingly the macro leads to larger code */
+ 101:Drivers/u8glib/src/u8g_clip.c ****   /* return U8G_IS_INTERSECTION_MACRO(a0,a1,v0,v1); */
+ 102:Drivers/u8glib/src/u8g_clip.c ****   if ( v0 <= a1 )
+ 103:Drivers/u8glib/src/u8g_clip.c ****   {
+ 104:Drivers/u8glib/src/u8g_clip.c ****     if ( v1 >= a0 )
+ 105:Drivers/u8glib/src/u8g_clip.c ****     {
+ 106:Drivers/u8glib/src/u8g_clip.c ****       return 1;
+ 107:Drivers/u8glib/src/u8g_clip.c ****     }
+ 108:Drivers/u8glib/src/u8g_clip.c ****     else
+ 109:Drivers/u8glib/src/u8g_clip.c ****     {
+ 110:Drivers/u8glib/src/u8g_clip.c ****       if ( v0 > v1 )
+ 111:Drivers/u8glib/src/u8g_clip.c ****       {
+ 112:Drivers/u8glib/src/u8g_clip.c **** 	return 1;
+ 113:Drivers/u8glib/src/u8g_clip.c ****       }
+ 114:Drivers/u8glib/src/u8g_clip.c ****       else
+ 115:Drivers/u8glib/src/u8g_clip.c ****       {
+ 116:Drivers/u8glib/src/u8g_clip.c **** 	return 0;
+ 117:Drivers/u8glib/src/u8g_clip.c ****       }
+ 118:Drivers/u8glib/src/u8g_clip.c ****     }
+ 119:Drivers/u8glib/src/u8g_clip.c ****   }
+ 120:Drivers/u8glib/src/u8g_clip.c ****   else
+ 121:Drivers/u8glib/src/u8g_clip.c ****   {
+ 122:Drivers/u8glib/src/u8g_clip.c ****     if ( v1 >= a0 )
+ 123:Drivers/u8glib/src/u8g_clip.c ****     {
+ 124:Drivers/u8glib/src/u8g_clip.c ****       if ( v0 > v1 )
+ 125:Drivers/u8glib/src/u8g_clip.c ****       {
+ 126:Drivers/u8glib/src/u8g_clip.c **** 	return 1;
+ 127:Drivers/u8glib/src/u8g_clip.c ****       }
+ 128:Drivers/u8glib/src/u8g_clip.c ****       else
+ 129:Drivers/u8glib/src/u8g_clip.c ****       {
+ 130:Drivers/u8glib/src/u8g_clip.c **** 	return 0;
+ 131:Drivers/u8glib/src/u8g_clip.c ****       }
+ 132:Drivers/u8glib/src/u8g_clip.c ****     }
+ 133:Drivers/u8glib/src/u8g_clip.c ****     else
+ 134:Drivers/u8glib/src/u8g_clip.c ****     {
+ 135:Drivers/u8glib/src/u8g_clip.c ****       return 0;
+ 136:Drivers/u8glib/src/u8g_clip.c ****     }
+ 137:Drivers/u8glib/src/u8g_clip.c ****   }
+ 138:Drivers/u8glib/src/u8g_clip.c **** }
+ 139:Drivers/u8glib/src/u8g_clip.c **** 
+ 140:Drivers/u8glib/src/u8g_clip.c **** 
+ 141:Drivers/u8glib/src/u8g_clip.c **** uint8_t u8g_IsBBXIntersection(u8g_t *u8g, u8g_uint_t x, u8g_uint_t y, u8g_uint_t w, u8g_uint_t h)
+ 142:Drivers/u8glib/src/u8g_clip.c **** {
+  28              		.loc 1 142 1 view -0
+  29              		.cfi_startproc
+  30              		@ args = 4, pretend = 0, frame = 0
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccwHFtDQ.s 			page 4
+
+
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		.loc 1 142 1 is_stmt 0 view .LVU1
+  33 0000 10B5     		push	{r4, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 8
+  36              		.cfi_offset 4, -8
+  37              		.cfi_offset 14, -4
+ 143:Drivers/u8glib/src/u8g_clip.c ****   register u8g_uint_t tmp;
+  38              		.loc 1 143 3 is_stmt 1 view .LVU2
+ 144:Drivers/u8glib/src/u8g_clip.c ****   tmp = y;
+  39              		.loc 1 144 3 view .LVU3
+  40              	.LVL1:
+ 145:Drivers/u8glib/src/u8g_clip.c ****   tmp += h;
+  41              		.loc 1 145 3 view .LVU4
+  42              		.loc 1 145 7 is_stmt 0 view .LVU5
+  43 0002 9DF808C0 		ldrb	ip, [sp, #8]	@ zero_extendqisi2
+  44 0006 9444     		add	ip, ip, r2
+  45 0008 5FFA8CFC 		uxtb	ip, ip
+  46              	.LVL2:
+ 146:Drivers/u8glib/src/u8g_clip.c ****   tmp--;
+  47              		.loc 1 146 3 is_stmt 1 view .LVU6
+  48              		.loc 1 146 6 is_stmt 0 view .LVU7
+  49 000c 0CF1FF3C 		add	ip, ip, #-1
+  50              	.LVL3:
+  51              		.loc 1 146 6 view .LVU8
+  52 0010 5FFA8CFC 		uxtb	ip, ip
+  53              	.LVL4:
+ 147:Drivers/u8glib/src/u8g_clip.c ****   if ( u8g_is_intersection_decision_tree(u8g->current_page.y0, u8g->current_page.y1, y, tmp) == 0 )
+  54              		.loc 1 147 3 is_stmt 1 view .LVU9
+  55              		.loc 1 147 8 is_stmt 0 view .LVU10
+  56 0014 90F839E0 		ldrb	lr, [r0, #57]	@ zero_extendqisi2
+  57 0018 90F83B40 		ldrb	r4, [r0, #59]	@ zero_extendqisi2
+  58              	.LVL5:
+  59              	.LBB6:
+  60              	.LBI6:
+  98:Drivers/u8glib/src/u8g_clip.c **** {
+  61              		.loc 1 98 34 is_stmt 1 view .LVU11
+  62              	.LBB7:
+ 102:Drivers/u8glib/src/u8g_clip.c ****   {
+  63              		.loc 1 102 3 view .LVU12
+ 102:Drivers/u8glib/src/u8g_clip.c ****   {
+  64              		.loc 1 102 6 is_stmt 0 view .LVU13
+  65 001c 9442     		cmp	r4, r2
+  66 001e 05D3     		bcc	.L2
+ 104:Drivers/u8glib/src/u8g_clip.c ****     {
+  67              		.loc 1 104 5 is_stmt 1 view .LVU14
+ 104:Drivers/u8glib/src/u8g_clip.c ****     {
+  68              		.loc 1 104 8 is_stmt 0 view .LVU15
+  69 0020 E645     		cmp	lr, ip
+  70 0022 07D9     		bls	.L3
+ 110:Drivers/u8glib/src/u8g_clip.c ****       {
+  71              		.loc 1 110 7 is_stmt 1 view .LVU16
+ 110:Drivers/u8glib/src/u8g_clip.c ****       {
+  72              		.loc 1 110 10 is_stmt 0 view .LVU17
+  73 0024 6245     		cmp	r2, ip
+  74 0026 05D8     		bhi	.L3
+  75              	.LBE7:
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccwHFtDQ.s 			page 5
+
+
+  76              	.LBE6:
+ 148:Drivers/u8glib/src/u8g_clip.c ****     return 0; 
+  77              		.loc 1 148 12 view .LVU18
+  78 0028 0020     		movs	r0, #0
+  79              	.LVL6:
+  80              		.loc 1 148 12 view .LVU19
+  81 002a 1AE0     		b	.L4
+  82              	.LVL7:
+  83              	.L2:
+  84              	.LBB9:
+  85              	.LBB8:
+ 122:Drivers/u8glib/src/u8g_clip.c ****     {
+  86              		.loc 1 122 5 is_stmt 1 view .LVU20
+ 122:Drivers/u8glib/src/u8g_clip.c ****     {
+  87              		.loc 1 122 8 is_stmt 0 view .LVU21
+  88 002c E645     		cmp	lr, ip
+  89 002e 17D8     		bhi	.L6
+ 124:Drivers/u8glib/src/u8g_clip.c ****       {
+  90              		.loc 1 124 7 is_stmt 1 view .LVU22
+ 124:Drivers/u8glib/src/u8g_clip.c ****       {
+  91              		.loc 1 124 10 is_stmt 0 view .LVU23
+  92 0030 6245     		cmp	r2, ip
+  93 0032 17D9     		bls	.L7
+  94              	.L3:
+  95              	.LVL8:
+ 124:Drivers/u8glib/src/u8g_clip.c ****       {
+  96              		.loc 1 124 10 view .LVU24
+  97              	.LBE8:
+  98              	.LBE9:
+ 149:Drivers/u8glib/src/u8g_clip.c ****   
+ 150:Drivers/u8glib/src/u8g_clip.c ****   tmp = x;
+  99              		.loc 1 150 3 is_stmt 1 view .LVU25
+ 151:Drivers/u8glib/src/u8g_clip.c ****   tmp += w;
+ 100              		.loc 1 151 3 view .LVU26
+ 101              		.loc 1 151 7 is_stmt 0 view .LVU27
+ 102 0034 0B44     		add	r3, r3, r1
+ 103              	.LVL9:
+ 104              		.loc 1 151 7 view .LVU28
+ 105 0036 DBB2     		uxtb	r3, r3
+ 106              	.LVL10:
+ 152:Drivers/u8glib/src/u8g_clip.c ****   tmp--;
+ 107              		.loc 1 152 3 is_stmt 1 view .LVU29
+ 108              		.loc 1 152 6 is_stmt 0 view .LVU30
+ 109 0038 013B     		subs	r3, r3, #1
+ 110              	.LVL11:
+ 111              		.loc 1 152 6 view .LVU31
+ 112 003a DBB2     		uxtb	r3, r3
+ 113              	.LVL12:
+ 153:Drivers/u8glib/src/u8g_clip.c ****   return u8g_is_intersection_decision_tree(u8g->current_page.x0, u8g->current_page.x1, x, tmp);
+ 114              		.loc 1 153 3 is_stmt 1 view .LVU32
+ 115              		.loc 1 153 10 is_stmt 0 view .LVU33
+ 116 003c 90F83820 		ldrb	r2, [r0, #56]	@ zero_extendqisi2
+ 117              	.LVL13:
+ 118              		.loc 1 153 10 view .LVU34
+ 119 0040 90F83A00 		ldrb	r0, [r0, #58]	@ zero_extendqisi2
+ 120              	.LVL14:
+ 121              	.LBB10:
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccwHFtDQ.s 			page 6
+
+
+ 122              	.LBI10:
+  98:Drivers/u8glib/src/u8g_clip.c **** {
+ 123              		.loc 1 98 34 is_stmt 1 view .LVU35
+ 124              	.LBB11:
+ 102:Drivers/u8glib/src/u8g_clip.c ****   {
+ 125              		.loc 1 102 3 view .LVU36
+ 102:Drivers/u8glib/src/u8g_clip.c ****   {
+ 126              		.loc 1 102 6 is_stmt 0 view .LVU37
+ 127 0044 8842     		cmp	r0, r1
+ 128 0046 05D3     		bcc	.L5
+ 104:Drivers/u8glib/src/u8g_clip.c ****     {
+ 129              		.loc 1 104 5 is_stmt 1 view .LVU38
+ 104:Drivers/u8glib/src/u8g_clip.c ****     {
+ 130              		.loc 1 104 8 is_stmt 0 view .LVU39
+ 131 0048 9A42     		cmp	r2, r3
+ 132 004a 0DD9     		bls	.L8
+ 110:Drivers/u8glib/src/u8g_clip.c ****       {
+ 133              		.loc 1 110 7 is_stmt 1 view .LVU40
+ 110:Drivers/u8glib/src/u8g_clip.c ****       {
+ 134              		.loc 1 110 10 is_stmt 0 view .LVU41
+ 135 004c 9942     		cmp	r1, r3
+ 136 004e 0DD9     		bls	.L9
+ 112:Drivers/u8glib/src/u8g_clip.c ****       }
+ 137              		.loc 1 112 9 view .LVU42
+ 138 0050 0120     		movs	r0, #1
+ 139              	.LVL15:
+ 112:Drivers/u8glib/src/u8g_clip.c ****       }
+ 140              		.loc 1 112 9 view .LVU43
+ 141 0052 06E0     		b	.L4
+ 142              	.LVL16:
+ 143              	.L5:
+ 122:Drivers/u8glib/src/u8g_clip.c ****     {
+ 144              		.loc 1 122 5 is_stmt 1 view .LVU44
+ 122:Drivers/u8glib/src/u8g_clip.c ****     {
+ 145              		.loc 1 122 8 is_stmt 0 view .LVU45
+ 146 0054 9A42     		cmp	r2, r3
+ 147 0056 0BD8     		bhi	.L10
+ 124:Drivers/u8glib/src/u8g_clip.c ****       {
+ 148              		.loc 1 124 7 is_stmt 1 view .LVU46
+ 124:Drivers/u8glib/src/u8g_clip.c ****       {
+ 149              		.loc 1 124 10 is_stmt 0 view .LVU47
+ 150 0058 9942     		cmp	r1, r3
+ 151 005a 0BD9     		bls	.L11
+ 126:Drivers/u8glib/src/u8g_clip.c ****       }
+ 152              		.loc 1 126 9 view .LVU48
+ 153 005c 0120     		movs	r0, #1
+ 154              	.LVL17:
+ 126:Drivers/u8glib/src/u8g_clip.c ****       }
+ 155              		.loc 1 126 9 view .LVU49
+ 156 005e 00E0     		b	.L4
+ 157              	.LVL18:
+ 158              	.L6:
+ 126:Drivers/u8glib/src/u8g_clip.c ****       }
+ 159              		.loc 1 126 9 view .LVU50
+ 160              	.LBE11:
+ 161              	.LBE10:
+ 148:Drivers/u8glib/src/u8g_clip.c ****   
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccwHFtDQ.s 			page 7
+
+
+ 162              		.loc 1 148 12 view .LVU51
+ 163 0060 0020     		movs	r0, #0
+ 164              	.LVL19:
+ 165              	.L4:
+ 154:Drivers/u8glib/src/u8g_clip.c **** }
+ 166              		.loc 1 154 1 view .LVU52
+ 167 0062 10BD     		pop	{r4, pc}
+ 168              	.LVL20:
+ 169              	.L7:
+ 148:Drivers/u8glib/src/u8g_clip.c ****   
+ 170              		.loc 1 148 12 view .LVU53
+ 171 0064 0020     		movs	r0, #0
+ 172              	.LVL21:
+ 148:Drivers/u8glib/src/u8g_clip.c ****   
+ 173              		.loc 1 148 12 view .LVU54
+ 174 0066 FCE7     		b	.L4
+ 175              	.LVL22:
+ 176              	.L8:
+ 177              	.LBB13:
+ 178              	.LBB12:
+ 106:Drivers/u8glib/src/u8g_clip.c ****     }
+ 179              		.loc 1 106 14 view .LVU55
+ 180 0068 0120     		movs	r0, #1
+ 181              	.LVL23:
+ 106:Drivers/u8glib/src/u8g_clip.c ****     }
+ 182              		.loc 1 106 14 view .LVU56
+ 183 006a FAE7     		b	.L4
+ 184              	.LVL24:
+ 185              	.L9:
+ 116:Drivers/u8glib/src/u8g_clip.c ****       }
+ 186              		.loc 1 116 9 view .LVU57
+ 187 006c 0020     		movs	r0, #0
+ 188              	.LVL25:
+ 116:Drivers/u8glib/src/u8g_clip.c ****       }
+ 189              		.loc 1 116 9 view .LVU58
+ 190 006e F8E7     		b	.L4
+ 191              	.LVL26:
+ 192              	.L10:
+ 135:Drivers/u8glib/src/u8g_clip.c ****     }
+ 193              		.loc 1 135 14 view .LVU59
+ 194 0070 0020     		movs	r0, #0
+ 195              	.LVL27:
+ 135:Drivers/u8glib/src/u8g_clip.c ****     }
+ 196              		.loc 1 135 14 view .LVU60
+ 197 0072 F6E7     		b	.L4
+ 198              	.LVL28:
+ 199              	.L11:
+ 130:Drivers/u8glib/src/u8g_clip.c ****       }
+ 200              		.loc 1 130 9 view .LVU61
+ 201 0074 0020     		movs	r0, #0
+ 202              	.LVL29:
+ 130:Drivers/u8glib/src/u8g_clip.c ****       }
+ 203              		.loc 1 130 9 view .LVU62
+ 204 0076 F4E7     		b	.L4
+ 205              	.LBE12:
+ 206              	.LBE13:
+ 207              		.cfi_endproc
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccwHFtDQ.s 			page 8
+
+
+ 208              	.LFE1:
+ 210              		.text
+ 211              	.Letext0:
+ 212              		.file 2 "c:\\users\\zbigniew\\appdata\\roaming\\code\\user\\globalstorage\\bmd.stm32-for-vscode\\@
+ 213              		.file 3 "c:\\users\\zbigniew\\appdata\\roaming\\code\\user\\globalstorage\\bmd.stm32-for-vscode\\@
+ 214              		.file 4 "Inc/../Drivers/u8glib/inc/u8g.h"
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccwHFtDQ.s 			page 9
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 u8g_clip.c
+C:\Users\Zbigniew\AppData\Local\Temp\ccwHFtDQ.s:18     .text.u8g_IsBBXIntersection:0000000000000000 $t
+C:\Users\Zbigniew\AppData\Local\Temp\ccwHFtDQ.s:24     .text.u8g_IsBBXIntersection:0000000000000000 u8g_IsBBXIntersection
+
+NO UNDEFINED SYMBOLS

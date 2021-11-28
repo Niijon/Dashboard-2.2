@@ -1,5 +1,15 @@
 {
     "makefile.extensionOutputFolder": "./.vscode",
     "cortex-debug.armToolchainPath": "c:\\Users\\Zbigniew\\AppData\\Roaming\\Code\\User\\globalStorage\\bmd.stm32-for-vscode\\@xpack-dev-tools\\arm-none-eabi-gcc\\10.3.1-2.2.1\\.content\\bin",
-    "cortex-debug.openocdPath": "C:\\USERS\\ZBIGNIEW\\APPDATA\\ROAMING\\CODE\\USER\\GLOBALSTORAGE\\BMD.STM32-FOR-VSCODE\\@XPACK-DEV-TOOLS\\OPENOCD\\0.11.0-2.1\\.CONTENT\\BIN\\OPENOCD.EXE"
+    "cortex-debug.openocdPath": "C:\\USERS\\ZBIGNIEW\\APPDATA\\ROAMING\\CODE\\USER\\GLOBALSTORAGE\\BMD.STM32-FOR-VSCODE\\@XPACK-DEV-TOOLS\\OPENOCD\\0.11.0-2.1\\.CONTENT\\BIN\\OPENOCD.EXE",
+    "files.associations": {
+        "lcd.h": "c",
+        "tim.h": "c",
+        "gui.h": "c",
+        "ws_leds.h": "c",
+        "u8g_arm.h": "c",
+        "pwm.h": "c",
+        "pictures.h": "c",
+        "gui_data.h": "c"
+    }
 }

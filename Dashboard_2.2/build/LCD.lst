@@ -1,0 +1,887 @@
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\cc7rtp4z.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.arch armv7-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"LCD.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.lcd_write_command,"ax",%progbits
+  18              		.align	1
+  19              		.syntax unified
+  20              		.thumb
+  21              		.thumb_func
+  23              	lcd_write_command:
+  24              	.LVL0:
+  25              	.LFB70:
+  26              		.file 1 "Src/LCD.c"
+   1:Src/LCD.c     **** 
+   2:Src/LCD.c     **** #include "LCD.h"
+   3:Src/LCD.c     **** #include "stm32f1xx_hal.h"
+   4:Src/LCD.c     **** 
+   5:Src/LCD.c     **** /************************************** Static declarations **************************************/
+   6:Src/LCD.c     **** 
+   7:Src/LCD.c     **** static void lcd_write_data(uint8_t data);
+   8:Src/LCD.c     **** static void lcd_write_command(uint8_t command);
+   9:Src/LCD.c     **** static void lcd_write(uint8_t data, uint8_t len);
+  10:Src/LCD.c     **** 
+  11:Src/LCD.c     **** /************************************** Function definitions **************************************
+  12:Src/LCD.c     **** 
+  13:Src/LCD.c     **** /**
+  14:Src/LCD.c     ****  * Create new Lcd_HandleTypeDef and initialize the Lcd
+  15:Src/LCD.c     ****  */
+  16:Src/LCD.c     **** /**
+  17:Src/LCD.c     ****  * Initialize 16x2-lcd without cursor
+  18:Src/LCD.c     ****  */
+  19:Src/LCD.c     **** void Lcd_init()
+  20:Src/LCD.c     **** {
+  21:Src/LCD.c     **** 	 HAL_GPIO_WritePin(GPIOB,GPIO_PIN_12,GPIO_PIN_SET); // Podciagniecie RST
+  22:Src/LCD.c     **** 	 HAL_GPIO_WritePin(GPIOB,GPIO_PIN_14,GPIO_PIN_RESET); // Podciagniecie DC do zera
+  23:Src/LCD.c     **** 
+  24:Src/LCD.c     **** 
+  25:Src/LCD.c     **** 
+  26:Src/LCD.c     **** 	//lcd_write_command(FUNCTION_SET | OPT_DL | OPT_N);
+  27:Src/LCD.c     **** 
+  28:Src/LCD.c     **** 
+  29:Src/LCD.c     **** 	//lcd_write_command(CLEAR_DISPLAY);						// Clear screen
+  30:Src/LCD.c     **** 	//lcd_write_command(DISPLAY_ON_OFF_CONTROL | OPT_D);		// Lcd-on, cursor-off, no-blink
+  31:Src/LCD.c     **** 	//lcd_write_command(ENTRY_MODE_SET | OPT_INC);			// Increment cursor
+  32:Src/LCD.c     **** 
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\cc7rtp4z.s 			page 2
+
+
+  33:Src/LCD.c     **** 		lcd_write_command(0x80);
+  34:Src/LCD.c     **** 		lcd_write_command(0x2A);  /* **** Set "RE"=1  00101010B */
+  35:Src/LCD.c     **** 		lcd_write_command(0x71);
+  36:Src/LCD.c     **** 		lcd_write_command(0xC0);
+  37:Src/LCD.c     **** 		lcd_write_command(0x00);
+  38:Src/LCD.c     **** 		lcd_write_command(0x28);
+  39:Src/LCD.c     **** 
+  40:Src/LCD.c     **** 		lcd_write_command(0x08); /* **** Set Sleep Mode On     */
+  41:Src/LCD.c     **** 		lcd_write_command(0x2A); /* **** Set "RE"=1  00101010B */
+  42:Src/LCD.c     **** 		lcd_write_command(0x79); /* **** Set "SD"=1  01111001B */
+  43:Src/LCD.c     **** 
+  44:Src/LCD.c     **** 		lcd_write_command(0xD5);
+  45:Src/LCD.c     **** 		lcd_write_command(0x70);
+  46:Src/LCD.c     **** 		lcd_write_command(0x78); /* **** Set "SD"=0            */
+  47:Src/LCD.c     **** 
+  48:Src/LCD.c     **** 		//lcd_write_command(0x08);
+  49:Src/LCD.c     **** 		/* **** Set 5-dot, 3 or 4 line(0x09), 1 or 2 line(0x08) */
+  50:Src/LCD.c     **** 		lcd_write_command(0x08);
+  51:Src/LCD.c     **** 
+  52:Src/LCD.c     **** 
+  53:Src/LCD.c     **** 		lcd_write_command(0x06); /* **** Set Com31-->Com0  Seg0-->Seg99 */
+  54:Src/LCD.c     **** 		lcd_write_command(0x72);
+  55:Src/LCD.c     **** 		lcd_write_command(0xC0);
+  56:Src/LCD.c     **** 		lcd_write_command(0x01);
+  57:Src/LCD.c     **** 
+  58:Src/LCD.c     **** 		/**** Set OLED Characterization ***/
+  59:Src/LCD.c     **** 		lcd_write_command(0x2A);   /* **** Set "RE"=1  */
+  60:Src/LCD.c     **** 		lcd_write_command(0x79);   /* **** Set "SD"=1 */
+  61:Src/LCD.c     **** 
+  62:Src/LCD.c     **** 		/**** CGROM/CGRAM Management ***/
+  63:Src/LCD.c     **** 	#if 0
+  64:Src/LCD.c     **** 		lcd_write_command(0x72); /* **** Set ROM */
+  65:Src/LCD.c     **** 		lcd_write_command(0x00); /*  **** Set ROM A and 8 CGRAM */
+  66:Src/LCD.c     **** 	#endif
+  67:Src/LCD.c     **** 
+  68:Src/LCD.c     **** 		lcd_write_command(0xDC);    /* **** Set ROM */
+  69:Src/LCD.c     **** 		lcd_write_command(0x00);    /* **** Set ROM A and 8 CGRAM */
+  70:Src/LCD.c     **** 
+  71:Src/LCD.c     **** 		lcd_write_command(0xDA);    /* **** Set Seg Pins HW Config */
+  72:Src/LCD.c     **** 		lcd_write_command(0x10);
+  73:Src/LCD.c     **** 
+  74:Src/LCD.c     **** 		lcd_write_command(0x81);    /* **** Set Contrast */
+  75:Src/LCD.c     **** 		lcd_write_command(0xD9);
+  76:Src/LCD.c     **** 		lcd_write_command(0x8F);    /* **** Set Contrast */
+  77:Src/LCD.c     **** 
+  78:Src/LCD.c     **** 		lcd_write_command(0xF1);
+  79:Src/LCD.c     **** 
+  80:Src/LCD.c     **** 		lcd_write_command(0xDB);   /* **** Set VCOM deselect level */
+  81:Src/LCD.c     **** 		lcd_write_command(0x30);   /* **** VCC x 0.83              */
+  82:Src/LCD.c     **** 
+  83:Src/LCD.c     **** 		lcd_write_command(0xDC);   /* *Set gpio -turn EN for 15V generator on. */
+  84:Src/LCD.c     **** 		lcd_write_command(0x03);
+  85:Src/LCD.c     **** 
+  86:Src/LCD.c     **** 		lcd_write_command(0x78);   /* **** Exiting Set OLED Characterization */
+  87:Src/LCD.c     **** 		lcd_write_command(0x28);
+  88:Src/LCD.c     **** 
+  89:Src/LCD.c     **** 		//flip display with these two lines, comment out the 0x06 write below
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\cc7rtp4z.s 			page 3
+
+
+  90:Src/LCD.c     **** 		//lcd_write_command(0x2A);
+  91:Src/LCD.c     **** 		//lcd_write_command(0x05);   /* **** Set Entry Mode (invert) */
+  92:Src/LCD.c     **** 
+  93:Src/LCD.c     **** 		lcd_write_command(0x06);     /* **** Set Entry Mode */
+  94:Src/LCD.c     **** 
+  95:Src/LCD.c     **** 		lcd_write_command(0x28);     /* **** Set "IS"=0 , "RE" =0 /28 */
+  96:Src/LCD.c     **** 		lcd_write_command(0x01);
+  97:Src/LCD.c     **** 		lcd_write_command(0x80);     /* Set DDRAM Address to 0x80 (line 1 start)*/
+  98:Src/LCD.c     **** 
+  99:Src/LCD.c     **** 		//HAL_Delay(100);
+ 100:Src/LCD.c     **** 
+ 101:Src/LCD.c     **** 		lcd_write_command(0x0C);   /* **** Turn on Display */
+ 102:Src/LCD.c     **** 
+ 103:Src/LCD.c     **** 
+ 104:Src/LCD.c     **** 
+ 105:Src/LCD.c     **** 
+ 106:Src/LCD.c     **** 
+ 107:Src/LCD.c     **** 
+ 108:Src/LCD.c     **** 
+ 109:Src/LCD.c     **** 
+ 110:Src/LCD.c     **** 
+ 111:Src/LCD.c     **** 
+ 112:Src/LCD.c     **** 
+ 113:Src/LCD.c     **** 
+ 114:Src/LCD.c     **** 
+ 115:Src/LCD.c     **** 
+ 116:Src/LCD.c     **** 
+ 117:Src/LCD.c     **** 
+ 118:Src/LCD.c     **** 
+ 119:Src/LCD.c     **** 
+ 120:Src/LCD.c     **** 
+ 121:Src/LCD.c     **** 
+ 122:Src/LCD.c     **** 
+ 123:Src/LCD.c     **** 
+ 124:Src/LCD.c     **** 
+ 125:Src/LCD.c     **** }
+ 126:Src/LCD.c     **** 
+ 127:Src/LCD.c     **** /**
+ 128:Src/LCD.c     ****  * Write a number on the current position
+ 129:Src/LCD.c     ****  */
+ 130:Src/LCD.c     **** void Lcd_clr()
+ 131:Src/LCD.c     **** {
+ 132:Src/LCD.c     **** 	lcd_write_command(CLEAR_DISPLAY);
+ 133:Src/LCD.c     **** 	lcd_write_command(RETURN_HOME);
+ 134:Src/LCD.c     **** 
+ 135:Src/LCD.c     **** 
+ 136:Src/LCD.c     **** }
+ 137:Src/LCD.c     **** 
+ 138:Src/LCD.c     **** 
+ 139:Src/LCD.c     **** 
+ 140:Src/LCD.c     **** void Lcd_int(int number)
+ 141:Src/LCD.c     **** {
+ 142:Src/LCD.c     **** 	char buffer[11];
+ 143:Src/LCD.c     **** 	sprintf(buffer, "%d", number);
+ 144:Src/LCD.c     **** 	Lcd_string(buffer);
+ 145:Src/LCD.c     **** }
+ 146:Src/LCD.c     **** 
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\cc7rtp4z.s 			page 4
+
+
+ 147:Src/LCD.c     **** /**
+ 148:Src/LCD.c     ****  * Write a string on the current position
+ 149:Src/LCD.c     ****  */
+ 150:Src/LCD.c     **** void Lcd_string(char * string)
+ 151:Src/LCD.c     **** {
+ 152:Src/LCD.c     **** 	for(uint8_t i = 0; i < strlen(string); i++)
+ 153:Src/LCD.c     **** 	{
+ 154:Src/LCD.c     **** 		lcd_write_data(string[i]);
+ 155:Src/LCD.c     **** 	}
+ 156:Src/LCD.c     **** }
+ 157:Src/LCD.c     **** 
+ 158:Src/LCD.c     **** /**
+ 159:Src/LCD.c     ****  * Set the cursor position
+ 160:Src/LCD.c     ****  */
+ 161:Src/LCD.c     **** void Lcd_cursor(uint8_t row, uint8_t col)
+ 162:Src/LCD.c     **** {
+ 163:Src/LCD.c     **** 
+ 164:Src/LCD.c     **** 	lcd_write_command(SET_DDRAM_ADDR | ((row * 0x40) + col));
+ 165:Src/LCD.c     **** }
+ 166:Src/LCD.c     **** 
+ 167:Src/LCD.c     **** 
+ 168:Src/LCD.c     **** /************************************** Static function definition ********************************
+ 169:Src/LCD.c     **** 
+ 170:Src/LCD.c     **** /**
+ 171:Src/LCD.c     ****  * Write a byte to the command register
+ 172:Src/LCD.c     ****  */
+ 173:Src/LCD.c     **** void lcd_write_command(uint8_t command)
+ 174:Src/LCD.c     **** {
+  27              		.loc 1 174 1 view -0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 8
+  30              		@ frame_needed = 0, uses_anonymous_args = 0
+  31              		.loc 1 174 1 is_stmt 0 view .LVU1
+  32 0000 30B5     		push	{r4, r5, lr}
+  33              	.LCFI0:
+  34              		.cfi_def_cfa_offset 12
+  35              		.cfi_offset 4, -12
+  36              		.cfi_offset 5, -8
+  37              		.cfi_offset 14, -4
+  38 0002 83B0     		sub	sp, sp, #12
+  39              	.LCFI1:
+  40              		.cfi_def_cfa_offset 24
+  41 0004 0446     		mov	r4, r0
+ 175:Src/LCD.c     **** 
+ 176:Src/LCD.c     **** 	uint8_t buf = 0x1F;
+  42              		.loc 1 176 2 is_stmt 1 view .LVU2
+  43              		.loc 1 176 10 is_stmt 0 view .LVU3
+  44 0006 1F23     		movs	r3, #31
+  45 0008 8DF80730 		strb	r3, [sp, #7]
+ 177:Src/LCD.c     **** 	HAL_SPI_Transmit(&hspi2, &buf, 1, HAL_MAX_DELAY);
+  46              		.loc 1 177 2 is_stmt 1 view .LVU4
+  47 000c 104D     		ldr	r5, .L3
+  48 000e 4FF0FF33 		mov	r3, #-1
+  49 0012 0122     		movs	r2, #1
+  50 0014 0DF10701 		add	r1, sp, #7
+  51 0018 2846     		mov	r0, r5
+  52              	.LVL1:
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\cc7rtp4z.s 			page 5
+
+
+  53              		.loc 1 177 2 is_stmt 0 view .LVU5
+  54 001a FFF7FEFF 		bl	HAL_SPI_Transmit
+  55              	.LVL2:
+ 178:Src/LCD.c     **** 
+ 179:Src/LCD.c     **** 	buf = command & 0x0F;
+  56              		.loc 1 179 2 is_stmt 1 view .LVU6
+  57              		.loc 1 179 16 is_stmt 0 view .LVU7
+  58 001e 04F00F03 		and	r3, r4, #15
+  59              		.loc 1 179 6 view .LVU8
+  60 0022 8DF80730 		strb	r3, [sp, #7]
+ 180:Src/LCD.c     **** 	HAL_SPI_Transmit(&hspi2 , &buf, 1, HAL_MAX_DELAY);
+  61              		.loc 1 180 2 is_stmt 1 view .LVU9
+  62 0026 4FF0FF33 		mov	r3, #-1
+  63 002a 0122     		movs	r2, #1
+  64 002c 0DF10701 		add	r1, sp, #7
+  65 0030 2846     		mov	r0, r5
+  66 0032 FFF7FEFF 		bl	HAL_SPI_Transmit
+  67              	.LVL3:
+ 181:Src/LCD.c     **** 
+ 182:Src/LCD.c     **** 	buf = (command >> 4) & 0x0F;
+  68              		.loc 1 182 2 view .LVU10
+  69              		.loc 1 182 6 is_stmt 0 view .LVU11
+  70 0036 2409     		lsrs	r4, r4, #4
+  71 0038 8DF80740 		strb	r4, [sp, #7]
+ 183:Src/LCD.c     **** 	HAL_SPI_Transmit(&hspi2 , &buf , 1, HAL_MAX_DELAY);
+  72              		.loc 1 183 2 is_stmt 1 view .LVU12
+  73 003c 4FF0FF33 		mov	r3, #-1
+  74 0040 0122     		movs	r2, #1
+  75 0042 0DF10701 		add	r1, sp, #7
+  76 0046 2846     		mov	r0, r5
+  77 0048 FFF7FEFF 		bl	HAL_SPI_Transmit
+  78              	.LVL4:
+ 184:Src/LCD.c     **** 
+ 185:Src/LCD.c     **** }
+  79              		.loc 1 185 1 is_stmt 0 view .LVU13
+  80 004c 03B0     		add	sp, sp, #12
+  81              	.LCFI2:
+  82              		.cfi_def_cfa_offset 12
+  83              		@ sp needed
+  84 004e 30BD     		pop	{r4, r5, pc}
+  85              	.L4:
+  86              		.align	2
+  87              	.L3:
+  88 0050 00000000 		.word	hspi2
+  89              		.cfi_endproc
+  90              	.LFE70:
+  92              		.section	.text.lcd_write_data,"ax",%progbits
+  93              		.align	1
+  94              		.syntax unified
+  95              		.thumb
+  96              		.thumb_func
+  98              	lcd_write_data:
+  99              	.LVL5:
+ 100              	.LFB71:
+ 186:Src/LCD.c     **** 
+ 187:Src/LCD.c     **** /**
+ 188:Src/LCD.c     ****  * Write a byte to the data register
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\cc7rtp4z.s 			page 6
+
+
+ 189:Src/LCD.c     ****  */
+ 190:Src/LCD.c     **** void lcd_write_data(uint8_t data)
+ 191:Src/LCD.c     **** {
+ 101              		.loc 1 191 1 is_stmt 1 view -0
+ 102              		.cfi_startproc
+ 103              		@ args = 0, pretend = 0, frame = 8
+ 104              		@ frame_needed = 0, uses_anonymous_args = 0
+ 105              		.loc 1 191 1 is_stmt 0 view .LVU15
+ 106 0000 30B5     		push	{r4, r5, lr}
+ 107              	.LCFI3:
+ 108              		.cfi_def_cfa_offset 12
+ 109              		.cfi_offset 4, -12
+ 110              		.cfi_offset 5, -8
+ 111              		.cfi_offset 14, -4
+ 112 0002 83B0     		sub	sp, sp, #12
+ 113              	.LCFI4:
+ 114              		.cfi_def_cfa_offset 24
+ 115 0004 0446     		mov	r4, r0
+ 192:Src/LCD.c     **** 	uint8_t buf = 0x5F;
+ 116              		.loc 1 192 2 is_stmt 1 view .LVU16
+ 117              		.loc 1 192 10 is_stmt 0 view .LVU17
+ 118 0006 5F23     		movs	r3, #95
+ 119 0008 8DF80730 		strb	r3, [sp, #7]
+ 193:Src/LCD.c     **** 	HAL_SPI_Transmit(&hspi2, &buf, 1,10);
+ 120              		.loc 1 193 2 is_stmt 1 view .LVU18
+ 121 000c 0F4D     		ldr	r5, .L7
+ 122 000e 0A23     		movs	r3, #10
+ 123 0010 0122     		movs	r2, #1
+ 124 0012 0DF10701 		add	r1, sp, #7
+ 125 0016 2846     		mov	r0, r5
+ 126              	.LVL6:
+ 127              		.loc 1 193 2 is_stmt 0 view .LVU19
+ 128 0018 FFF7FEFF 		bl	HAL_SPI_Transmit
+ 129              	.LVL7:
+ 194:Src/LCD.c     **** 
+ 195:Src/LCD.c     **** 	buf = data & 0x0F;
+ 130              		.loc 1 195 2 is_stmt 1 view .LVU20
+ 131              		.loc 1 195 13 is_stmt 0 view .LVU21
+ 132 001c 04F00F03 		and	r3, r4, #15
+ 133              		.loc 1 195 6 view .LVU22
+ 134 0020 8DF80730 		strb	r3, [sp, #7]
+ 196:Src/LCD.c     **** 	HAL_SPI_Transmit(&hspi2 , &buf, 1, 10);
+ 135              		.loc 1 196 2 is_stmt 1 view .LVU23
+ 136 0024 0A23     		movs	r3, #10
+ 137 0026 0122     		movs	r2, #1
+ 138 0028 0DF10701 		add	r1, sp, #7
+ 139 002c 2846     		mov	r0, r5
+ 140 002e FFF7FEFF 		bl	HAL_SPI_Transmit
+ 141              	.LVL8:
+ 197:Src/LCD.c     **** 
+ 198:Src/LCD.c     **** 	buf = (data >> 4) & 0x0F;
+ 142              		.loc 1 198 2 view .LVU24
+ 143              		.loc 1 198 6 is_stmt 0 view .LVU25
+ 144 0032 2409     		lsrs	r4, r4, #4
+ 145 0034 8DF80740 		strb	r4, [sp, #7]
+ 199:Src/LCD.c     **** 	HAL_SPI_Transmit(&hspi2 , &buf , 1, 10);
+ 146              		.loc 1 199 2 is_stmt 1 view .LVU26
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\cc7rtp4z.s 			page 7
+
+
+ 147 0038 0A23     		movs	r3, #10
+ 148 003a 0122     		movs	r2, #1
+ 149 003c 0DF10701 		add	r1, sp, #7
+ 150 0040 2846     		mov	r0, r5
+ 151 0042 FFF7FEFF 		bl	HAL_SPI_Transmit
+ 152              	.LVL9:
+ 200:Src/LCD.c     **** }
+ 153              		.loc 1 200 1 is_stmt 0 view .LVU27
+ 154 0046 03B0     		add	sp, sp, #12
+ 155              	.LCFI5:
+ 156              		.cfi_def_cfa_offset 12
+ 157              		@ sp needed
+ 158 0048 30BD     		pop	{r4, r5, pc}
+ 159              	.L8:
+ 160 004a 00BF     		.align	2
+ 161              	.L7:
+ 162 004c 00000000 		.word	hspi2
+ 163              		.cfi_endproc
+ 164              	.LFE71:
+ 166              		.section	.text.Lcd_init,"ax",%progbits
+ 167              		.align	1
+ 168              		.global	Lcd_init
+ 169              		.syntax unified
+ 170              		.thumb
+ 171              		.thumb_func
+ 173              	Lcd_init:
+ 174              	.LFB65:
+  20:Src/LCD.c     **** 	 HAL_GPIO_WritePin(GPIOB,GPIO_PIN_12,GPIO_PIN_SET); // Podciagniecie RST
+ 175              		.loc 1 20 1 is_stmt 1 view -0
+ 176              		.cfi_startproc
+ 177              		@ args = 0, pretend = 0, frame = 0
+ 178              		@ frame_needed = 0, uses_anonymous_args = 0
+ 179 0000 10B5     		push	{r4, lr}
+ 180              	.LCFI6:
+ 181              		.cfi_def_cfa_offset 8
+ 182              		.cfi_offset 4, -8
+ 183              		.cfi_offset 14, -4
+  21:Src/LCD.c     **** 	 HAL_GPIO_WritePin(GPIOB,GPIO_PIN_14,GPIO_PIN_RESET); // Podciagniecie DC do zera
+ 184              		.loc 1 21 3 view .LVU29
+ 185 0002 404C     		ldr	r4, .L11
+ 186 0004 0122     		movs	r2, #1
+ 187 0006 4FF48051 		mov	r1, #4096
+ 188 000a 2046     		mov	r0, r4
+ 189 000c FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 190              	.LVL10:
+  22:Src/LCD.c     **** 
+ 191              		.loc 1 22 3 view .LVU30
+ 192 0010 0022     		movs	r2, #0
+ 193 0012 4FF48041 		mov	r1, #16384
+ 194 0016 2046     		mov	r0, r4
+ 195 0018 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 196              	.LVL11:
+  33:Src/LCD.c     **** 		lcd_write_command(0x2A);  /* **** Set "RE"=1  00101010B */
+ 197              		.loc 1 33 3 view .LVU31
+ 198 001c 8020     		movs	r0, #128
+ 199 001e FFF7FEFF 		bl	lcd_write_command
+ 200              	.LVL12:
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\cc7rtp4z.s 			page 8
+
+
+  34:Src/LCD.c     **** 		lcd_write_command(0x71);
+ 201              		.loc 1 34 3 view .LVU32
+ 202 0022 2A20     		movs	r0, #42
+ 203 0024 FFF7FEFF 		bl	lcd_write_command
+ 204              	.LVL13:
+  35:Src/LCD.c     **** 		lcd_write_command(0xC0);
+ 205              		.loc 1 35 3 view .LVU33
+ 206 0028 7120     		movs	r0, #113
+ 207 002a FFF7FEFF 		bl	lcd_write_command
+ 208              	.LVL14:
+  36:Src/LCD.c     **** 		lcd_write_command(0x00);
+ 209              		.loc 1 36 3 view .LVU34
+ 210 002e C020     		movs	r0, #192
+ 211 0030 FFF7FEFF 		bl	lcd_write_command
+ 212              	.LVL15:
+  37:Src/LCD.c     **** 		lcd_write_command(0x28);
+ 213              		.loc 1 37 3 view .LVU35
+ 214 0034 0020     		movs	r0, #0
+ 215 0036 FFF7FEFF 		bl	lcd_write_command
+ 216              	.LVL16:
+  38:Src/LCD.c     **** 
+ 217              		.loc 1 38 3 view .LVU36
+ 218 003a 2820     		movs	r0, #40
+ 219 003c FFF7FEFF 		bl	lcd_write_command
+ 220              	.LVL17:
+  40:Src/LCD.c     **** 		lcd_write_command(0x2A); /* **** Set "RE"=1  00101010B */
+ 221              		.loc 1 40 3 view .LVU37
+ 222 0040 0820     		movs	r0, #8
+ 223 0042 FFF7FEFF 		bl	lcd_write_command
+ 224              	.LVL18:
+  41:Src/LCD.c     **** 		lcd_write_command(0x79); /* **** Set "SD"=1  01111001B */
+ 225              		.loc 1 41 3 view .LVU38
+ 226 0046 2A20     		movs	r0, #42
+ 227 0048 FFF7FEFF 		bl	lcd_write_command
+ 228              	.LVL19:
+  42:Src/LCD.c     **** 
+ 229              		.loc 1 42 3 view .LVU39
+ 230 004c 7920     		movs	r0, #121
+ 231 004e FFF7FEFF 		bl	lcd_write_command
+ 232              	.LVL20:
+  44:Src/LCD.c     **** 		lcd_write_command(0x70);
+ 233              		.loc 1 44 3 view .LVU40
+ 234 0052 D520     		movs	r0, #213
+ 235 0054 FFF7FEFF 		bl	lcd_write_command
+ 236              	.LVL21:
+  45:Src/LCD.c     **** 		lcd_write_command(0x78); /* **** Set "SD"=0            */
+ 237              		.loc 1 45 3 view .LVU41
+ 238 0058 7020     		movs	r0, #112
+ 239 005a FFF7FEFF 		bl	lcd_write_command
+ 240              	.LVL22:
+  46:Src/LCD.c     **** 
+ 241              		.loc 1 46 3 view .LVU42
+ 242 005e 7820     		movs	r0, #120
+ 243 0060 FFF7FEFF 		bl	lcd_write_command
+ 244              	.LVL23:
+  50:Src/LCD.c     **** 
+ 245              		.loc 1 50 3 view .LVU43
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\cc7rtp4z.s 			page 9
+
+
+ 246 0064 0820     		movs	r0, #8
+ 247 0066 FFF7FEFF 		bl	lcd_write_command
+ 248              	.LVL24:
+  53:Src/LCD.c     **** 		lcd_write_command(0x72);
+ 249              		.loc 1 53 3 view .LVU44
+ 250 006a 0620     		movs	r0, #6
+ 251 006c FFF7FEFF 		bl	lcd_write_command
+ 252              	.LVL25:
+  54:Src/LCD.c     **** 		lcd_write_command(0xC0);
+ 253              		.loc 1 54 3 view .LVU45
+ 254 0070 7220     		movs	r0, #114
+ 255 0072 FFF7FEFF 		bl	lcd_write_command
+ 256              	.LVL26:
+  55:Src/LCD.c     **** 		lcd_write_command(0x01);
+ 257              		.loc 1 55 3 view .LVU46
+ 258 0076 C020     		movs	r0, #192
+ 259 0078 FFF7FEFF 		bl	lcd_write_command
+ 260              	.LVL27:
+  56:Src/LCD.c     **** 
+ 261              		.loc 1 56 3 view .LVU47
+ 262 007c 0120     		movs	r0, #1
+ 263 007e FFF7FEFF 		bl	lcd_write_command
+ 264              	.LVL28:
+  59:Src/LCD.c     **** 		lcd_write_command(0x79);   /* **** Set "SD"=1 */
+ 265              		.loc 1 59 3 view .LVU48
+ 266 0082 2A20     		movs	r0, #42
+ 267 0084 FFF7FEFF 		bl	lcd_write_command
+ 268              	.LVL29:
+  60:Src/LCD.c     **** 
+ 269              		.loc 1 60 3 view .LVU49
+ 270 0088 7920     		movs	r0, #121
+ 271 008a FFF7FEFF 		bl	lcd_write_command
+ 272              	.LVL30:
+  68:Src/LCD.c     **** 		lcd_write_command(0x00);    /* **** Set ROM A and 8 CGRAM */
+ 273              		.loc 1 68 3 view .LVU50
+ 274 008e DC20     		movs	r0, #220
+ 275 0090 FFF7FEFF 		bl	lcd_write_command
+ 276              	.LVL31:
+  69:Src/LCD.c     **** 
+ 277              		.loc 1 69 3 view .LVU51
+ 278 0094 0020     		movs	r0, #0
+ 279 0096 FFF7FEFF 		bl	lcd_write_command
+ 280              	.LVL32:
+  71:Src/LCD.c     **** 		lcd_write_command(0x10);
+ 281              		.loc 1 71 3 view .LVU52
+ 282 009a DA20     		movs	r0, #218
+ 283 009c FFF7FEFF 		bl	lcd_write_command
+ 284              	.LVL33:
+  72:Src/LCD.c     **** 
+ 285              		.loc 1 72 3 view .LVU53
+ 286 00a0 1020     		movs	r0, #16
+ 287 00a2 FFF7FEFF 		bl	lcd_write_command
+ 288              	.LVL34:
+  74:Src/LCD.c     **** 		lcd_write_command(0xD9);
+ 289              		.loc 1 74 3 view .LVU54
+ 290 00a6 8120     		movs	r0, #129
+ 291 00a8 FFF7FEFF 		bl	lcd_write_command
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\cc7rtp4z.s 			page 10
+
+
+ 292              	.LVL35:
+  75:Src/LCD.c     **** 		lcd_write_command(0x8F);    /* **** Set Contrast */
+ 293              		.loc 1 75 3 view .LVU55
+ 294 00ac D920     		movs	r0, #217
+ 295 00ae FFF7FEFF 		bl	lcd_write_command
+ 296              	.LVL36:
+  76:Src/LCD.c     **** 
+ 297              		.loc 1 76 3 view .LVU56
+ 298 00b2 8F20     		movs	r0, #143
+ 299 00b4 FFF7FEFF 		bl	lcd_write_command
+ 300              	.LVL37:
+  78:Src/LCD.c     **** 
+ 301              		.loc 1 78 3 view .LVU57
+ 302 00b8 F120     		movs	r0, #241
+ 303 00ba FFF7FEFF 		bl	lcd_write_command
+ 304              	.LVL38:
+  80:Src/LCD.c     **** 		lcd_write_command(0x30);   /* **** VCC x 0.83              */
+ 305              		.loc 1 80 3 view .LVU58
+ 306 00be DB20     		movs	r0, #219
+ 307 00c0 FFF7FEFF 		bl	lcd_write_command
+ 308              	.LVL39:
+  81:Src/LCD.c     **** 
+ 309              		.loc 1 81 3 view .LVU59
+ 310 00c4 3020     		movs	r0, #48
+ 311 00c6 FFF7FEFF 		bl	lcd_write_command
+ 312              	.LVL40:
+  83:Src/LCD.c     **** 		lcd_write_command(0x03);
+ 313              		.loc 1 83 3 view .LVU60
+ 314 00ca DC20     		movs	r0, #220
+ 315 00cc FFF7FEFF 		bl	lcd_write_command
+ 316              	.LVL41:
+  84:Src/LCD.c     **** 
+ 317              		.loc 1 84 3 view .LVU61
+ 318 00d0 0320     		movs	r0, #3
+ 319 00d2 FFF7FEFF 		bl	lcd_write_command
+ 320              	.LVL42:
+  86:Src/LCD.c     **** 		lcd_write_command(0x28);
+ 321              		.loc 1 86 3 view .LVU62
+ 322 00d6 7820     		movs	r0, #120
+ 323 00d8 FFF7FEFF 		bl	lcd_write_command
+ 324              	.LVL43:
+  87:Src/LCD.c     **** 
+ 325              		.loc 1 87 3 view .LVU63
+ 326 00dc 2820     		movs	r0, #40
+ 327 00de FFF7FEFF 		bl	lcd_write_command
+ 328              	.LVL44:
+  93:Src/LCD.c     **** 
+ 329              		.loc 1 93 3 view .LVU64
+ 330 00e2 0620     		movs	r0, #6
+ 331 00e4 FFF7FEFF 		bl	lcd_write_command
+ 332              	.LVL45:
+  95:Src/LCD.c     **** 		lcd_write_command(0x01);
+ 333              		.loc 1 95 3 view .LVU65
+ 334 00e8 2820     		movs	r0, #40
+ 335 00ea FFF7FEFF 		bl	lcd_write_command
+ 336              	.LVL46:
+  96:Src/LCD.c     **** 		lcd_write_command(0x80);     /* Set DDRAM Address to 0x80 (line 1 start)*/
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\cc7rtp4z.s 			page 11
+
+
+ 337              		.loc 1 96 3 view .LVU66
+ 338 00ee 0120     		movs	r0, #1
+ 339 00f0 FFF7FEFF 		bl	lcd_write_command
+ 340              	.LVL47:
+  97:Src/LCD.c     **** 
+ 341              		.loc 1 97 3 view .LVU67
+ 342 00f4 8020     		movs	r0, #128
+ 343 00f6 FFF7FEFF 		bl	lcd_write_command
+ 344              	.LVL48:
+ 101:Src/LCD.c     **** 
+ 345              		.loc 1 101 3 view .LVU68
+ 346 00fa 0C20     		movs	r0, #12
+ 347 00fc FFF7FEFF 		bl	lcd_write_command
+ 348              	.LVL49:
+ 125:Src/LCD.c     **** 
+ 349              		.loc 1 125 1 is_stmt 0 view .LVU69
+ 350 0100 10BD     		pop	{r4, pc}
+ 351              	.L12:
+ 352 0102 00BF     		.align	2
+ 353              	.L11:
+ 354 0104 000C0140 		.word	1073810432
+ 355              		.cfi_endproc
+ 356              	.LFE65:
+ 358              		.section	.text.Lcd_clr,"ax",%progbits
+ 359              		.align	1
+ 360              		.global	Lcd_clr
+ 361              		.syntax unified
+ 362              		.thumb
+ 363              		.thumb_func
+ 365              	Lcd_clr:
+ 366              	.LFB66:
+ 131:Src/LCD.c     **** 	lcd_write_command(CLEAR_DISPLAY);
+ 367              		.loc 1 131 1 is_stmt 1 view -0
+ 368              		.cfi_startproc
+ 369              		@ args = 0, pretend = 0, frame = 0
+ 370              		@ frame_needed = 0, uses_anonymous_args = 0
+ 371 0000 08B5     		push	{r3, lr}
+ 372              	.LCFI7:
+ 373              		.cfi_def_cfa_offset 8
+ 374              		.cfi_offset 3, -8
+ 375              		.cfi_offset 14, -4
+ 132:Src/LCD.c     **** 	lcd_write_command(RETURN_HOME);
+ 376              		.loc 1 132 2 view .LVU71
+ 377 0002 0120     		movs	r0, #1
+ 378 0004 FFF7FEFF 		bl	lcd_write_command
+ 379              	.LVL50:
+ 133:Src/LCD.c     **** 
+ 380              		.loc 1 133 2 view .LVU72
+ 381 0008 0220     		movs	r0, #2
+ 382 000a FFF7FEFF 		bl	lcd_write_command
+ 383              	.LVL51:
+ 136:Src/LCD.c     **** 
+ 384              		.loc 1 136 1 is_stmt 0 view .LVU73
+ 385 000e 08BD     		pop	{r3, pc}
+ 386              		.cfi_endproc
+ 387              	.LFE66:
+ 389              		.section	.text.Lcd_string,"ax",%progbits
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\cc7rtp4z.s 			page 12
+
+
+ 390              		.align	1
+ 391              		.global	Lcd_string
+ 392              		.syntax unified
+ 393              		.thumb
+ 394              		.thumb_func
+ 396              	Lcd_string:
+ 397              	.LVL52:
+ 398              	.LFB68:
+ 151:Src/LCD.c     **** 	for(uint8_t i = 0; i < strlen(string); i++)
+ 399              		.loc 1 151 1 is_stmt 1 view -0
+ 400              		.cfi_startproc
+ 401              		@ args = 0, pretend = 0, frame = 0
+ 402              		@ frame_needed = 0, uses_anonymous_args = 0
+ 151:Src/LCD.c     **** 	for(uint8_t i = 0; i < strlen(string); i++)
+ 403              		.loc 1 151 1 is_stmt 0 view .LVU75
+ 404 0000 38B5     		push	{r3, r4, r5, lr}
+ 405              	.LCFI8:
+ 406              		.cfi_def_cfa_offset 16
+ 407              		.cfi_offset 3, -16
+ 408              		.cfi_offset 4, -12
+ 409              		.cfi_offset 5, -8
+ 410              		.cfi_offset 14, -4
+ 411 0002 0546     		mov	r5, r0
+ 152:Src/LCD.c     **** 	{
+ 412              		.loc 1 152 2 is_stmt 1 view .LVU76
+ 413              	.LBB2:
+ 152:Src/LCD.c     **** 	{
+ 414              		.loc 1 152 6 view .LVU77
+ 415              	.LVL53:
+ 152:Src/LCD.c     **** 	{
+ 416              		.loc 1 152 14 is_stmt 0 view .LVU78
+ 417 0004 0024     		movs	r4, #0
+ 152:Src/LCD.c     **** 	{
+ 418              		.loc 1 152 2 view .LVU79
+ 419 0006 04E0     		b	.L16
+ 420              	.LVL54:
+ 421              	.L17:
+ 154:Src/LCD.c     **** 	}
+ 422              		.loc 1 154 3 is_stmt 1 discriminator 3 view .LVU80
+ 423 0008 285D     		ldrb	r0, [r5, r4]	@ zero_extendqisi2
+ 424 000a FFF7FEFF 		bl	lcd_write_data
+ 425              	.LVL55:
+ 152:Src/LCD.c     **** 	{
+ 426              		.loc 1 152 41 discriminator 3 view .LVU81
+ 152:Src/LCD.c     **** 	{
+ 427              		.loc 1 152 42 is_stmt 0 discriminator 3 view .LVU82
+ 428 000e 0134     		adds	r4, r4, #1
+ 429              	.LVL56:
+ 152:Src/LCD.c     **** 	{
+ 430              		.loc 1 152 42 discriminator 3 view .LVU83
+ 431 0010 E4B2     		uxtb	r4, r4
+ 432              	.LVL57:
+ 433              	.L16:
+ 152:Src/LCD.c     **** 	{
+ 434              		.loc 1 152 21 is_stmt 1 discriminator 1 view .LVU84
+ 152:Src/LCD.c     **** 	{
+ 435              		.loc 1 152 25 is_stmt 0 discriminator 1 view .LVU85
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\cc7rtp4z.s 			page 13
+
+
+ 436 0012 2846     		mov	r0, r5
+ 437 0014 FFF7FEFF 		bl	strlen
+ 438              	.LVL58:
+ 152:Src/LCD.c     **** 	{
+ 439              		.loc 1 152 2 discriminator 1 view .LVU86
+ 440 0018 8442     		cmp	r4, r0
+ 441 001a F5D3     		bcc	.L17
+ 442              	.LBE2:
+ 156:Src/LCD.c     **** 
+ 443              		.loc 1 156 1 view .LVU87
+ 444 001c 38BD     		pop	{r3, r4, r5, pc}
+ 156:Src/LCD.c     **** 
+ 445              		.loc 1 156 1 view .LVU88
+ 446              		.cfi_endproc
+ 447              	.LFE68:
+ 449              		.section	.rodata.Lcd_int.str1.4,"aMS",%progbits,1
+ 450              		.align	2
+ 451              	.LC0:
+ 452 0000 256400   		.ascii	"%d\000"
+ 453              		.section	.text.Lcd_int,"ax",%progbits
+ 454              		.align	1
+ 455              		.global	Lcd_int
+ 456              		.syntax unified
+ 457              		.thumb
+ 458              		.thumb_func
+ 460              	Lcd_int:
+ 461              	.LVL59:
+ 462              	.LFB67:
+ 141:Src/LCD.c     **** 	char buffer[11];
+ 463              		.loc 1 141 1 is_stmt 1 view -0
+ 464              		.cfi_startproc
+ 465              		@ args = 0, pretend = 0, frame = 16
+ 466              		@ frame_needed = 0, uses_anonymous_args = 0
+ 141:Src/LCD.c     **** 	char buffer[11];
+ 467              		.loc 1 141 1 is_stmt 0 view .LVU90
+ 468 0000 00B5     		push	{lr}
+ 469              	.LCFI9:
+ 470              		.cfi_def_cfa_offset 4
+ 471              		.cfi_offset 14, -4
+ 472 0002 85B0     		sub	sp, sp, #20
+ 473              	.LCFI10:
+ 474              		.cfi_def_cfa_offset 24
+ 475 0004 0246     		mov	r2, r0
+ 142:Src/LCD.c     **** 	sprintf(buffer, "%d", number);
+ 476              		.loc 1 142 2 is_stmt 1 view .LVU91
+ 143:Src/LCD.c     **** 	Lcd_string(buffer);
+ 477              		.loc 1 143 2 view .LVU92
+ 478 0006 0549     		ldr	r1, .L21
+ 479 0008 01A8     		add	r0, sp, #4
+ 480              	.LVL60:
+ 143:Src/LCD.c     **** 	Lcd_string(buffer);
+ 481              		.loc 1 143 2 is_stmt 0 view .LVU93
+ 482 000a FFF7FEFF 		bl	sprintf
+ 483              	.LVL61:
+ 144:Src/LCD.c     **** }
+ 484              		.loc 1 144 2 is_stmt 1 view .LVU94
+ 485 000e 01A8     		add	r0, sp, #4
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\cc7rtp4z.s 			page 14
+
+
+ 486 0010 FFF7FEFF 		bl	Lcd_string
+ 487              	.LVL62:
+ 145:Src/LCD.c     **** 
+ 488              		.loc 1 145 1 is_stmt 0 view .LVU95
+ 489 0014 05B0     		add	sp, sp, #20
+ 490              	.LCFI11:
+ 491              		.cfi_def_cfa_offset 4
+ 492              		@ sp needed
+ 493 0016 5DF804FB 		ldr	pc, [sp], #4
+ 494              	.L22:
+ 495 001a 00BF     		.align	2
+ 496              	.L21:
+ 497 001c 00000000 		.word	.LC0
+ 498              		.cfi_endproc
+ 499              	.LFE67:
+ 501              		.section	.text.Lcd_cursor,"ax",%progbits
+ 502              		.align	1
+ 503              		.global	Lcd_cursor
+ 504              		.syntax unified
+ 505              		.thumb
+ 506              		.thumb_func
+ 508              	Lcd_cursor:
+ 509              	.LVL63:
+ 510              	.LFB69:
+ 162:Src/LCD.c     **** 
+ 511              		.loc 1 162 1 is_stmt 1 view -0
+ 512              		.cfi_startproc
+ 513              		@ args = 0, pretend = 0, frame = 0
+ 514              		@ frame_needed = 0, uses_anonymous_args = 0
+ 162:Src/LCD.c     **** 
+ 515              		.loc 1 162 1 is_stmt 0 view .LVU97
+ 516 0000 08B5     		push	{r3, lr}
+ 517              	.LCFI12:
+ 518              		.cfi_def_cfa_offset 8
+ 519              		.cfi_offset 3, -8
+ 520              		.cfi_offset 14, -4
+ 164:Src/LCD.c     **** }
+ 521              		.loc 1 164 2 is_stmt 1 view .LVU98
+ 164:Src/LCD.c     **** }
+ 522              		.loc 1 164 51 is_stmt 0 view .LVU99
+ 523 0002 01EB8010 		add	r0, r1, r0, lsl #6
+ 524              	.LVL64:
+ 164:Src/LCD.c     **** }
+ 525              		.loc 1 164 51 view .LVU100
+ 526 0006 40B2     		sxtb	r0, r0
+ 164:Src/LCD.c     **** }
+ 527              		.loc 1 164 35 view .LVU101
+ 528 0008 60F07F00 		orn	r0, r0, #127
+ 164:Src/LCD.c     **** }
+ 529              		.loc 1 164 2 view .LVU102
+ 530 000c C0B2     		uxtb	r0, r0
+ 531 000e FFF7FEFF 		bl	lcd_write_command
+ 532              	.LVL65:
+ 165:Src/LCD.c     **** 
+ 533              		.loc 1 165 1 view .LVU103
+ 534 0012 08BD     		pop	{r3, pc}
+ 535              		.cfi_endproc
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\cc7rtp4z.s 			page 15
+
+
+ 536              	.LFE69:
+ 538              		.text
+ 539              	.Letext0:
+ 540              		.file 2 "c:\\users\\zbigniew\\appdata\\roaming\\code\\user\\globalstorage\\bmd.stm32-for-vscode\\@
+ 541              		.file 3 "c:\\users\\zbigniew\\appdata\\roaming\\code\\user\\globalstorage\\bmd.stm32-for-vscode\\@
+ 542              		.file 4 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xe.h"
+ 543              		.file 5 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_def.h"
+ 544              		.file 6 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_gpio.h"
+ 545              		.file 7 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_dma.h"
+ 546              		.file 8 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_spi.h"
+ 547              		.file 9 "c:\\users\\zbigniew\\appdata\\roaming\\code\\user\\globalstorage\\bmd.stm32-for-vscode\\@
+ 548              		.file 10 "Inc/spi.h"
+ 549              		.file 11 "<built-in>"
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\cc7rtp4z.s 			page 16
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 LCD.c
+C:\Users\Zbigniew\AppData\Local\Temp\cc7rtp4z.s:18     .text.lcd_write_command:0000000000000000 $t
+C:\Users\Zbigniew\AppData\Local\Temp\cc7rtp4z.s:23     .text.lcd_write_command:0000000000000000 lcd_write_command
+C:\Users\Zbigniew\AppData\Local\Temp\cc7rtp4z.s:88     .text.lcd_write_command:0000000000000050 $d
+C:\Users\Zbigniew\AppData\Local\Temp\cc7rtp4z.s:93     .text.lcd_write_data:0000000000000000 $t
+C:\Users\Zbigniew\AppData\Local\Temp\cc7rtp4z.s:98     .text.lcd_write_data:0000000000000000 lcd_write_data
+C:\Users\Zbigniew\AppData\Local\Temp\cc7rtp4z.s:162    .text.lcd_write_data:000000000000004c $d
+C:\Users\Zbigniew\AppData\Local\Temp\cc7rtp4z.s:167    .text.Lcd_init:0000000000000000 $t
+C:\Users\Zbigniew\AppData\Local\Temp\cc7rtp4z.s:173    .text.Lcd_init:0000000000000000 Lcd_init
+C:\Users\Zbigniew\AppData\Local\Temp\cc7rtp4z.s:354    .text.Lcd_init:0000000000000104 $d
+C:\Users\Zbigniew\AppData\Local\Temp\cc7rtp4z.s:359    .text.Lcd_clr:0000000000000000 $t
+C:\Users\Zbigniew\AppData\Local\Temp\cc7rtp4z.s:365    .text.Lcd_clr:0000000000000000 Lcd_clr
+C:\Users\Zbigniew\AppData\Local\Temp\cc7rtp4z.s:390    .text.Lcd_string:0000000000000000 $t
+C:\Users\Zbigniew\AppData\Local\Temp\cc7rtp4z.s:396    .text.Lcd_string:0000000000000000 Lcd_string
+C:\Users\Zbigniew\AppData\Local\Temp\cc7rtp4z.s:450    .rodata.Lcd_int.str1.4:0000000000000000 $d
+C:\Users\Zbigniew\AppData\Local\Temp\cc7rtp4z.s:454    .text.Lcd_int:0000000000000000 $t
+C:\Users\Zbigniew\AppData\Local\Temp\cc7rtp4z.s:460    .text.Lcd_int:0000000000000000 Lcd_int
+C:\Users\Zbigniew\AppData\Local\Temp\cc7rtp4z.s:497    .text.Lcd_int:000000000000001c $d
+C:\Users\Zbigniew\AppData\Local\Temp\cc7rtp4z.s:502    .text.Lcd_cursor:0000000000000000 $t
+C:\Users\Zbigniew\AppData\Local\Temp\cc7rtp4z.s:508    .text.Lcd_cursor:0000000000000000 Lcd_cursor
+
+UNDEFINED SYMBOLS
+HAL_SPI_Transmit
+hspi2
+HAL_GPIO_WritePin
+strlen
+sprintf

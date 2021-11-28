@@ -1,0 +1,127 @@
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\cci9fGuy.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.arch armv7-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"u8g_dev_null.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.u8g_dev_null,"ax",%progbits
+  18              		.align	1
+  19              		.global	u8g_dev_null
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  24              	u8g_dev_null:
+  25              	.LVL0:
+  26              	.LFB0:
+  27              		.file 1 "Drivers/u8glib/src/u8g_dev_null.c"
+   1:Drivers/u8glib/src/u8g_dev_null.c **** /*
+   2:Drivers/u8glib/src/u8g_dev_null.c **** 
+   3:Drivers/u8glib/src/u8g_dev_null.c ****   u8g_dev_null.c
+   4:Drivers/u8glib/src/u8g_dev_null.c **** 
+   5:Drivers/u8glib/src/u8g_dev_null.c ****   Universal 8bit Graphics Library
+   6:Drivers/u8glib/src/u8g_dev_null.c ****   
+   7:Drivers/u8glib/src/u8g_dev_null.c ****   Copyright (c) 2011, olikraus@gmail.com
+   8:Drivers/u8glib/src/u8g_dev_null.c ****   All rights reserved.
+   9:Drivers/u8glib/src/u8g_dev_null.c **** 
+  10:Drivers/u8glib/src/u8g_dev_null.c ****   Redistribution and use in source and binary forms, with or without modification, 
+  11:Drivers/u8glib/src/u8g_dev_null.c ****   are permitted provided that the following conditions are met:
+  12:Drivers/u8glib/src/u8g_dev_null.c **** 
+  13:Drivers/u8glib/src/u8g_dev_null.c ****   * Redistributions of source code must retain the above copyright notice, this list 
+  14:Drivers/u8glib/src/u8g_dev_null.c ****     of conditions and the following disclaimer.
+  15:Drivers/u8glib/src/u8g_dev_null.c ****     
+  16:Drivers/u8glib/src/u8g_dev_null.c ****   * Redistributions in binary form must reproduce the above copyright notice, this 
+  17:Drivers/u8glib/src/u8g_dev_null.c ****     list of conditions and the following disclaimer in the documentation and/or other 
+  18:Drivers/u8glib/src/u8g_dev_null.c ****     materials provided with the distribution.
+  19:Drivers/u8glib/src/u8g_dev_null.c **** 
+  20:Drivers/u8glib/src/u8g_dev_null.c ****   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND 
+  21:Drivers/u8glib/src/u8g_dev_null.c ****   CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, 
+  22:Drivers/u8glib/src/u8g_dev_null.c ****   INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF 
+  23:Drivers/u8glib/src/u8g_dev_null.c ****   MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE 
+  24:Drivers/u8glib/src/u8g_dev_null.c ****   DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR 
+  25:Drivers/u8glib/src/u8g_dev_null.c ****   CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, 
+  26:Drivers/u8glib/src/u8g_dev_null.c ****   SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT 
+  27:Drivers/u8glib/src/u8g_dev_null.c ****   NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; 
+  28:Drivers/u8glib/src/u8g_dev_null.c ****   LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER 
+  29:Drivers/u8glib/src/u8g_dev_null.c ****   CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, 
+  30:Drivers/u8glib/src/u8g_dev_null.c ****   STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+  31:Drivers/u8glib/src/u8g_dev_null.c ****   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF 
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\cci9fGuy.s 			page 2
+
+
+  32:Drivers/u8glib/src/u8g_dev_null.c ****   ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.  
+  33:Drivers/u8glib/src/u8g_dev_null.c ****   
+  34:Drivers/u8glib/src/u8g_dev_null.c ****   
+  35:Drivers/u8glib/src/u8g_dev_null.c **** */
+  36:Drivers/u8glib/src/u8g_dev_null.c **** 
+  37:Drivers/u8glib/src/u8g_dev_null.c **** #include "../Drivers/u8glib/inc/u8g.h"
+  38:Drivers/u8glib/src/u8g_dev_null.c **** 
+  39:Drivers/u8glib/src/u8g_dev_null.c **** uint8_t u8g_dev_null(u8g_t *u8g, u8g_dev_t *dev, uint8_t msg, void *arg)
+  40:Drivers/u8glib/src/u8g_dev_null.c **** {
+  28              		.loc 1 40 1 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+  41:Drivers/u8glib/src/u8g_dev_null.c ****   switch(msg)
+  33              		.loc 1 41 3 view .LVU1
+  42:Drivers/u8glib/src/u8g_dev_null.c ****   {
+  43:Drivers/u8glib/src/u8g_dev_null.c ****     case U8G_DEV_MSG_SET_8PIXEL:                /* most often used command */
+  44:Drivers/u8glib/src/u8g_dev_null.c ****       break;
+  45:Drivers/u8glib/src/u8g_dev_null.c ****     case U8G_DEV_MSG_SET_PIXEL:
+  46:Drivers/u8glib/src/u8g_dev_null.c ****       break;
+  47:Drivers/u8glib/src/u8g_dev_null.c ****     case U8G_DEV_MSG_INIT:
+  48:Drivers/u8glib/src/u8g_dev_null.c ****       break;
+  49:Drivers/u8glib/src/u8g_dev_null.c ****     case U8G_DEV_MSG_STOP:
+  50:Drivers/u8glib/src/u8g_dev_null.c ****       break;
+  51:Drivers/u8glib/src/u8g_dev_null.c ****     case U8G_DEV_MSG_PAGE_FIRST:
+  52:Drivers/u8glib/src/u8g_dev_null.c ****       break;
+  53:Drivers/u8glib/src/u8g_dev_null.c ****     case U8G_DEV_MSG_PAGE_NEXT:
+  54:Drivers/u8glib/src/u8g_dev_null.c ****       break;
+  55:Drivers/u8glib/src/u8g_dev_null.c **** #ifdef U8G_DEV_MSG_IS_BBX_INTERSECTION
+  56:Drivers/u8glib/src/u8g_dev_null.c ****     case U8G_DEV_MSG_IS_BBX_INTERSECTION:
+  57:Drivers/u8glib/src/u8g_dev_null.c ****       return 1;
+  58:Drivers/u8glib/src/u8g_dev_null.c **** #endif
+  59:Drivers/u8glib/src/u8g_dev_null.c ****     case U8G_DEV_MSG_GET_PAGE_BOX:
+  60:Drivers/u8glib/src/u8g_dev_null.c ****       break;
+  61:Drivers/u8glib/src/u8g_dev_null.c ****     case U8G_DEV_MSG_SET_COLOR_ENTRY:
+  62:Drivers/u8glib/src/u8g_dev_null.c ****       break;
+  63:Drivers/u8glib/src/u8g_dev_null.c ****     case U8G_DEV_MSG_SET_XY_CB:
+  64:Drivers/u8glib/src/u8g_dev_null.c ****       break;
+  65:Drivers/u8glib/src/u8g_dev_null.c ****   }
+  66:Drivers/u8glib/src/u8g_dev_null.c ****   return 1;
+  34              		.loc 1 66 3 view .LVU2
+  67:Drivers/u8glib/src/u8g_dev_null.c **** }
+  35              		.loc 1 67 1 is_stmt 0 view .LVU3
+  36 0000 0120     		movs	r0, #1
+  37              	.LVL1:
+  38              		.loc 1 67 1 view .LVU4
+  39 0002 7047     		bx	lr
+  40              		.cfi_endproc
+  41              	.LFE0:
+  43              		.text
+  44              	.Letext0:
+  45              		.file 2 "c:\\users\\zbigniew\\appdata\\roaming\\code\\user\\globalstorage\\bmd.stm32-for-vscode\\@
+  46              		.file 3 "c:\\users\\zbigniew\\appdata\\roaming\\code\\user\\globalstorage\\bmd.stm32-for-vscode\\@
+  47              		.file 4 "Inc/../Drivers/u8glib/inc/u8g.h"
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\cci9fGuy.s 			page 3
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 u8g_dev_null.c
+C:\Users\Zbigniew\AppData\Local\Temp\cci9fGuy.s:18     .text.u8g_dev_null:0000000000000000 $t
+C:\Users\Zbigniew\AppData\Local\Temp\cci9fGuy.s:24     .text.u8g_dev_null:0000000000000000 u8g_dev_null
+
+NO UNDEFINED SYMBOLS

@@ -1,0 +1,1175 @@
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccy25Bsl.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.arch armv7-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"u8g_bitmap.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.u8g_DrawHXBM,"ax",%progbits
+  18              		.align	1
+  19              		.syntax unified
+  20              		.thumb
+  21              		.thumb_func
+  23              	u8g_DrawHXBM:
+  24              	.LVL0:
+  25              	.LFB4:
+  26              		.file 1 "Drivers/u8glib/src/u8g_bitmap.c"
+   1:Drivers/u8glib/src/u8g_bitmap.c **** /*
+   2:Drivers/u8glib/src/u8g_bitmap.c **** 
+   3:Drivers/u8glib/src/u8g_bitmap.c ****   u8g_bitmap.c
+   4:Drivers/u8glib/src/u8g_bitmap.c **** 
+   5:Drivers/u8glib/src/u8g_bitmap.c ****   Universal 8bit Graphics Library
+   6:Drivers/u8glib/src/u8g_bitmap.c ****   
+   7:Drivers/u8glib/src/u8g_bitmap.c ****   Copyright (c) 2011, olikraus@gmail.com
+   8:Drivers/u8glib/src/u8g_bitmap.c ****   All rights reserved.
+   9:Drivers/u8glib/src/u8g_bitmap.c **** 
+  10:Drivers/u8glib/src/u8g_bitmap.c ****   Redistribution and use in source and binary forms, with or without modification, 
+  11:Drivers/u8glib/src/u8g_bitmap.c ****   are permitted provided that the following conditions are met:
+  12:Drivers/u8glib/src/u8g_bitmap.c **** 
+  13:Drivers/u8glib/src/u8g_bitmap.c ****   * Redistributions of source code must retain the above copyright notice, this list 
+  14:Drivers/u8glib/src/u8g_bitmap.c ****     of conditions and the following disclaimer.
+  15:Drivers/u8glib/src/u8g_bitmap.c ****     
+  16:Drivers/u8glib/src/u8g_bitmap.c ****   * Redistributions in binary form must reproduce the above copyright notice, this 
+  17:Drivers/u8glib/src/u8g_bitmap.c ****     list of conditions and the following disclaimer in the documentation and/or other 
+  18:Drivers/u8glib/src/u8g_bitmap.c ****     materials provided with the distribution.
+  19:Drivers/u8glib/src/u8g_bitmap.c **** 
+  20:Drivers/u8glib/src/u8g_bitmap.c ****   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND 
+  21:Drivers/u8glib/src/u8g_bitmap.c ****   CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, 
+  22:Drivers/u8glib/src/u8g_bitmap.c ****   INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF 
+  23:Drivers/u8glib/src/u8g_bitmap.c ****   MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE 
+  24:Drivers/u8glib/src/u8g_bitmap.c ****   DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR 
+  25:Drivers/u8glib/src/u8g_bitmap.c ****   CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, 
+  26:Drivers/u8glib/src/u8g_bitmap.c ****   SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT 
+  27:Drivers/u8glib/src/u8g_bitmap.c ****   NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; 
+  28:Drivers/u8glib/src/u8g_bitmap.c ****   LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER 
+  29:Drivers/u8glib/src/u8g_bitmap.c ****   CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, 
+  30:Drivers/u8glib/src/u8g_bitmap.c ****   STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+  31:Drivers/u8glib/src/u8g_bitmap.c ****   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF 
+  32:Drivers/u8glib/src/u8g_bitmap.c ****   ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.  
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccy25Bsl.s 			page 2
+
+
+  33:Drivers/u8glib/src/u8g_bitmap.c ****   
+  34:Drivers/u8glib/src/u8g_bitmap.c **** 
+  35:Drivers/u8glib/src/u8g_bitmap.c **** */
+  36:Drivers/u8glib/src/u8g_bitmap.c **** 
+  37:Drivers/u8glib/src/u8g_bitmap.c **** #include "../Drivers/u8glib/inc/u8g.h"
+  38:Drivers/u8glib/src/u8g_bitmap.c **** 
+  39:Drivers/u8glib/src/u8g_bitmap.c **** void u8g_DrawHBitmap(u8g_t *u8g, u8g_uint_t x, u8g_uint_t y, u8g_uint_t cnt, const uint8_t *bitmap)
+  40:Drivers/u8glib/src/u8g_bitmap.c **** {
+  41:Drivers/u8glib/src/u8g_bitmap.c ****   while( cnt > 0 )
+  42:Drivers/u8glib/src/u8g_bitmap.c ****   {
+  43:Drivers/u8glib/src/u8g_bitmap.c ****     u8g_Draw8Pixel(u8g, x, y, 0, *bitmap);
+  44:Drivers/u8glib/src/u8g_bitmap.c ****     bitmap++;
+  45:Drivers/u8glib/src/u8g_bitmap.c ****     cnt--;
+  46:Drivers/u8glib/src/u8g_bitmap.c ****     x+=8;
+  47:Drivers/u8glib/src/u8g_bitmap.c ****   }
+  48:Drivers/u8glib/src/u8g_bitmap.c **** }
+  49:Drivers/u8glib/src/u8g_bitmap.c **** 
+  50:Drivers/u8glib/src/u8g_bitmap.c **** void u8g_DrawBitmap(u8g_t *u8g, u8g_uint_t x, u8g_uint_t y, u8g_uint_t cnt, u8g_uint_t h, const uin
+  51:Drivers/u8glib/src/u8g_bitmap.c **** {
+  52:Drivers/u8glib/src/u8g_bitmap.c ****   if ( u8g_IsBBXIntersection(u8g, x, y, cnt*8, h) == 0 )
+  53:Drivers/u8glib/src/u8g_bitmap.c ****     return;
+  54:Drivers/u8glib/src/u8g_bitmap.c ****   while( h > 0 )
+  55:Drivers/u8glib/src/u8g_bitmap.c ****   {
+  56:Drivers/u8glib/src/u8g_bitmap.c ****     u8g_DrawHBitmap(u8g, x, y, cnt, bitmap);
+  57:Drivers/u8glib/src/u8g_bitmap.c ****     bitmap += cnt;
+  58:Drivers/u8glib/src/u8g_bitmap.c ****     y++;
+  59:Drivers/u8glib/src/u8g_bitmap.c ****     h--;
+  60:Drivers/u8glib/src/u8g_bitmap.c ****   }
+  61:Drivers/u8glib/src/u8g_bitmap.c **** }
+  62:Drivers/u8glib/src/u8g_bitmap.c **** 
+  63:Drivers/u8glib/src/u8g_bitmap.c **** 
+  64:Drivers/u8glib/src/u8g_bitmap.c **** void u8g_DrawHBitmapP(u8g_t *u8g, u8g_uint_t x, u8g_uint_t y, u8g_uint_t cnt, const u8g_pgm_uint8_t
+  65:Drivers/u8glib/src/u8g_bitmap.c **** {
+  66:Drivers/u8glib/src/u8g_bitmap.c ****   while( cnt > 0 )
+  67:Drivers/u8glib/src/u8g_bitmap.c ****   {
+  68:Drivers/u8glib/src/u8g_bitmap.c ****     u8g_Draw8Pixel(u8g, x, y, 0, u8g_pgm_read(bitmap));
+  69:Drivers/u8glib/src/u8g_bitmap.c ****     bitmap++;
+  70:Drivers/u8glib/src/u8g_bitmap.c ****     cnt--;
+  71:Drivers/u8glib/src/u8g_bitmap.c ****     x+=8;
+  72:Drivers/u8glib/src/u8g_bitmap.c ****   }
+  73:Drivers/u8glib/src/u8g_bitmap.c **** }
+  74:Drivers/u8glib/src/u8g_bitmap.c **** 
+  75:Drivers/u8glib/src/u8g_bitmap.c **** void u8g_DrawBitmapP(u8g_t *u8g, u8g_uint_t x, u8g_uint_t y, u8g_uint_t cnt, u8g_uint_t h, const u8
+  76:Drivers/u8glib/src/u8g_bitmap.c **** {
+  77:Drivers/u8glib/src/u8g_bitmap.c ****   if ( u8g_IsBBXIntersection(u8g, x, y, cnt*8, h) == 0 )
+  78:Drivers/u8glib/src/u8g_bitmap.c ****     return;
+  79:Drivers/u8glib/src/u8g_bitmap.c ****   while( h > 0 )
+  80:Drivers/u8glib/src/u8g_bitmap.c ****   {
+  81:Drivers/u8glib/src/u8g_bitmap.c ****     u8g_DrawHBitmapP(u8g, x, y, cnt, bitmap);
+  82:Drivers/u8glib/src/u8g_bitmap.c ****     bitmap += cnt;
+  83:Drivers/u8glib/src/u8g_bitmap.c ****     y++;
+  84:Drivers/u8glib/src/u8g_bitmap.c ****     h--;
+  85:Drivers/u8glib/src/u8g_bitmap.c ****   }
+  86:Drivers/u8glib/src/u8g_bitmap.c **** }
+  87:Drivers/u8glib/src/u8g_bitmap.c **** 
+  88:Drivers/u8glib/src/u8g_bitmap.c **** /*=========================================================================*/
+  89:Drivers/u8glib/src/u8g_bitmap.c **** 
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccy25Bsl.s 			page 3
+
+
+  90:Drivers/u8glib/src/u8g_bitmap.c **** static void u8g_DrawHXBM(u8g_t *u8g, u8g_uint_t x, u8g_uint_t y, u8g_uint_t w, const uint8_t *bitma
+  91:Drivers/u8glib/src/u8g_bitmap.c **** {
+  27              		.loc 1 91 1 view -0
+  28              		.cfi_startproc
+  29              		@ args = 4, pretend = 0, frame = 0
+  30              		@ frame_needed = 0, uses_anonymous_args = 0
+  31              		.loc 1 91 1 is_stmt 0 view .LVU1
+  32 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+  33              	.LCFI0:
+  34              		.cfi_def_cfa_offset 24
+  35              		.cfi_offset 4, -24
+  36              		.cfi_offset 5, -20
+  37              		.cfi_offset 6, -16
+  38              		.cfi_offset 7, -12
+  39              		.cfi_offset 8, -8
+  40              		.cfi_offset 14, -4
+  41 0004 82B0     		sub	sp, sp, #8
+  42              	.LCFI1:
+  43              		.cfi_def_cfa_offset 32
+  44 0006 0646     		mov	r6, r0
+  45 0008 1746     		mov	r7, r2
+  46 000a 1C46     		mov	r4, r3
+  47 000c DDF82080 		ldr	r8, [sp, #32]
+  92:Drivers/u8glib/src/u8g_bitmap.c ****   uint8_t d;
+  48              		.loc 1 92 3 is_stmt 1 view .LVU2
+  93:Drivers/u8glib/src/u8g_bitmap.c ****   x+=7;
+  49              		.loc 1 93 3 view .LVU3
+  50              		.loc 1 93 4 is_stmt 0 view .LVU4
+  51 0010 0731     		adds	r1, r1, #7
+  52              	.LVL1:
+  53              		.loc 1 93 4 view .LVU5
+  54 0012 CDB2     		uxtb	r5, r1
+  55              	.LVL2:
+  94:Drivers/u8glib/src/u8g_bitmap.c ****   while( w >= 8 )
+  56              		.loc 1 94 3 is_stmt 1 view .LVU6
+  57              		.loc 1 94 8 is_stmt 0 view .LVU7
+  58 0014 0CE0     		b	.L2
+  59              	.LVL3:
+  60              	.L3:
+  95:Drivers/u8glib/src/u8g_bitmap.c ****   {
+  96:Drivers/u8glib/src/u8g_bitmap.c ****     u8g_Draw8Pixel(u8g, x, y, 2, *bitmap);
+  61              		.loc 1 96 5 is_stmt 1 view .LVU8
+  62 0016 18F8013B 		ldrb	r3, [r8], #1	@ zero_extendqisi2
+  63              	.LVL4:
+  64              		.loc 1 96 5 is_stmt 0 view .LVU9
+  65 001a 0093     		str	r3, [sp]
+  66 001c 0223     		movs	r3, #2
+  67 001e 3A46     		mov	r2, r7
+  68 0020 2946     		mov	r1, r5
+  69 0022 3046     		mov	r0, r6
+  70 0024 FFF7FEFF 		bl	u8g_Draw8Pixel
+  71              	.LVL5:
+  97:Drivers/u8glib/src/u8g_bitmap.c ****     bitmap++;
+  72              		.loc 1 97 5 is_stmt 1 view .LVU10
+  98:Drivers/u8glib/src/u8g_bitmap.c ****     w-= 8;
+  73              		.loc 1 98 5 view .LVU11
+  74              		.loc 1 98 6 is_stmt 0 view .LVU12
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccy25Bsl.s 			page 4
+
+
+  75 0028 083C     		subs	r4, r4, #8
+  76              	.LVL6:
+  77              		.loc 1 98 6 view .LVU13
+  78 002a E4B2     		uxtb	r4, r4
+  79              	.LVL7:
+  99:Drivers/u8glib/src/u8g_bitmap.c ****     x+=8;
+  80              		.loc 1 99 5 is_stmt 1 view .LVU14
+  81              		.loc 1 99 6 is_stmt 0 view .LVU15
+  82 002c 0835     		adds	r5, r5, #8
+  83              	.LVL8:
+  84              		.loc 1 99 6 view .LVU16
+  85 002e EDB2     		uxtb	r5, r5
+  86              	.LVL9:
+  87              	.L2:
+  94:Drivers/u8glib/src/u8g_bitmap.c ****   {
+  88              		.loc 1 94 8 is_stmt 1 view .LVU17
+  89 0030 072C     		cmp	r4, #7
+  90 0032 F0D8     		bhi	.L3
+ 100:Drivers/u8glib/src/u8g_bitmap.c ****   }
+ 101:Drivers/u8glib/src/u8g_bitmap.c ****   if ( w > 0 )
+  91              		.loc 1 101 3 view .LVU18
+  92              		.loc 1 101 6 is_stmt 0 view .LVU19
+  93 0034 ACB1     		cbz	r4, .L1
+ 102:Drivers/u8glib/src/u8g_bitmap.c ****   {
+ 103:Drivers/u8glib/src/u8g_bitmap.c ****     d = *bitmap;
+  94              		.loc 1 103 5 is_stmt 1 view .LVU20
+  95              		.loc 1 103 7 is_stmt 0 view .LVU21
+  96 0036 98F80080 		ldrb	r8, [r8]	@ zero_extendqisi2
+  97              	.LVL10:
+ 104:Drivers/u8glib/src/u8g_bitmap.c ****     x -= 7;
+  98              		.loc 1 104 5 is_stmt 1 view .LVU22
+  99              		.loc 1 104 7 is_stmt 0 view .LVU23
+ 100 003a 073D     		subs	r5, r5, #7
+ 101              	.LVL11:
+ 102              		.loc 1 104 7 view .LVU24
+ 103 003c EDB2     		uxtb	r5, r5
+ 104              	.LVL12:
+ 105              		.loc 1 104 7 view .LVU25
+ 106 003e 07E0     		b	.L6
+ 107              	.L5:
+ 105:Drivers/u8glib/src/u8g_bitmap.c ****     do
+ 106:Drivers/u8glib/src/u8g_bitmap.c ****     {
+ 107:Drivers/u8glib/src/u8g_bitmap.c ****       if ( d & 1 )
+ 108:Drivers/u8glib/src/u8g_bitmap.c ****         u8g_DrawPixel(u8g, x, y);
+ 109:Drivers/u8glib/src/u8g_bitmap.c ****       x++;
+ 108              		.loc 1 109 7 is_stmt 1 view .LVU26
+ 109              		.loc 1 109 8 is_stmt 0 view .LVU27
+ 110 0040 0135     		adds	r5, r5, #1
+ 111              	.LVL13:
+ 112              		.loc 1 109 8 view .LVU28
+ 113 0042 EDB2     		uxtb	r5, r5
+ 114              	.LVL14:
+ 110:Drivers/u8glib/src/u8g_bitmap.c ****       w--;
+ 115              		.loc 1 110 7 is_stmt 1 view .LVU29
+ 116              		.loc 1 110 8 is_stmt 0 view .LVU30
+ 117 0044 013C     		subs	r4, r4, #1
+ 118              	.LVL15:
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccy25Bsl.s 			page 5
+
+
+ 111:Drivers/u8glib/src/u8g_bitmap.c ****       d >>= 1;      
+ 119              		.loc 1 111 7 is_stmt 1 view .LVU31
+ 120              		.loc 1 111 9 is_stmt 0 view .LVU32
+ 121 0046 4FEA5808 		lsr	r8, r8, #1
+ 122              	.LVL16:
+ 112:Drivers/u8glib/src/u8g_bitmap.c ****     } while ( w > 0 );
+ 123              		.loc 1 112 13 is_stmt 1 view .LVU33
+ 124              		.loc 1 112 5 is_stmt 0 view .LVU34
+ 125 004a 14F0FF04 		ands	r4, r4, #255
+ 126              	.LVL17:
+ 127              		.loc 1 112 5 view .LVU35
+ 128 004e 08D0     		beq	.L1
+ 129              	.L6:
+ 130              	.LVL18:
+ 105:Drivers/u8glib/src/u8g_bitmap.c ****     {
+ 131              		.loc 1 105 5 is_stmt 1 view .LVU36
+ 107:Drivers/u8glib/src/u8g_bitmap.c ****         u8g_DrawPixel(u8g, x, y);
+ 132              		.loc 1 107 7 view .LVU37
+ 107:Drivers/u8glib/src/u8g_bitmap.c ****         u8g_DrawPixel(u8g, x, y);
+ 133              		.loc 1 107 10 is_stmt 0 view .LVU38
+ 134 0050 18F0010F 		tst	r8, #1
+ 135 0054 F4D0     		beq	.L5
+ 108:Drivers/u8glib/src/u8g_bitmap.c ****       x++;
+ 136              		.loc 1 108 9 is_stmt 1 view .LVU39
+ 137 0056 3A46     		mov	r2, r7
+ 138 0058 2946     		mov	r1, r5
+ 139 005a 3046     		mov	r0, r6
+ 140 005c FFF7FEFF 		bl	u8g_DrawPixel
+ 141              	.LVL19:
+ 142 0060 EEE7     		b	.L5
+ 143              	.LVL20:
+ 144              	.L1:
+ 113:Drivers/u8glib/src/u8g_bitmap.c ****   }
+ 114:Drivers/u8glib/src/u8g_bitmap.c **** }
+ 145              		.loc 1 114 1 is_stmt 0 view .LVU40
+ 146 0062 02B0     		add	sp, sp, #8
+ 147              	.LCFI2:
+ 148              		.cfi_def_cfa_offset 24
+ 149              		@ sp needed
+ 150 0064 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 151              		.loc 1 114 1 view .LVU41
+ 152              		.cfi_endproc
+ 153              	.LFE4:
+ 155              		.section	.text.u8g_DrawHXBMP,"ax",%progbits
+ 156              		.align	1
+ 157              		.syntax unified
+ 158              		.thumb
+ 159              		.thumb_func
+ 161              	u8g_DrawHXBMP:
+ 162              	.LVL21:
+ 163              	.LFB6:
+ 115:Drivers/u8glib/src/u8g_bitmap.c **** 
+ 116:Drivers/u8glib/src/u8g_bitmap.c **** void u8g_DrawXBM(u8g_t *u8g, u8g_uint_t x, u8g_uint_t y, u8g_uint_t w, u8g_uint_t h, const uint8_t 
+ 117:Drivers/u8glib/src/u8g_bitmap.c **** {
+ 118:Drivers/u8glib/src/u8g_bitmap.c ****   u8g_uint_t b;
+ 119:Drivers/u8glib/src/u8g_bitmap.c ****   b = w;
+ 120:Drivers/u8glib/src/u8g_bitmap.c ****   b += 7;
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccy25Bsl.s 			page 6
+
+
+ 121:Drivers/u8glib/src/u8g_bitmap.c ****   b >>= 3;
+ 122:Drivers/u8glib/src/u8g_bitmap.c ****   
+ 123:Drivers/u8glib/src/u8g_bitmap.c ****   if ( u8g_IsBBXIntersection(u8g, x, y, w, h) == 0 )
+ 124:Drivers/u8glib/src/u8g_bitmap.c ****     return;
+ 125:Drivers/u8glib/src/u8g_bitmap.c ****   
+ 126:Drivers/u8glib/src/u8g_bitmap.c ****   while( h > 0 )
+ 127:Drivers/u8glib/src/u8g_bitmap.c ****   {
+ 128:Drivers/u8glib/src/u8g_bitmap.c ****     u8g_DrawHXBM(u8g, x, y, w, bitmap);
+ 129:Drivers/u8glib/src/u8g_bitmap.c ****     bitmap += b;
+ 130:Drivers/u8glib/src/u8g_bitmap.c ****     y++;
+ 131:Drivers/u8glib/src/u8g_bitmap.c ****     h--;
+ 132:Drivers/u8glib/src/u8g_bitmap.c ****   }
+ 133:Drivers/u8glib/src/u8g_bitmap.c **** }
+ 134:Drivers/u8glib/src/u8g_bitmap.c **** 
+ 135:Drivers/u8glib/src/u8g_bitmap.c **** static void u8g_DrawHXBMP(u8g_t *u8g, u8g_uint_t x, u8g_uint_t y, u8g_uint_t w, const u8g_pgm_uint8
+ 136:Drivers/u8glib/src/u8g_bitmap.c **** {
+ 164              		.loc 1 136 1 is_stmt 1 view -0
+ 165              		.cfi_startproc
+ 166              		@ args = 4, pretend = 0, frame = 0
+ 167              		@ frame_needed = 0, uses_anonymous_args = 0
+ 168              		.loc 1 136 1 is_stmt 0 view .LVU43
+ 169 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 170              	.LCFI3:
+ 171              		.cfi_def_cfa_offset 24
+ 172              		.cfi_offset 4, -24
+ 173              		.cfi_offset 5, -20
+ 174              		.cfi_offset 6, -16
+ 175              		.cfi_offset 7, -12
+ 176              		.cfi_offset 8, -8
+ 177              		.cfi_offset 14, -4
+ 178 0004 82B0     		sub	sp, sp, #8
+ 179              	.LCFI4:
+ 180              		.cfi_def_cfa_offset 32
+ 181 0006 0646     		mov	r6, r0
+ 182 0008 1746     		mov	r7, r2
+ 183 000a 1C46     		mov	r4, r3
+ 184 000c DDF82080 		ldr	r8, [sp, #32]
+ 137:Drivers/u8glib/src/u8g_bitmap.c ****   uint8_t d;
+ 185              		.loc 1 137 3 is_stmt 1 view .LVU44
+ 138:Drivers/u8glib/src/u8g_bitmap.c ****   x+=7;
+ 186              		.loc 1 138 3 view .LVU45
+ 187              		.loc 1 138 4 is_stmt 0 view .LVU46
+ 188 0010 0731     		adds	r1, r1, #7
+ 189              	.LVL22:
+ 190              		.loc 1 138 4 view .LVU47
+ 191 0012 CDB2     		uxtb	r5, r1
+ 192              	.LVL23:
+ 139:Drivers/u8glib/src/u8g_bitmap.c ****   while( w >= 8 )
+ 193              		.loc 1 139 3 is_stmt 1 view .LVU48
+ 194              		.loc 1 139 8 is_stmt 0 view .LVU49
+ 195 0014 0CE0     		b	.L9
+ 196              	.LVL24:
+ 197              	.L10:
+ 140:Drivers/u8glib/src/u8g_bitmap.c ****   {
+ 141:Drivers/u8glib/src/u8g_bitmap.c ****     u8g_Draw8Pixel(u8g, x, y, 2, u8g_pgm_read(bitmap));
+ 198              		.loc 1 141 5 is_stmt 1 view .LVU50
+ 199 0016 18F8013B 		ldrb	r3, [r8], #1	@ zero_extendqisi2
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccy25Bsl.s 			page 7
+
+
+ 200              	.LVL25:
+ 201              		.loc 1 141 5 is_stmt 0 view .LVU51
+ 202 001a 0093     		str	r3, [sp]
+ 203 001c 0223     		movs	r3, #2
+ 204 001e 3A46     		mov	r2, r7
+ 205 0020 2946     		mov	r1, r5
+ 206 0022 3046     		mov	r0, r6
+ 207 0024 FFF7FEFF 		bl	u8g_Draw8Pixel
+ 208              	.LVL26:
+ 142:Drivers/u8glib/src/u8g_bitmap.c ****     bitmap++;
+ 209              		.loc 1 142 5 is_stmt 1 view .LVU52
+ 143:Drivers/u8glib/src/u8g_bitmap.c ****     w-= 8;
+ 210              		.loc 1 143 5 view .LVU53
+ 211              		.loc 1 143 6 is_stmt 0 view .LVU54
+ 212 0028 083C     		subs	r4, r4, #8
+ 213              	.LVL27:
+ 214              		.loc 1 143 6 view .LVU55
+ 215 002a E4B2     		uxtb	r4, r4
+ 216              	.LVL28:
+ 144:Drivers/u8glib/src/u8g_bitmap.c ****     x+=8;
+ 217              		.loc 1 144 5 is_stmt 1 view .LVU56
+ 218              		.loc 1 144 6 is_stmt 0 view .LVU57
+ 219 002c 0835     		adds	r5, r5, #8
+ 220              	.LVL29:
+ 221              		.loc 1 144 6 view .LVU58
+ 222 002e EDB2     		uxtb	r5, r5
+ 223              	.LVL30:
+ 224              	.L9:
+ 139:Drivers/u8glib/src/u8g_bitmap.c ****   {
+ 225              		.loc 1 139 8 is_stmt 1 view .LVU59
+ 226 0030 072C     		cmp	r4, #7
+ 227 0032 F0D8     		bhi	.L10
+ 145:Drivers/u8glib/src/u8g_bitmap.c ****   }
+ 146:Drivers/u8glib/src/u8g_bitmap.c ****   if ( w > 0 )
+ 228              		.loc 1 146 3 view .LVU60
+ 229              		.loc 1 146 6 is_stmt 0 view .LVU61
+ 230 0034 ACB1     		cbz	r4, .L8
+ 147:Drivers/u8glib/src/u8g_bitmap.c ****   {
+ 148:Drivers/u8glib/src/u8g_bitmap.c ****     d = u8g_pgm_read(bitmap);
+ 231              		.loc 1 148 5 is_stmt 1 view .LVU62
+ 232              		.loc 1 148 7 is_stmt 0 view .LVU63
+ 233 0036 98F80080 		ldrb	r8, [r8]	@ zero_extendqisi2
+ 234              	.LVL31:
+ 149:Drivers/u8glib/src/u8g_bitmap.c ****     x -= 7;
+ 235              		.loc 1 149 5 is_stmt 1 view .LVU64
+ 236              		.loc 1 149 7 is_stmt 0 view .LVU65
+ 237 003a 073D     		subs	r5, r5, #7
+ 238              	.LVL32:
+ 239              		.loc 1 149 7 view .LVU66
+ 240 003c EDB2     		uxtb	r5, r5
+ 241              	.LVL33:
+ 242              		.loc 1 149 7 view .LVU67
+ 243 003e 07E0     		b	.L13
+ 244              	.L12:
+ 150:Drivers/u8glib/src/u8g_bitmap.c ****     do
+ 151:Drivers/u8glib/src/u8g_bitmap.c ****     {
+ 152:Drivers/u8glib/src/u8g_bitmap.c ****       if ( d & 1 )
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccy25Bsl.s 			page 8
+
+
+ 153:Drivers/u8glib/src/u8g_bitmap.c ****         u8g_DrawPixel(u8g, x, y);
+ 154:Drivers/u8glib/src/u8g_bitmap.c ****       x++;
+ 245              		.loc 1 154 7 is_stmt 1 view .LVU68
+ 246              		.loc 1 154 8 is_stmt 0 view .LVU69
+ 247 0040 0135     		adds	r5, r5, #1
+ 248              	.LVL34:
+ 249              		.loc 1 154 8 view .LVU70
+ 250 0042 EDB2     		uxtb	r5, r5
+ 251              	.LVL35:
+ 155:Drivers/u8glib/src/u8g_bitmap.c ****       w--;
+ 252              		.loc 1 155 7 is_stmt 1 view .LVU71
+ 253              		.loc 1 155 8 is_stmt 0 view .LVU72
+ 254 0044 013C     		subs	r4, r4, #1
+ 255              	.LVL36:
+ 156:Drivers/u8glib/src/u8g_bitmap.c ****       d >>= 1;      
+ 256              		.loc 1 156 7 is_stmt 1 view .LVU73
+ 257              		.loc 1 156 9 is_stmt 0 view .LVU74
+ 258 0046 4FEA5808 		lsr	r8, r8, #1
+ 259              	.LVL37:
+ 157:Drivers/u8glib/src/u8g_bitmap.c ****     } while ( w > 0 );
+ 260              		.loc 1 157 13 is_stmt 1 view .LVU75
+ 261              		.loc 1 157 5 is_stmt 0 view .LVU76
+ 262 004a 14F0FF04 		ands	r4, r4, #255
+ 263              	.LVL38:
+ 264              		.loc 1 157 5 view .LVU77
+ 265 004e 08D0     		beq	.L8
+ 266              	.L13:
+ 267              	.LVL39:
+ 150:Drivers/u8glib/src/u8g_bitmap.c ****     {
+ 268              		.loc 1 150 5 is_stmt 1 view .LVU78
+ 152:Drivers/u8glib/src/u8g_bitmap.c ****         u8g_DrawPixel(u8g, x, y);
+ 269              		.loc 1 152 7 view .LVU79
+ 152:Drivers/u8glib/src/u8g_bitmap.c ****         u8g_DrawPixel(u8g, x, y);
+ 270              		.loc 1 152 10 is_stmt 0 view .LVU80
+ 271 0050 18F0010F 		tst	r8, #1
+ 272 0054 F4D0     		beq	.L12
+ 153:Drivers/u8glib/src/u8g_bitmap.c ****       x++;
+ 273              		.loc 1 153 9 is_stmt 1 view .LVU81
+ 274 0056 3A46     		mov	r2, r7
+ 275 0058 2946     		mov	r1, r5
+ 276 005a 3046     		mov	r0, r6
+ 277 005c FFF7FEFF 		bl	u8g_DrawPixel
+ 278              	.LVL40:
+ 279 0060 EEE7     		b	.L12
+ 280              	.LVL41:
+ 281              	.L8:
+ 158:Drivers/u8glib/src/u8g_bitmap.c ****   }
+ 159:Drivers/u8glib/src/u8g_bitmap.c **** }
+ 282              		.loc 1 159 1 is_stmt 0 view .LVU82
+ 283 0062 02B0     		add	sp, sp, #8
+ 284              	.LCFI5:
+ 285              		.cfi_def_cfa_offset 24
+ 286              		@ sp needed
+ 287 0064 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 288              		.loc 1 159 1 view .LVU83
+ 289              		.cfi_endproc
+ 290              	.LFE6:
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccy25Bsl.s 			page 9
+
+
+ 292              		.section	.text.u8g_DrawHBitmap,"ax",%progbits
+ 293              		.align	1
+ 294              		.global	u8g_DrawHBitmap
+ 295              		.syntax unified
+ 296              		.thumb
+ 297              		.thumb_func
+ 299              	u8g_DrawHBitmap:
+ 300              	.LVL42:
+ 301              	.LFB0:
+  40:Drivers/u8glib/src/u8g_bitmap.c ****   while( cnt > 0 )
+ 302              		.loc 1 40 1 is_stmt 1 view -0
+ 303              		.cfi_startproc
+ 304              		@ args = 4, pretend = 0, frame = 0
+ 305              		@ frame_needed = 0, uses_anonymous_args = 0
+  40:Drivers/u8glib/src/u8g_bitmap.c ****   while( cnt > 0 )
+ 306              		.loc 1 40 1 is_stmt 0 view .LVU85
+ 307 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 308              	.LCFI6:
+ 309              		.cfi_def_cfa_offset 24
+ 310              		.cfi_offset 4, -24
+ 311              		.cfi_offset 5, -20
+ 312              		.cfi_offset 6, -16
+ 313              		.cfi_offset 7, -12
+ 314              		.cfi_offset 8, -8
+ 315              		.cfi_offset 14, -4
+ 316 0004 82B0     		sub	sp, sp, #8
+ 317              	.LCFI7:
+ 318              		.cfi_def_cfa_offset 32
+ 319 0006 8046     		mov	r8, r0
+ 320 0008 0D46     		mov	r5, r1
+ 321 000a 1746     		mov	r7, r2
+ 322 000c 1C46     		mov	r4, r3
+ 323 000e 089E     		ldr	r6, [sp, #32]
+  41:Drivers/u8glib/src/u8g_bitmap.c ****   {
+ 324              		.loc 1 41 3 is_stmt 1 view .LVU86
+  41:Drivers/u8glib/src/u8g_bitmap.c ****   {
+ 325              		.loc 1 41 8 is_stmt 0 view .LVU87
+ 326 0010 0CE0     		b	.L16
+ 327              	.LVL43:
+ 328              	.L17:
+  43:Drivers/u8glib/src/u8g_bitmap.c ****     bitmap++;
+ 329              		.loc 1 43 5 is_stmt 1 view .LVU88
+ 330 0012 16F8013B 		ldrb	r3, [r6], #1	@ zero_extendqisi2
+ 331              	.LVL44:
+  43:Drivers/u8glib/src/u8g_bitmap.c ****     bitmap++;
+ 332              		.loc 1 43 5 is_stmt 0 view .LVU89
+ 333 0016 0093     		str	r3, [sp]
+ 334 0018 0023     		movs	r3, #0
+ 335 001a 3A46     		mov	r2, r7
+ 336 001c 2946     		mov	r1, r5
+ 337 001e 4046     		mov	r0, r8
+ 338 0020 FFF7FEFF 		bl	u8g_Draw8Pixel
+ 339              	.LVL45:
+  44:Drivers/u8glib/src/u8g_bitmap.c ****     cnt--;
+ 340              		.loc 1 44 5 is_stmt 1 view .LVU90
+  45:Drivers/u8glib/src/u8g_bitmap.c ****     x+=8;
+ 341              		.loc 1 45 5 view .LVU91
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccy25Bsl.s 			page 10
+
+
+  45:Drivers/u8glib/src/u8g_bitmap.c ****     x+=8;
+ 342              		.loc 1 45 8 is_stmt 0 view .LVU92
+ 343 0024 013C     		subs	r4, r4, #1
+ 344              	.LVL46:
+  45:Drivers/u8glib/src/u8g_bitmap.c ****     x+=8;
+ 345              		.loc 1 45 8 view .LVU93
+ 346 0026 E4B2     		uxtb	r4, r4
+ 347              	.LVL47:
+  46:Drivers/u8glib/src/u8g_bitmap.c ****   }
+ 348              		.loc 1 46 5 is_stmt 1 view .LVU94
+  46:Drivers/u8glib/src/u8g_bitmap.c ****   }
+ 349              		.loc 1 46 6 is_stmt 0 view .LVU95
+ 350 0028 0835     		adds	r5, r5, #8
+ 351              	.LVL48:
+  46:Drivers/u8glib/src/u8g_bitmap.c ****   }
+ 352              		.loc 1 46 6 view .LVU96
+ 353 002a EDB2     		uxtb	r5, r5
+ 354              	.LVL49:
+ 355              	.L16:
+  41:Drivers/u8glib/src/u8g_bitmap.c ****   {
+ 356              		.loc 1 41 8 is_stmt 1 view .LVU97
+ 357 002c 002C     		cmp	r4, #0
+ 358 002e F0D1     		bne	.L17
+  48:Drivers/u8glib/src/u8g_bitmap.c **** 
+ 359              		.loc 1 48 1 is_stmt 0 view .LVU98
+ 360 0030 02B0     		add	sp, sp, #8
+ 361              	.LCFI8:
+ 362              		.cfi_def_cfa_offset 24
+ 363              		@ sp needed
+ 364 0032 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+  48:Drivers/u8glib/src/u8g_bitmap.c **** 
+ 365              		.loc 1 48 1 view .LVU99
+ 366              		.cfi_endproc
+ 367              	.LFE0:
+ 369              		.section	.text.u8g_DrawBitmap,"ax",%progbits
+ 370              		.align	1
+ 371              		.global	u8g_DrawBitmap
+ 372              		.syntax unified
+ 373              		.thumb
+ 374              		.thumb_func
+ 376              	u8g_DrawBitmap:
+ 377              	.LVL50:
+ 378              	.LFB1:
+  51:Drivers/u8glib/src/u8g_bitmap.c ****   if ( u8g_IsBBXIntersection(u8g, x, y, cnt*8, h) == 0 )
+ 379              		.loc 1 51 1 is_stmt 1 view -0
+ 380              		.cfi_startproc
+ 381              		@ args = 8, pretend = 0, frame = 0
+ 382              		@ frame_needed = 0, uses_anonymous_args = 0
+  51:Drivers/u8glib/src/u8g_bitmap.c ****   if ( u8g_IsBBXIntersection(u8g, x, y, cnt*8, h) == 0 )
+ 383              		.loc 1 51 1 is_stmt 0 view .LVU101
+ 384 0000 2DE9F043 		push	{r4, r5, r6, r7, r8, r9, lr}
+ 385              	.LCFI9:
+ 386              		.cfi_def_cfa_offset 28
+ 387              		.cfi_offset 4, -28
+ 388              		.cfi_offset 5, -24
+ 389              		.cfi_offset 6, -20
+ 390              		.cfi_offset 7, -16
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccy25Bsl.s 			page 11
+
+
+ 391              		.cfi_offset 8, -12
+ 392              		.cfi_offset 9, -8
+ 393              		.cfi_offset 14, -4
+ 394 0004 83B0     		sub	sp, sp, #12
+ 395              	.LCFI10:
+ 396              		.cfi_def_cfa_offset 40
+ 397 0006 8146     		mov	r9, r0
+ 398 0008 8846     		mov	r8, r1
+ 399 000a 1446     		mov	r4, r2
+ 400 000c 1F46     		mov	r7, r3
+ 401 000e 9DF82850 		ldrb	r5, [sp, #40]	@ zero_extendqisi2
+ 402 0012 0B9E     		ldr	r6, [sp, #44]
+  52:Drivers/u8glib/src/u8g_bitmap.c ****     return;
+ 403              		.loc 1 52 3 is_stmt 1 view .LVU102
+  52:Drivers/u8glib/src/u8g_bitmap.c ****     return;
+ 404              		.loc 1 52 8 is_stmt 0 view .LVU103
+ 405 0014 DB00     		lsls	r3, r3, #3
+ 406              	.LVL51:
+  52:Drivers/u8glib/src/u8g_bitmap.c ****     return;
+ 407              		.loc 1 52 8 view .LVU104
+ 408 0016 0095     		str	r5, [sp]
+ 409 0018 03F0F803 		and	r3, r3, #248
+ 410 001c FFF7FEFF 		bl	u8g_IsBBXIntersection
+ 411              	.LVL52:
+  52:Drivers/u8glib/src/u8g_bitmap.c ****     return;
+ 412              		.loc 1 52 6 view .LVU105
+ 413 0020 60B9     		cbnz	r0, .L21
+ 414 0022 0DE0     		b	.L19
+ 415              	.LVL53:
+ 416              	.L22:
+  56:Drivers/u8glib/src/u8g_bitmap.c ****     bitmap += cnt;
+ 417              		.loc 1 56 5 is_stmt 1 view .LVU106
+ 418 0024 0096     		str	r6, [sp]
+ 419 0026 3B46     		mov	r3, r7
+ 420 0028 2246     		mov	r2, r4
+ 421 002a 4146     		mov	r1, r8
+ 422 002c 4846     		mov	r0, r9
+ 423 002e FFF7FEFF 		bl	u8g_DrawHBitmap
+ 424              	.LVL54:
+  57:Drivers/u8glib/src/u8g_bitmap.c ****     y++;
+ 425              		.loc 1 57 5 view .LVU107
+  57:Drivers/u8glib/src/u8g_bitmap.c ****     y++;
+ 426              		.loc 1 57 12 is_stmt 0 view .LVU108
+ 427 0032 3E44     		add	r6, r6, r7
+ 428              	.LVL55:
+  58:Drivers/u8glib/src/u8g_bitmap.c ****     h--;
+ 429              		.loc 1 58 5 is_stmt 1 view .LVU109
+  58:Drivers/u8glib/src/u8g_bitmap.c ****     h--;
+ 430              		.loc 1 58 6 is_stmt 0 view .LVU110
+ 431 0034 0134     		adds	r4, r4, #1
+ 432              	.LVL56:
+  58:Drivers/u8glib/src/u8g_bitmap.c ****     h--;
+ 433              		.loc 1 58 6 view .LVU111
+ 434 0036 E4B2     		uxtb	r4, r4
+ 435              	.LVL57:
+  59:Drivers/u8glib/src/u8g_bitmap.c ****   }
+ 436              		.loc 1 59 5 is_stmt 1 view .LVU112
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccy25Bsl.s 			page 12
+
+
+  59:Drivers/u8glib/src/u8g_bitmap.c ****   }
+ 437              		.loc 1 59 6 is_stmt 0 view .LVU113
+ 438 0038 013D     		subs	r5, r5, #1
+ 439              	.LVL58:
+  59:Drivers/u8glib/src/u8g_bitmap.c ****   }
+ 440              		.loc 1 59 6 view .LVU114
+ 441 003a EDB2     		uxtb	r5, r5
+ 442              	.LVL59:
+ 443              	.L21:
+  54:Drivers/u8glib/src/u8g_bitmap.c ****   {
+ 444              		.loc 1 54 8 is_stmt 1 view .LVU115
+ 445 003c 002D     		cmp	r5, #0
+ 446 003e F1D1     		bne	.L22
+ 447              	.LVL60:
+ 448              	.L19:
+  61:Drivers/u8glib/src/u8g_bitmap.c **** 
+ 449              		.loc 1 61 1 is_stmt 0 view .LVU116
+ 450 0040 03B0     		add	sp, sp, #12
+ 451              	.LCFI11:
+ 452              		.cfi_def_cfa_offset 28
+ 453              		@ sp needed
+ 454 0042 BDE8F083 		pop	{r4, r5, r6, r7, r8, r9, pc}
+  61:Drivers/u8glib/src/u8g_bitmap.c **** 
+ 455              		.loc 1 61 1 view .LVU117
+ 456              		.cfi_endproc
+ 457              	.LFE1:
+ 459              		.section	.text.u8g_DrawHBitmapP,"ax",%progbits
+ 460              		.align	1
+ 461              		.global	u8g_DrawHBitmapP
+ 462              		.syntax unified
+ 463              		.thumb
+ 464              		.thumb_func
+ 466              	u8g_DrawHBitmapP:
+ 467              	.LVL61:
+ 468              	.LFB2:
+  65:Drivers/u8glib/src/u8g_bitmap.c ****   while( cnt > 0 )
+ 469              		.loc 1 65 1 is_stmt 1 view -0
+ 470              		.cfi_startproc
+ 471              		@ args = 4, pretend = 0, frame = 0
+ 472              		@ frame_needed = 0, uses_anonymous_args = 0
+  65:Drivers/u8glib/src/u8g_bitmap.c ****   while( cnt > 0 )
+ 473              		.loc 1 65 1 is_stmt 0 view .LVU119
+ 474 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 475              	.LCFI12:
+ 476              		.cfi_def_cfa_offset 24
+ 477              		.cfi_offset 4, -24
+ 478              		.cfi_offset 5, -20
+ 479              		.cfi_offset 6, -16
+ 480              		.cfi_offset 7, -12
+ 481              		.cfi_offset 8, -8
+ 482              		.cfi_offset 14, -4
+ 483 0004 82B0     		sub	sp, sp, #8
+ 484              	.LCFI13:
+ 485              		.cfi_def_cfa_offset 32
+ 486 0006 8046     		mov	r8, r0
+ 487 0008 0D46     		mov	r5, r1
+ 488 000a 1746     		mov	r7, r2
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccy25Bsl.s 			page 13
+
+
+ 489 000c 1C46     		mov	r4, r3
+ 490 000e 089E     		ldr	r6, [sp, #32]
+  66:Drivers/u8glib/src/u8g_bitmap.c ****   {
+ 491              		.loc 1 66 3 is_stmt 1 view .LVU120
+  66:Drivers/u8glib/src/u8g_bitmap.c ****   {
+ 492              		.loc 1 66 8 is_stmt 0 view .LVU121
+ 493 0010 0CE0     		b	.L25
+ 494              	.LVL62:
+ 495              	.L26:
+  68:Drivers/u8glib/src/u8g_bitmap.c ****     bitmap++;
+ 496              		.loc 1 68 5 is_stmt 1 view .LVU122
+ 497 0012 16F8013B 		ldrb	r3, [r6], #1	@ zero_extendqisi2
+ 498              	.LVL63:
+  68:Drivers/u8glib/src/u8g_bitmap.c ****     bitmap++;
+ 499              		.loc 1 68 5 is_stmt 0 view .LVU123
+ 500 0016 0093     		str	r3, [sp]
+ 501 0018 0023     		movs	r3, #0
+ 502 001a 3A46     		mov	r2, r7
+ 503 001c 2946     		mov	r1, r5
+ 504 001e 4046     		mov	r0, r8
+ 505 0020 FFF7FEFF 		bl	u8g_Draw8Pixel
+ 506              	.LVL64:
+  69:Drivers/u8glib/src/u8g_bitmap.c ****     cnt--;
+ 507              		.loc 1 69 5 is_stmt 1 view .LVU124
+  70:Drivers/u8glib/src/u8g_bitmap.c ****     x+=8;
+ 508              		.loc 1 70 5 view .LVU125
+  70:Drivers/u8glib/src/u8g_bitmap.c ****     x+=8;
+ 509              		.loc 1 70 8 is_stmt 0 view .LVU126
+ 510 0024 013C     		subs	r4, r4, #1
+ 511              	.LVL65:
+  70:Drivers/u8glib/src/u8g_bitmap.c ****     x+=8;
+ 512              		.loc 1 70 8 view .LVU127
+ 513 0026 E4B2     		uxtb	r4, r4
+ 514              	.LVL66:
+  71:Drivers/u8glib/src/u8g_bitmap.c ****   }
+ 515              		.loc 1 71 5 is_stmt 1 view .LVU128
+  71:Drivers/u8glib/src/u8g_bitmap.c ****   }
+ 516              		.loc 1 71 6 is_stmt 0 view .LVU129
+ 517 0028 0835     		adds	r5, r5, #8
+ 518              	.LVL67:
+  71:Drivers/u8glib/src/u8g_bitmap.c ****   }
+ 519              		.loc 1 71 6 view .LVU130
+ 520 002a EDB2     		uxtb	r5, r5
+ 521              	.LVL68:
+ 522              	.L25:
+  66:Drivers/u8glib/src/u8g_bitmap.c ****   {
+ 523              		.loc 1 66 8 is_stmt 1 view .LVU131
+ 524 002c 002C     		cmp	r4, #0
+ 525 002e F0D1     		bne	.L26
+  73:Drivers/u8glib/src/u8g_bitmap.c **** 
+ 526              		.loc 1 73 1 is_stmt 0 view .LVU132
+ 527 0030 02B0     		add	sp, sp, #8
+ 528              	.LCFI14:
+ 529              		.cfi_def_cfa_offset 24
+ 530              		@ sp needed
+ 531 0032 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+  73:Drivers/u8glib/src/u8g_bitmap.c **** 
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccy25Bsl.s 			page 14
+
+
+ 532              		.loc 1 73 1 view .LVU133
+ 533              		.cfi_endproc
+ 534              	.LFE2:
+ 536              		.section	.text.u8g_DrawBitmapP,"ax",%progbits
+ 537              		.align	1
+ 538              		.global	u8g_DrawBitmapP
+ 539              		.syntax unified
+ 540              		.thumb
+ 541              		.thumb_func
+ 543              	u8g_DrawBitmapP:
+ 544              	.LVL69:
+ 545              	.LFB3:
+  76:Drivers/u8glib/src/u8g_bitmap.c ****   if ( u8g_IsBBXIntersection(u8g, x, y, cnt*8, h) == 0 )
+ 546              		.loc 1 76 1 is_stmt 1 view -0
+ 547              		.cfi_startproc
+ 548              		@ args = 8, pretend = 0, frame = 0
+ 549              		@ frame_needed = 0, uses_anonymous_args = 0
+  76:Drivers/u8glib/src/u8g_bitmap.c ****   if ( u8g_IsBBXIntersection(u8g, x, y, cnt*8, h) == 0 )
+ 550              		.loc 1 76 1 is_stmt 0 view .LVU135
+ 551 0000 2DE9F043 		push	{r4, r5, r6, r7, r8, r9, lr}
+ 552              	.LCFI15:
+ 553              		.cfi_def_cfa_offset 28
+ 554              		.cfi_offset 4, -28
+ 555              		.cfi_offset 5, -24
+ 556              		.cfi_offset 6, -20
+ 557              		.cfi_offset 7, -16
+ 558              		.cfi_offset 8, -12
+ 559              		.cfi_offset 9, -8
+ 560              		.cfi_offset 14, -4
+ 561 0004 83B0     		sub	sp, sp, #12
+ 562              	.LCFI16:
+ 563              		.cfi_def_cfa_offset 40
+ 564 0006 8146     		mov	r9, r0
+ 565 0008 8846     		mov	r8, r1
+ 566 000a 1446     		mov	r4, r2
+ 567 000c 1F46     		mov	r7, r3
+ 568 000e 9DF82850 		ldrb	r5, [sp, #40]	@ zero_extendqisi2
+ 569 0012 0B9E     		ldr	r6, [sp, #44]
+  77:Drivers/u8glib/src/u8g_bitmap.c ****     return;
+ 570              		.loc 1 77 3 is_stmt 1 view .LVU136
+  77:Drivers/u8glib/src/u8g_bitmap.c ****     return;
+ 571              		.loc 1 77 8 is_stmt 0 view .LVU137
+ 572 0014 DB00     		lsls	r3, r3, #3
+ 573              	.LVL70:
+  77:Drivers/u8glib/src/u8g_bitmap.c ****     return;
+ 574              		.loc 1 77 8 view .LVU138
+ 575 0016 0095     		str	r5, [sp]
+ 576 0018 03F0F803 		and	r3, r3, #248
+ 577 001c FFF7FEFF 		bl	u8g_IsBBXIntersection
+ 578              	.LVL71:
+  77:Drivers/u8glib/src/u8g_bitmap.c ****     return;
+ 579              		.loc 1 77 6 view .LVU139
+ 580 0020 60B9     		cbnz	r0, .L30
+ 581 0022 0DE0     		b	.L28
+ 582              	.LVL72:
+ 583              	.L31:
+  81:Drivers/u8glib/src/u8g_bitmap.c ****     bitmap += cnt;
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccy25Bsl.s 			page 15
+
+
+ 584              		.loc 1 81 5 is_stmt 1 view .LVU140
+ 585 0024 0096     		str	r6, [sp]
+ 586 0026 3B46     		mov	r3, r7
+ 587 0028 2246     		mov	r2, r4
+ 588 002a 4146     		mov	r1, r8
+ 589 002c 4846     		mov	r0, r9
+ 590 002e FFF7FEFF 		bl	u8g_DrawHBitmapP
+ 591              	.LVL73:
+  82:Drivers/u8glib/src/u8g_bitmap.c ****     y++;
+ 592              		.loc 1 82 5 view .LVU141
+  82:Drivers/u8glib/src/u8g_bitmap.c ****     y++;
+ 593              		.loc 1 82 12 is_stmt 0 view .LVU142
+ 594 0032 3E44     		add	r6, r6, r7
+ 595              	.LVL74:
+  83:Drivers/u8glib/src/u8g_bitmap.c ****     h--;
+ 596              		.loc 1 83 5 is_stmt 1 view .LVU143
+  83:Drivers/u8glib/src/u8g_bitmap.c ****     h--;
+ 597              		.loc 1 83 6 is_stmt 0 view .LVU144
+ 598 0034 0134     		adds	r4, r4, #1
+ 599              	.LVL75:
+  83:Drivers/u8glib/src/u8g_bitmap.c ****     h--;
+ 600              		.loc 1 83 6 view .LVU145
+ 601 0036 E4B2     		uxtb	r4, r4
+ 602              	.LVL76:
+  84:Drivers/u8glib/src/u8g_bitmap.c ****   }
+ 603              		.loc 1 84 5 is_stmt 1 view .LVU146
+  84:Drivers/u8glib/src/u8g_bitmap.c ****   }
+ 604              		.loc 1 84 6 is_stmt 0 view .LVU147
+ 605 0038 013D     		subs	r5, r5, #1
+ 606              	.LVL77:
+  84:Drivers/u8glib/src/u8g_bitmap.c ****   }
+ 607              		.loc 1 84 6 view .LVU148
+ 608 003a EDB2     		uxtb	r5, r5
+ 609              	.LVL78:
+ 610              	.L30:
+  79:Drivers/u8glib/src/u8g_bitmap.c ****   {
+ 611              		.loc 1 79 8 is_stmt 1 view .LVU149
+ 612 003c 002D     		cmp	r5, #0
+ 613 003e F1D1     		bne	.L31
+ 614              	.LVL79:
+ 615              	.L28:
+  86:Drivers/u8glib/src/u8g_bitmap.c **** 
+ 616              		.loc 1 86 1 is_stmt 0 view .LVU150
+ 617 0040 03B0     		add	sp, sp, #12
+ 618              	.LCFI17:
+ 619              		.cfi_def_cfa_offset 28
+ 620              		@ sp needed
+ 621 0042 BDE8F083 		pop	{r4, r5, r6, r7, r8, r9, pc}
+  86:Drivers/u8glib/src/u8g_bitmap.c **** 
+ 622              		.loc 1 86 1 view .LVU151
+ 623              		.cfi_endproc
+ 624              	.LFE3:
+ 626              		.section	.text.u8g_DrawXBM,"ax",%progbits
+ 627              		.align	1
+ 628              		.global	u8g_DrawXBM
+ 629              		.syntax unified
+ 630              		.thumb
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccy25Bsl.s 			page 16
+
+
+ 631              		.thumb_func
+ 633              	u8g_DrawXBM:
+ 634              	.LVL80:
+ 635              	.LFB5:
+ 117:Drivers/u8glib/src/u8g_bitmap.c ****   u8g_uint_t b;
+ 636              		.loc 1 117 1 is_stmt 1 view -0
+ 637              		.cfi_startproc
+ 638              		@ args = 8, pretend = 0, frame = 0
+ 639              		@ frame_needed = 0, uses_anonymous_args = 0
+ 117:Drivers/u8glib/src/u8g_bitmap.c ****   u8g_uint_t b;
+ 640              		.loc 1 117 1 is_stmt 0 view .LVU153
+ 641 0000 2DE9F047 		push	{r4, r5, r6, r7, r8, r9, r10, lr}
+ 642              	.LCFI18:
+ 643              		.cfi_def_cfa_offset 32
+ 644              		.cfi_offset 4, -32
+ 645              		.cfi_offset 5, -28
+ 646              		.cfi_offset 6, -24
+ 647              		.cfi_offset 7, -20
+ 648              		.cfi_offset 8, -16
+ 649              		.cfi_offset 9, -12
+ 650              		.cfi_offset 10, -8
+ 651              		.cfi_offset 14, -4
+ 652 0004 82B0     		sub	sp, sp, #8
+ 653              	.LCFI19:
+ 654              		.cfi_def_cfa_offset 40
+ 655 0006 8246     		mov	r10, r0
+ 656 0008 8946     		mov	r9, r1
+ 657 000a 1446     		mov	r4, r2
+ 658 000c 1F46     		mov	r7, r3
+ 659 000e 9DF82850 		ldrb	r5, [sp, #40]	@ zero_extendqisi2
+ 660 0012 0B9E     		ldr	r6, [sp, #44]
+ 118:Drivers/u8glib/src/u8g_bitmap.c ****   b = w;
+ 661              		.loc 1 118 3 is_stmt 1 view .LVU154
+ 119:Drivers/u8glib/src/u8g_bitmap.c ****   b += 7;
+ 662              		.loc 1 119 3 view .LVU155
+ 663              	.LVL81:
+ 120:Drivers/u8glib/src/u8g_bitmap.c ****   b >>= 3;
+ 664              		.loc 1 120 3 view .LVU156
+ 120:Drivers/u8glib/src/u8g_bitmap.c ****   b >>= 3;
+ 665              		.loc 1 120 5 is_stmt 0 view .LVU157
+ 666 0014 03F10708 		add	r8, r3, #7
+ 667              	.LVL82:
+ 121:Drivers/u8glib/src/u8g_bitmap.c ****   
+ 668              		.loc 1 121 3 is_stmt 1 view .LVU158
+ 121:Drivers/u8glib/src/u8g_bitmap.c ****   
+ 669              		.loc 1 121 5 is_stmt 0 view .LVU159
+ 670 0018 C8F3C408 		ubfx	r8, r8, #3, #5
+ 671              	.LVL83:
+ 123:Drivers/u8glib/src/u8g_bitmap.c ****     return;
+ 672              		.loc 1 123 3 is_stmt 1 view .LVU160
+ 123:Drivers/u8glib/src/u8g_bitmap.c ****     return;
+ 673              		.loc 1 123 8 is_stmt 0 view .LVU161
+ 674 001c 0095     		str	r5, [sp]
+ 675 001e FFF7FEFF 		bl	u8g_IsBBXIntersection
+ 676              	.LVL84:
+ 123:Drivers/u8glib/src/u8g_bitmap.c ****     return;
+ 677              		.loc 1 123 6 view .LVU162
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccy25Bsl.s 			page 17
+
+
+ 678 0022 60B9     		cbnz	r0, .L35
+ 679 0024 0DE0     		b	.L33
+ 680              	.LVL85:
+ 681              	.L36:
+ 128:Drivers/u8glib/src/u8g_bitmap.c ****     bitmap += b;
+ 682              		.loc 1 128 5 is_stmt 1 view .LVU163
+ 683 0026 0096     		str	r6, [sp]
+ 684 0028 3B46     		mov	r3, r7
+ 685 002a 2246     		mov	r2, r4
+ 686 002c 4946     		mov	r1, r9
+ 687 002e 5046     		mov	r0, r10
+ 688 0030 FFF7FEFF 		bl	u8g_DrawHXBM
+ 689              	.LVL86:
+ 129:Drivers/u8glib/src/u8g_bitmap.c ****     y++;
+ 690              		.loc 1 129 5 view .LVU164
+ 129:Drivers/u8glib/src/u8g_bitmap.c ****     y++;
+ 691              		.loc 1 129 12 is_stmt 0 view .LVU165
+ 692 0034 4644     		add	r6, r6, r8
+ 693              	.LVL87:
+ 130:Drivers/u8glib/src/u8g_bitmap.c ****     h--;
+ 694              		.loc 1 130 5 is_stmt 1 view .LVU166
+ 130:Drivers/u8glib/src/u8g_bitmap.c ****     h--;
+ 695              		.loc 1 130 6 is_stmt 0 view .LVU167
+ 696 0036 0134     		adds	r4, r4, #1
+ 697              	.LVL88:
+ 130:Drivers/u8glib/src/u8g_bitmap.c ****     h--;
+ 698              		.loc 1 130 6 view .LVU168
+ 699 0038 E4B2     		uxtb	r4, r4
+ 700              	.LVL89:
+ 131:Drivers/u8glib/src/u8g_bitmap.c ****   }
+ 701              		.loc 1 131 5 is_stmt 1 view .LVU169
+ 131:Drivers/u8glib/src/u8g_bitmap.c ****   }
+ 702              		.loc 1 131 6 is_stmt 0 view .LVU170
+ 703 003a 013D     		subs	r5, r5, #1
+ 704              	.LVL90:
+ 131:Drivers/u8glib/src/u8g_bitmap.c ****   }
+ 705              		.loc 1 131 6 view .LVU171
+ 706 003c EDB2     		uxtb	r5, r5
+ 707              	.LVL91:
+ 708              	.L35:
+ 126:Drivers/u8glib/src/u8g_bitmap.c ****   {
+ 709              		.loc 1 126 8 is_stmt 1 view .LVU172
+ 710 003e 002D     		cmp	r5, #0
+ 711 0040 F1D1     		bne	.L36
+ 712              	.LVL92:
+ 713              	.L33:
+ 133:Drivers/u8glib/src/u8g_bitmap.c **** 
+ 714              		.loc 1 133 1 is_stmt 0 view .LVU173
+ 715 0042 02B0     		add	sp, sp, #8
+ 716              	.LCFI20:
+ 717              		.cfi_def_cfa_offset 32
+ 718              		@ sp needed
+ 719 0044 BDE8F087 		pop	{r4, r5, r6, r7, r8, r9, r10, pc}
+ 133:Drivers/u8glib/src/u8g_bitmap.c **** 
+ 720              		.loc 1 133 1 view .LVU174
+ 721              		.cfi_endproc
+ 722              	.LFE5:
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccy25Bsl.s 			page 18
+
+
+ 724              		.section	.text.u8g_DrawXBMP,"ax",%progbits
+ 725              		.align	1
+ 726              		.global	u8g_DrawXBMP
+ 727              		.syntax unified
+ 728              		.thumb
+ 729              		.thumb_func
+ 731              	u8g_DrawXBMP:
+ 732              	.LVL93:
+ 733              	.LFB7:
+ 160:Drivers/u8glib/src/u8g_bitmap.c **** 
+ 161:Drivers/u8glib/src/u8g_bitmap.c **** void u8g_DrawXBMP(u8g_t *u8g, u8g_uint_t x, u8g_uint_t y, u8g_uint_t w, u8g_uint_t h, const u8g_pgm
+ 162:Drivers/u8glib/src/u8g_bitmap.c **** {
+ 734              		.loc 1 162 1 is_stmt 1 view -0
+ 735              		.cfi_startproc
+ 736              		@ args = 8, pretend = 0, frame = 0
+ 737              		@ frame_needed = 0, uses_anonymous_args = 0
+ 738              		.loc 1 162 1 is_stmt 0 view .LVU176
+ 739 0000 2DE9F047 		push	{r4, r5, r6, r7, r8, r9, r10, lr}
+ 740              	.LCFI21:
+ 741              		.cfi_def_cfa_offset 32
+ 742              		.cfi_offset 4, -32
+ 743              		.cfi_offset 5, -28
+ 744              		.cfi_offset 6, -24
+ 745              		.cfi_offset 7, -20
+ 746              		.cfi_offset 8, -16
+ 747              		.cfi_offset 9, -12
+ 748              		.cfi_offset 10, -8
+ 749              		.cfi_offset 14, -4
+ 750 0004 82B0     		sub	sp, sp, #8
+ 751              	.LCFI22:
+ 752              		.cfi_def_cfa_offset 40
+ 753 0006 8246     		mov	r10, r0
+ 754 0008 8946     		mov	r9, r1
+ 755 000a 1446     		mov	r4, r2
+ 756 000c 1F46     		mov	r7, r3
+ 757 000e 9DF82850 		ldrb	r5, [sp, #40]	@ zero_extendqisi2
+ 758 0012 0B9E     		ldr	r6, [sp, #44]
+ 163:Drivers/u8glib/src/u8g_bitmap.c ****   u8g_uint_t b;
+ 759              		.loc 1 163 3 is_stmt 1 view .LVU177
+ 164:Drivers/u8glib/src/u8g_bitmap.c ****   b = w;
+ 760              		.loc 1 164 3 view .LVU178
+ 761              	.LVL94:
+ 165:Drivers/u8glib/src/u8g_bitmap.c ****   b += 7;
+ 762              		.loc 1 165 3 view .LVU179
+ 763              		.loc 1 165 5 is_stmt 0 view .LVU180
+ 764 0014 03F10708 		add	r8, r3, #7
+ 765              	.LVL95:
+ 166:Drivers/u8glib/src/u8g_bitmap.c ****   b >>= 3;
+ 766              		.loc 1 166 3 is_stmt 1 view .LVU181
+ 767              		.loc 1 166 5 is_stmt 0 view .LVU182
+ 768 0018 C8F3C408 		ubfx	r8, r8, #3, #5
+ 769              	.LVL96:
+ 167:Drivers/u8glib/src/u8g_bitmap.c ****   
+ 168:Drivers/u8glib/src/u8g_bitmap.c ****   if ( u8g_IsBBXIntersection(u8g, x, y, w, h) == 0 )
+ 770              		.loc 1 168 3 is_stmt 1 view .LVU183
+ 771              		.loc 1 168 8 is_stmt 0 view .LVU184
+ 772 001c 0095     		str	r5, [sp]
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccy25Bsl.s 			page 19
+
+
+ 773 001e FFF7FEFF 		bl	u8g_IsBBXIntersection
+ 774              	.LVL97:
+ 775              		.loc 1 168 6 view .LVU185
+ 776 0022 60B9     		cbnz	r0, .L40
+ 777 0024 0DE0     		b	.L38
+ 778              	.LVL98:
+ 779              	.L41:
+ 169:Drivers/u8glib/src/u8g_bitmap.c ****     return;
+ 170:Drivers/u8glib/src/u8g_bitmap.c ****   while( h > 0 )
+ 171:Drivers/u8glib/src/u8g_bitmap.c ****   {
+ 172:Drivers/u8glib/src/u8g_bitmap.c ****     u8g_DrawHXBMP(u8g, x, y, w, bitmap);
+ 780              		.loc 1 172 5 is_stmt 1 view .LVU186
+ 781 0026 0096     		str	r6, [sp]
+ 782 0028 3B46     		mov	r3, r7
+ 783 002a 2246     		mov	r2, r4
+ 784 002c 4946     		mov	r1, r9
+ 785 002e 5046     		mov	r0, r10
+ 786 0030 FFF7FEFF 		bl	u8g_DrawHXBMP
+ 787              	.LVL99:
+ 173:Drivers/u8glib/src/u8g_bitmap.c ****     bitmap += b;
+ 788              		.loc 1 173 5 view .LVU187
+ 789              		.loc 1 173 12 is_stmt 0 view .LVU188
+ 790 0034 4644     		add	r6, r6, r8
+ 791              	.LVL100:
+ 174:Drivers/u8glib/src/u8g_bitmap.c ****     y++;
+ 792              		.loc 1 174 5 is_stmt 1 view .LVU189
+ 793              		.loc 1 174 6 is_stmt 0 view .LVU190
+ 794 0036 0134     		adds	r4, r4, #1
+ 795              	.LVL101:
+ 796              		.loc 1 174 6 view .LVU191
+ 797 0038 E4B2     		uxtb	r4, r4
+ 798              	.LVL102:
+ 175:Drivers/u8glib/src/u8g_bitmap.c ****     h--;
+ 799              		.loc 1 175 5 is_stmt 1 view .LVU192
+ 800              		.loc 1 175 6 is_stmt 0 view .LVU193
+ 801 003a 013D     		subs	r5, r5, #1
+ 802              	.LVL103:
+ 803              		.loc 1 175 6 view .LVU194
+ 804 003c EDB2     		uxtb	r5, r5
+ 805              	.LVL104:
+ 806              	.L40:
+ 170:Drivers/u8glib/src/u8g_bitmap.c ****   {
+ 807              		.loc 1 170 8 is_stmt 1 view .LVU195
+ 808 003e 002D     		cmp	r5, #0
+ 809 0040 F1D1     		bne	.L41
+ 810              	.LVL105:
+ 811              	.L38:
+ 176:Drivers/u8glib/src/u8g_bitmap.c ****   }
+ 177:Drivers/u8glib/src/u8g_bitmap.c **** }
+ 812              		.loc 1 177 1 is_stmt 0 view .LVU196
+ 813 0042 02B0     		add	sp, sp, #8
+ 814              	.LCFI23:
+ 815              		.cfi_def_cfa_offset 32
+ 816              		@ sp needed
+ 817 0044 BDE8F087 		pop	{r4, r5, r6, r7, r8, r9, r10, pc}
+ 818              		.loc 1 177 1 view .LVU197
+ 819              		.cfi_endproc
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccy25Bsl.s 			page 20
+
+
+ 820              	.LFE7:
+ 822              		.text
+ 823              	.Letext0:
+ 824              		.file 2 "c:\\users\\zbigniew\\appdata\\roaming\\code\\user\\globalstorage\\bmd.stm32-for-vscode\\@
+ 825              		.file 3 "c:\\users\\zbigniew\\appdata\\roaming\\code\\user\\globalstorage\\bmd.stm32-for-vscode\\@
+ 826              		.file 4 "Inc/../Drivers/u8glib/inc/u8g.h"
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccy25Bsl.s 			page 21
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 u8g_bitmap.c
+C:\Users\Zbigniew\AppData\Local\Temp\ccy25Bsl.s:18     .text.u8g_DrawHXBM:0000000000000000 $t
+C:\Users\Zbigniew\AppData\Local\Temp\ccy25Bsl.s:23     .text.u8g_DrawHXBM:0000000000000000 u8g_DrawHXBM
+C:\Users\Zbigniew\AppData\Local\Temp\ccy25Bsl.s:156    .text.u8g_DrawHXBMP:0000000000000000 $t
+C:\Users\Zbigniew\AppData\Local\Temp\ccy25Bsl.s:161    .text.u8g_DrawHXBMP:0000000000000000 u8g_DrawHXBMP
+C:\Users\Zbigniew\AppData\Local\Temp\ccy25Bsl.s:293    .text.u8g_DrawHBitmap:0000000000000000 $t
+C:\Users\Zbigniew\AppData\Local\Temp\ccy25Bsl.s:299    .text.u8g_DrawHBitmap:0000000000000000 u8g_DrawHBitmap
+C:\Users\Zbigniew\AppData\Local\Temp\ccy25Bsl.s:370    .text.u8g_DrawBitmap:0000000000000000 $t
+C:\Users\Zbigniew\AppData\Local\Temp\ccy25Bsl.s:376    .text.u8g_DrawBitmap:0000000000000000 u8g_DrawBitmap
+C:\Users\Zbigniew\AppData\Local\Temp\ccy25Bsl.s:460    .text.u8g_DrawHBitmapP:0000000000000000 $t
+C:\Users\Zbigniew\AppData\Local\Temp\ccy25Bsl.s:466    .text.u8g_DrawHBitmapP:0000000000000000 u8g_DrawHBitmapP
+C:\Users\Zbigniew\AppData\Local\Temp\ccy25Bsl.s:537    .text.u8g_DrawBitmapP:0000000000000000 $t
+C:\Users\Zbigniew\AppData\Local\Temp\ccy25Bsl.s:543    .text.u8g_DrawBitmapP:0000000000000000 u8g_DrawBitmapP
+C:\Users\Zbigniew\AppData\Local\Temp\ccy25Bsl.s:627    .text.u8g_DrawXBM:0000000000000000 $t
+C:\Users\Zbigniew\AppData\Local\Temp\ccy25Bsl.s:633    .text.u8g_DrawXBM:0000000000000000 u8g_DrawXBM
+C:\Users\Zbigniew\AppData\Local\Temp\ccy25Bsl.s:725    .text.u8g_DrawXBMP:0000000000000000 $t
+C:\Users\Zbigniew\AppData\Local\Temp\ccy25Bsl.s:731    .text.u8g_DrawXBMP:0000000000000000 u8g_DrawXBMP
+
+UNDEFINED SYMBOLS
+u8g_Draw8Pixel
+u8g_DrawPixel
+u8g_IsBBXIntersection

@@ -1,27 +1,50 @@
 {
-    "configurations": [
-        {
-            "name": "Win32",
-            "includePath": [
-                "${workspaceFolder}/**"
-            ],
-            "defines": [
-                "_DEBUG",
-                "UNICODE",
-                "_UNICODE",
-                "USE_HAL_DRIVER",
-                "STM32F103xE"
-            ],
-            "compilerPath": "G:\\Msys\\mingw64\\bin\\gcc.exe",
-            "compilerArgs": [
-                "-mcpu=cortex-m3",
-                "-mthumb"
-            ],
-            "cStandard": "c11",
-            "cppStandard": "c++17",
-            "intelliSenseMode": "gcc-arm",
-            "configurationProvider": "ms-vscode.makefile-tools"
-        }
-    ],
-    "version": 4
+  "configurations": [
+    {
+      "name": "Win32",
+      "includePath": [
+        "${workspaceFolder}/**",
+        "Drivers/u8glib"
+      ],
+      "defines": [
+        "_DEBUG",
+        "UNICODE",
+        "_UNICODE",
+        "USE_HAL_DRIVER",
+        "STM32F103xE"
+      ],
+      "compilerPath": "G:\\Msys\\mingw64\\bin\\gcc.exe",
+      "compilerArgs": [
+        "-mcpu=cortex-m3",
+        "-mthumb"
+      ],
+      "cStandard": "c11",
+      "cppStandard": "c++17",
+      "intelliSenseMode": "gcc-arm",
+      "configurationProvider": "ms-vscode.makefile-tools"
+    },
+    {
+      "name": "STM32",
+      "includePath": [
+        "${workspaceFolder}/GUI",
+        "Drivers/CMSIS/Device/ST/STM32F1xx/Include",
+        "Drivers/CMSIS/Include",
+        "Drivers/STM32F1xx_HAL_Driver/Inc",
+        "Drivers/STM32F1xx_HAL_Driver/Inc/Legacy",
+        "GUI/Inc",
+        "Inc",
+        "PWM"
+      ],
+      "defines": [
+        "STM32F103xE",
+        "USE_HAL_DRIVER"
+      ],
+      "compilerPath": "C:\\USERS\\ZBIGNIEW\\APPDATA\\ROAMING\\CODE\\USER\\GLOBALSTORAGE\\BMD.STM32-FOR-VSCODE\\@XPACK-DEV-TOOLS\\ARM-NONE-EABI-GCC\\10.3.1-2.2.1\\.CONTENT\\BIN\\ARM-NONE-EABI-GCC.EXE",
+      "compilerArgs": [
+        "-mcpu=cortex-m3",
+        "-mthumb"
+      ]
+    }
+  ],
+  "version": 4
 }

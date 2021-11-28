@@ -1,0 +1,1671 @@
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccc1AQLg.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.arch armv7-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"displays.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.rodata.display_battery.str1.4,"aMS",%progbits,1
+  18              		.align	2
+  19              	.LC0:
+  20 0000 25342E31 		.ascii	"%4.1f\000"
+  20      6600
+  21              		.global	__aeabi_dcmple
+  22              		.section	.text.display_battery,"ax",%progbits
+  23              		.align	1
+  24              		.global	display_battery
+  25              		.syntax unified
+  26              		.thumb
+  27              		.thumb_func
+  29              	display_battery:
+  30              	.LVL0:
+  31              	.LFB65:
+  32              		.file 1 "GUI/Src/displays.c"
+   1:GUI/Src/displays.c **** /*
+   2:GUI/Src/displays.c ****  * displays.c
+   3:GUI/Src/displays.c ****  *
+   4:GUI/Src/displays.c ****  *  Created on: 04.12.2018
+   5:GUI/Src/displays.c ****  *      Author: Marcin Szykowny
+   6:GUI/Src/displays.c ****  */
+   7:GUI/Src/displays.c **** #include <stdlib.h>
+   8:GUI/Src/displays.c **** #include "../GUI/Inc/displays.h"
+   9:GUI/Src/displays.c **** #include "stm32f1xx_hal.h"
+  10:GUI/Src/displays.c **** #include "main.h"
+  11:GUI/Src/displays.c **** 
+  12:GUI/Src/displays.c **** #include "LCD.h"
+  13:GUI/Src/displays.c **** 
+  14:GUI/Src/displays.c **** #include "../Drivers/u8glib/inc/u8g.h"
+  15:GUI/Src/displays.c **** #include "../Drivers/u8glib/inc/u8g_arm.h"
+  16:GUI/Src/displays.c **** #include "../Drivers/u8glib/pictures.h"
+  17:GUI/Src/displays.c **** 
+  18:GUI/Src/displays.c **** u8g_t u8g_big;
+  19:GUI/Src/displays.c **** u8g_t u8g_small;
+  20:GUI/Src/displays.c **** 
+  21:GUI/Src/displays.c **** void display_battery(double value) //USE OLED #1 (LEFT) to display battery level
+  22:GUI/Src/displays.c **** {
+  33              		.loc 1 22 1 view -0
+  34              		.cfi_startproc
+  35              		@ args = 0, pretend = 0, frame = 16
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccc1AQLg.s 			page 2
+
+
+  36              		@ frame_needed = 0, uses_anonymous_args = 0
+  37              		.loc 1 22 1 is_stmt 0 view .LVU1
+  38 0000 70B5     		push	{r4, r5, r6, lr}
+  39              	.LCFI0:
+  40              		.cfi_def_cfa_offset 16
+  41              		.cfi_offset 4, -16
+  42              		.cfi_offset 5, -12
+  43              		.cfi_offset 6, -8
+  44              		.cfi_offset 14, -4
+  45 0002 88B0     		sub	sp, sp, #32
+  46              	.LCFI1:
+  47              		.cfi_def_cfa_offset 48
+  48 0004 0446     		mov	r4, r0
+  49 0006 0D46     		mov	r5, r1
+  23:GUI/Src/displays.c **** 	char output[10] = "";
+  50              		.loc 1 23 2 is_stmt 1 view .LVU2
+  51              		.loc 1 23 7 is_stmt 0 view .LVU3
+  52 0008 0026     		movs	r6, #0
+  53 000a 0596     		str	r6, [sp, #20]
+  54 000c 0696     		str	r6, [sp, #24]
+  55 000e ADF81C60 		strh	r6, [sp, #28]	@ movhi
+  24:GUI/Src/displays.c **** 	snprintf(output, 10, "%4.1f", value); //Convert to string and format
+  56              		.loc 1 24 2 is_stmt 1 view .LVU4
+  57 0012 CDE90045 		strd	r4, [sp]
+  58 0016 174A     		ldr	r2, .L11
+  59 0018 0A21     		movs	r1, #10
+  60 001a 05A8     		add	r0, sp, #20
+  61              	.LVL1:
+  62              		.loc 1 24 2 is_stmt 0 view .LVU5
+  63 001c FFF7FEFF 		bl	snprintf
+  64              	.LVL2:
+  25:GUI/Src/displays.c **** 
+  26:GUI/Src/displays.c **** 	HAL_I2C_Mem_Write(&hi2c1, 0xE0, 4, 1, 0, 0, 10); //USTAW ADRES
+  65              		.loc 1 26 2 is_stmt 1 view .LVU6
+  66 0020 0A23     		movs	r3, #10
+  67 0022 0293     		str	r3, [sp, #8]
+  68 0024 0196     		str	r6, [sp, #4]
+  69 0026 0096     		str	r6, [sp]
+  70 0028 0123     		movs	r3, #1
+  71 002a 0422     		movs	r2, #4
+  72 002c E021     		movs	r1, #224
+  73 002e 1248     		ldr	r0, .L11+4
+  74 0030 FFF7FEFF 		bl	HAL_I2C_Mem_Write
+  75              	.LVL3:
+  27:GUI/Src/displays.c **** 	//u8g_small.font = u8g_font_fub30r;
+  28:GUI/Src/displays.c **** 
+  29:GUI/Src/displays.c **** 	u8g_FirstPage(&u8g_small);
+  76              		.loc 1 29 2 view .LVU7
+  77 0034 1148     		ldr	r0, .L11+8
+  78 0036 FFF7FEFF 		bl	u8g_FirstPage
+  79              	.LVL4:
+  80 003a 09E0     		b	.L5
+  81              	.L10:
+  30:GUI/Src/displays.c **** 	do
+  31:GUI/Src/displays.c **** 	{
+  32:GUI/Src/displays.c **** 		if(value <=9)
+  33:GUI/Src/displays.c **** 		{
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccc1AQLg.s 			page 3
+
+
+  34:GUI/Src/displays.c **** 			u8g_DrawStr(&u8g_small, 31, 32, output);
+  82              		.loc 1 34 4 view .LVU8
+  83 003c 05AB     		add	r3, sp, #20
+  84 003e 2022     		movs	r2, #32
+  85 0040 1F21     		movs	r1, #31
+  86 0042 0E48     		ldr	r0, .L11+8
+  87 0044 FFF7FEFF 		bl	u8g_DrawStr
+  88              	.LVL5:
+  89              	.L4:
+  35:GUI/Src/displays.c **** 		}
+  36:GUI/Src/displays.c **** 		else
+  37:GUI/Src/displays.c **** 		{
+  38:GUI/Src/displays.c **** 			u8g_DrawStr(&u8g_small, 20, 32, output);
+  39:GUI/Src/displays.c **** 		}
+  40:GUI/Src/displays.c **** 
+  41:GUI/Src/displays.c **** 	} while ( u8g_NextPage(&u8g_small) );
+  90              		.loc 1 41 10 view .LVU9
+  91              		.loc 1 41 12 is_stmt 0 view .LVU10
+  92 0048 0C48     		ldr	r0, .L11+8
+  93 004a FFF7FEFF 		bl	u8g_NextPage
+  94              	.LVL6:
+  95              		.loc 1 41 2 view .LVU11
+  96 004e 70B1     		cbz	r0, .L9
+  97              	.L5:
+  30:GUI/Src/displays.c **** 	do
+  98              		.loc 1 30 2 is_stmt 1 view .LVU12
+  32:GUI/Src/displays.c **** 		{
+  99              		.loc 1 32 3 view .LVU13
+  32:GUI/Src/displays.c **** 		{
+ 100              		.loc 1 32 5 is_stmt 0 view .LVU14
+ 101 0050 0022     		movs	r2, #0
+ 102 0052 0B4B     		ldr	r3, .L11+12
+ 103 0054 2046     		mov	r0, r4
+ 104 0056 2946     		mov	r1, r5
+ 105 0058 FFF7FEFF 		bl	__aeabi_dcmple
+ 106              	.LVL7:
+ 107 005c 0028     		cmp	r0, #0
+ 108 005e EDD1     		bne	.L10
+  38:GUI/Src/displays.c **** 		}
+ 109              		.loc 1 38 4 is_stmt 1 view .LVU15
+ 110 0060 05AB     		add	r3, sp, #20
+ 111 0062 2022     		movs	r2, #32
+ 112 0064 1421     		movs	r1, #20
+ 113 0066 0548     		ldr	r0, .L11+8
+ 114 0068 FFF7FEFF 		bl	u8g_DrawStr
+ 115              	.LVL8:
+ 116 006c ECE7     		b	.L4
+ 117              	.L9:
+  42:GUI/Src/displays.c **** 
+  43:GUI/Src/displays.c **** }
+ 118              		.loc 1 43 1 is_stmt 0 view .LVU16
+ 119 006e 08B0     		add	sp, sp, #32
+ 120              	.LCFI2:
+ 121              		.cfi_def_cfa_offset 16
+ 122              		@ sp needed
+ 123 0070 70BD     		pop	{r4, r5, r6, pc}
+ 124              	.L12:
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccc1AQLg.s 			page 4
+
+
+ 125 0072 00BF     		.align	2
+ 126              	.L11:
+ 127 0074 00000000 		.word	.LC0
+ 128 0078 00000000 		.word	hi2c1
+ 129 007c 00000000 		.word	.LANCHOR0
+ 130 0080 00002240 		.word	1075970048
+ 131              		.cfi_endproc
+ 132              	.LFE65:
+ 134              		.section	.text.display_gear,"ax",%progbits
+ 135              		.align	1
+ 136              		.global	display_gear
+ 137              		.syntax unified
+ 138              		.thumb
+ 139              		.thumb_func
+ 141              	display_gear:
+ 142              	.LVL9:
+ 143              	.LFB66:
+  44:GUI/Src/displays.c **** 
+  45:GUI/Src/displays.c **** void display_gear(int state) //USE OLED #2 (CENTER) to display gear setting (R N D)
+  46:GUI/Src/displays.c **** {
+ 144              		.loc 1 46 1 is_stmt 1 view -0
+ 145              		.cfi_startproc
+ 146              		@ args = 0, pretend = 0, frame = 0
+ 147              		@ frame_needed = 0, uses_anonymous_args = 0
+ 148              		.loc 1 46 1 is_stmt 0 view .LVU18
+ 149 0000 10B5     		push	{r4, lr}
+ 150              	.LCFI3:
+ 151              		.cfi_def_cfa_offset 8
+ 152              		.cfi_offset 4, -8
+ 153              		.cfi_offset 14, -4
+ 154 0002 84B0     		sub	sp, sp, #16
+ 155              	.LCFI4:
+ 156              		.cfi_def_cfa_offset 24
+ 157 0004 0446     		mov	r4, r0
+  47:GUI/Src/displays.c **** 	HAL_I2C_Mem_Write(&hi2c1, 0xE0, 10, 10, 0, 0, 10); //USTAW ADRES
+ 158              		.loc 1 47 2 is_stmt 1 view .LVU19
+ 159 0006 0A22     		movs	r2, #10
+ 160 0008 0292     		str	r2, [sp, #8]
+ 161 000a 0023     		movs	r3, #0
+ 162 000c 0193     		str	r3, [sp, #4]
+ 163 000e 0093     		str	r3, [sp]
+ 164 0010 1346     		mov	r3, r2
+ 165 0012 E021     		movs	r1, #224
+ 166 0014 2248     		ldr	r0, .L22
+ 167              	.LVL10:
+ 168              		.loc 1 47 2 is_stmt 0 view .LVU20
+ 169 0016 FFF7FEFF 		bl	HAL_I2C_Mem_Write
+ 170              	.LVL11:
+  48:GUI/Src/displays.c **** 	switch (state)
+ 171              		.loc 1 48 2 is_stmt 1 view .LVU21
+ 172 001a 012C     		cmp	r4, #1
+ 173 001c 18D0     		beq	.L14
+ 174 001e 022C     		cmp	r4, #2
+ 175 0020 2AD0     		beq	.L15
+ 176 0022 0CB1     		cbz	r4, .L21
+ 177              	.LVL12:
+ 178              	.L13:
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccc1AQLg.s 			page 5
+
+
+  49:GUI/Src/displays.c **** 	{
+  50:GUI/Src/displays.c **** 	    case 0: // code to be executed if state = 0 (neutral);
+  51:GUI/Src/displays.c **** 
+  52:GUI/Src/displays.c **** 
+  53:GUI/Src/displays.c **** 	    	u8g_FirstPage(&u8g_small);
+  54:GUI/Src/displays.c **** 	    	do
+  55:GUI/Src/displays.c **** 	    	{
+  56:GUI/Src/displays.c **** 	    		u8g_DrawBitmap(&u8g_small, 0, 0, 16, 64, neutral);
+  57:GUI/Src/displays.c **** 	    	} while ( u8g_NextPage(&u8g_small) );
+  58:GUI/Src/displays.c **** 
+  59:GUI/Src/displays.c **** 
+  60:GUI/Src/displays.c **** 	        break;
+  61:GUI/Src/displays.c **** 
+  62:GUI/Src/displays.c **** 	    case 1: // code to be executed if state = 1(drive);
+  63:GUI/Src/displays.c **** 
+  64:GUI/Src/displays.c **** 
+  65:GUI/Src/displays.c **** 	    	u8g_FirstPage(&u8g_small);
+  66:GUI/Src/displays.c **** 	    	do
+  67:GUI/Src/displays.c **** 	    	{
+  68:GUI/Src/displays.c **** 	    		u8g_DrawBitmap(&u8g_small, 0, 0, 16, 64, drive);
+  69:GUI/Src/displays.c **** 	    	} while ( u8g_NextPage(&u8g_small) );
+  70:GUI/Src/displays.c **** 
+  71:GUI/Src/displays.c **** 
+  72:GUI/Src/displays.c **** 
+  73:GUI/Src/displays.c **** 	        break;
+  74:GUI/Src/displays.c **** 
+  75:GUI/Src/displays.c **** 	    case 2: // code to be executed if state = 2(reverse);
+  76:GUI/Src/displays.c **** 
+  77:GUI/Src/displays.c **** 	    	u8g_FirstPage(&u8g_small);
+  78:GUI/Src/displays.c **** 	    	do
+  79:GUI/Src/displays.c **** 	    	{
+  80:GUI/Src/displays.c **** 	    		u8g_DrawBitmap(&u8g_small, 0, 0, 16, 64, reverse);
+  81:GUI/Src/displays.c **** 	    	} while ( u8g_NextPage(&u8g_small) );
+  82:GUI/Src/displays.c **** 
+  83:GUI/Src/displays.c **** 	        break;
+  84:GUI/Src/displays.c **** 	}
+  85:GUI/Src/displays.c **** }
+ 179              		.loc 1 85 1 is_stmt 0 view .LVU22
+ 180 0024 04B0     		add	sp, sp, #16
+ 181              	.LCFI5:
+ 182              		.cfi_remember_state
+ 183              		.cfi_def_cfa_offset 8
+ 184              		@ sp needed
+ 185 0026 10BD     		pop	{r4, pc}
+ 186              	.LVL13:
+ 187              	.L21:
+ 188              	.LCFI6:
+ 189              		.cfi_restore_state
+  53:GUI/Src/displays.c **** 	    	do
+ 190              		.loc 1 53 7 is_stmt 1 view .LVU23
+ 191 0028 1E48     		ldr	r0, .L22+4
+ 192 002a FFF7FEFF 		bl	u8g_FirstPage
+ 193              	.LVL14:
+ 194              	.L17:
+  54:GUI/Src/displays.c **** 	    	{
+ 195              		.loc 1 54 7 discriminator 1 view .LVU24
+  56:GUI/Src/displays.c **** 	    	} while ( u8g_NextPage(&u8g_small) );
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccc1AQLg.s 			page 6
+
+
+ 196              		.loc 1 56 8 discriminator 1 view .LVU25
+ 197 002e 1D4C     		ldr	r4, .L22+4
+ 198 0030 1D4B     		ldr	r3, .L22+8
+ 199 0032 0193     		str	r3, [sp, #4]
+ 200 0034 4023     		movs	r3, #64
+ 201 0036 0093     		str	r3, [sp]
+ 202 0038 1023     		movs	r3, #16
+ 203 003a 0022     		movs	r2, #0
+ 204 003c 1146     		mov	r1, r2
+ 205 003e 2046     		mov	r0, r4
+ 206 0040 FFF7FEFF 		bl	u8g_DrawBitmap
+ 207              	.LVL15:
+  57:GUI/Src/displays.c **** 
+ 208              		.loc 1 57 15 discriminator 1 view .LVU26
+  57:GUI/Src/displays.c **** 
+ 209              		.loc 1 57 17 is_stmt 0 discriminator 1 view .LVU27
+ 210 0044 2046     		mov	r0, r4
+ 211 0046 FFF7FEFF 		bl	u8g_NextPage
+ 212              	.LVL16:
+  57:GUI/Src/displays.c **** 
+ 213              		.loc 1 57 7 discriminator 1 view .LVU28
+ 214 004a 0028     		cmp	r0, #0
+ 215 004c EFD1     		bne	.L17
+ 216 004e E9E7     		b	.L13
+ 217              	.LVL17:
+ 218              	.L14:
+  65:GUI/Src/displays.c **** 	    	do
+ 219              		.loc 1 65 7 is_stmt 1 view .LVU29
+ 220 0050 1448     		ldr	r0, .L22+4
+ 221 0052 FFF7FEFF 		bl	u8g_FirstPage
+ 222              	.LVL18:
+ 223              	.L18:
+  66:GUI/Src/displays.c **** 	    	{
+ 224              		.loc 1 66 7 discriminator 1 view .LVU30
+  68:GUI/Src/displays.c **** 	    	} while ( u8g_NextPage(&u8g_small) );
+ 225              		.loc 1 68 8 discriminator 1 view .LVU31
+ 226 0056 134C     		ldr	r4, .L22+4
+ 227 0058 144B     		ldr	r3, .L22+12
+ 228 005a 0193     		str	r3, [sp, #4]
+ 229 005c 4023     		movs	r3, #64
+ 230 005e 0093     		str	r3, [sp]
+ 231 0060 1023     		movs	r3, #16
+ 232 0062 0022     		movs	r2, #0
+ 233 0064 1146     		mov	r1, r2
+ 234 0066 2046     		mov	r0, r4
+ 235 0068 FFF7FEFF 		bl	u8g_DrawBitmap
+ 236              	.LVL19:
+  69:GUI/Src/displays.c **** 
+ 237              		.loc 1 69 15 discriminator 1 view .LVU32
+  69:GUI/Src/displays.c **** 
+ 238              		.loc 1 69 17 is_stmt 0 discriminator 1 view .LVU33
+ 239 006c 2046     		mov	r0, r4
+ 240 006e FFF7FEFF 		bl	u8g_NextPage
+ 241              	.LVL20:
+  69:GUI/Src/displays.c **** 
+ 242              		.loc 1 69 7 discriminator 1 view .LVU34
+ 243 0072 0028     		cmp	r0, #0
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccc1AQLg.s 			page 7
+
+
+ 244 0074 EFD1     		bne	.L18
+ 245 0076 D5E7     		b	.L13
+ 246              	.LVL21:
+ 247              	.L15:
+  77:GUI/Src/displays.c **** 	    	do
+ 248              		.loc 1 77 7 is_stmt 1 view .LVU35
+ 249 0078 0A48     		ldr	r0, .L22+4
+ 250 007a FFF7FEFF 		bl	u8g_FirstPage
+ 251              	.LVL22:
+ 252              	.L19:
+  78:GUI/Src/displays.c **** 	    	{
+ 253              		.loc 1 78 7 discriminator 1 view .LVU36
+  80:GUI/Src/displays.c **** 	    	} while ( u8g_NextPage(&u8g_small) );
+ 254              		.loc 1 80 8 discriminator 1 view .LVU37
+ 255 007e 094C     		ldr	r4, .L22+4
+ 256 0080 0B4B     		ldr	r3, .L22+16
+ 257 0082 0193     		str	r3, [sp, #4]
+ 258 0084 4023     		movs	r3, #64
+ 259 0086 0093     		str	r3, [sp]
+ 260 0088 1023     		movs	r3, #16
+ 261 008a 0022     		movs	r2, #0
+ 262 008c 1146     		mov	r1, r2
+ 263 008e 2046     		mov	r0, r4
+ 264 0090 FFF7FEFF 		bl	u8g_DrawBitmap
+ 265              	.LVL23:
+  81:GUI/Src/displays.c **** 
+ 266              		.loc 1 81 15 discriminator 1 view .LVU38
+  81:GUI/Src/displays.c **** 
+ 267              		.loc 1 81 17 is_stmt 0 discriminator 1 view .LVU39
+ 268 0094 2046     		mov	r0, r4
+ 269 0096 FFF7FEFF 		bl	u8g_NextPage
+ 270              	.LVL24:
+  81:GUI/Src/displays.c **** 
+ 271              		.loc 1 81 7 discriminator 1 view .LVU40
+ 272 009a 0028     		cmp	r0, #0
+ 273 009c EFD1     		bne	.L19
+ 274 009e C1E7     		b	.L13
+ 275              	.L23:
+ 276              		.align	2
+ 277              	.L22:
+ 278 00a0 00000000 		.word	hi2c1
+ 279 00a4 00000000 		.word	.LANCHOR0
+ 280 00a8 00000000 		.word	neutral
+ 281 00ac 00000000 		.word	drive
+ 282 00b0 00000000 		.word	reverse
+ 283              		.cfi_endproc
+ 284              	.LFE66:
+ 286              		.section	.text.display_power_disable,"ax",%progbits
+ 287              		.align	1
+ 288              		.global	display_power_disable
+ 289              		.syntax unified
+ 290              		.thumb
+ 291              		.thumb_func
+ 293              	display_power_disable:
+ 294              	.LFB67:
+  86:GUI/Src/displays.c **** 
+  87:GUI/Src/displays.c **** 
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccc1AQLg.s 			page 8
+
+
+  88:GUI/Src/displays.c **** void display_power_disable(void)
+  89:GUI/Src/displays.c **** {
+ 295              		.loc 1 89 1 is_stmt 1 view -0
+ 296              		.cfi_startproc
+ 297              		@ args = 0, pretend = 0, frame = 0
+ 298              		@ frame_needed = 0, uses_anonymous_args = 0
+ 299 0000 10B5     		push	{r4, lr}
+ 300              	.LCFI7:
+ 301              		.cfi_def_cfa_offset 8
+ 302              		.cfi_offset 4, -8
+ 303              		.cfi_offset 14, -4
+ 304 0002 84B0     		sub	sp, sp, #16
+ 305              	.LCFI8:
+ 306              		.cfi_def_cfa_offset 24
+  90:GUI/Src/displays.c **** 	HAL_I2C_Mem_Write(&hi2c1, 0xE0, 1, 1, 0, 0, 10); //USTAW ADRES
+ 307              		.loc 1 90 2 view .LVU42
+ 308 0004 0A23     		movs	r3, #10
+ 309 0006 0293     		str	r3, [sp, #8]
+ 310 0008 0023     		movs	r3, #0
+ 311 000a 0193     		str	r3, [sp, #4]
+ 312 000c 0093     		str	r3, [sp]
+ 313 000e 0123     		movs	r3, #1
+ 314 0010 1A46     		mov	r2, r3
+ 315 0012 E021     		movs	r1, #224
+ 316 0014 0B48     		ldr	r0, .L27
+ 317 0016 FFF7FEFF 		bl	HAL_I2C_Mem_Write
+ 318              	.LVL25:
+  91:GUI/Src/displays.c **** 	u8g_FirstPage(&u8g_small);
+ 319              		.loc 1 91 2 view .LVU43
+ 320 001a 0B48     		ldr	r0, .L27+4
+ 321 001c FFF7FEFF 		bl	u8g_FirstPage
+ 322              	.LVL26:
+ 323              	.L25:
+  92:GUI/Src/displays.c **** 		do
+ 324              		.loc 1 92 3 discriminator 1 view .LVU44
+  93:GUI/Src/displays.c **** 		{
+  94:GUI/Src/displays.c **** 			u8g_DrawBitmap(&u8g_small, 0, 0, 16, 64, blank_small);
+ 325              		.loc 1 94 4 discriminator 1 view .LVU45
+ 326 0020 094C     		ldr	r4, .L27+4
+ 327 0022 0A4B     		ldr	r3, .L27+8
+ 328 0024 0193     		str	r3, [sp, #4]
+ 329 0026 4023     		movs	r3, #64
+ 330 0028 0093     		str	r3, [sp]
+ 331 002a 1023     		movs	r3, #16
+ 332 002c 0022     		movs	r2, #0
+ 333 002e 1146     		mov	r1, r2
+ 334 0030 2046     		mov	r0, r4
+ 335 0032 FFF7FEFF 		bl	u8g_DrawBitmap
+ 336              	.LVL27:
+  95:GUI/Src/displays.c **** 		} while ( u8g_NextPage(&u8g_small) );
+ 337              		.loc 1 95 11 discriminator 1 view .LVU46
+ 338              		.loc 1 95 13 is_stmt 0 discriminator 1 view .LVU47
+ 339 0036 2046     		mov	r0, r4
+ 340 0038 FFF7FEFF 		bl	u8g_NextPage
+ 341              	.LVL28:
+ 342              		.loc 1 95 3 discriminator 1 view .LVU48
+ 343 003c 0028     		cmp	r0, #0
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccc1AQLg.s 			page 9
+
+
+ 344 003e EFD1     		bne	.L25
+  96:GUI/Src/displays.c **** }
+ 345              		.loc 1 96 1 view .LVU49
+ 346 0040 04B0     		add	sp, sp, #16
+ 347              	.LCFI9:
+ 348              		.cfi_def_cfa_offset 8
+ 349              		@ sp needed
+ 350 0042 10BD     		pop	{r4, pc}
+ 351              	.L28:
+ 352              		.align	2
+ 353              	.L27:
+ 354 0044 00000000 		.word	hi2c1
+ 355 0048 00000000 		.word	.LANCHOR0
+ 356 004c 00000000 		.word	blank_small
+ 357              		.cfi_endproc
+ 358              	.LFE67:
+ 360              		.section	.text.display_battery_disable,"ax",%progbits
+ 361              		.align	1
+ 362              		.global	display_battery_disable
+ 363              		.syntax unified
+ 364              		.thumb
+ 365              		.thumb_func
+ 367              	display_battery_disable:
+ 368              	.LFB68:
+  97:GUI/Src/displays.c **** 
+  98:GUI/Src/displays.c **** void display_battery_disable(void)
+  99:GUI/Src/displays.c **** {
+ 369              		.loc 1 99 1 is_stmt 1 view -0
+ 370              		.cfi_startproc
+ 371              		@ args = 0, pretend = 0, frame = 0
+ 372              		@ frame_needed = 0, uses_anonymous_args = 0
+ 373 0000 10B5     		push	{r4, lr}
+ 374              	.LCFI10:
+ 375              		.cfi_def_cfa_offset 8
+ 376              		.cfi_offset 4, -8
+ 377              		.cfi_offset 14, -4
+ 378 0002 84B0     		sub	sp, sp, #16
+ 379              	.LCFI11:
+ 380              		.cfi_def_cfa_offset 24
+ 100:GUI/Src/displays.c **** 	HAL_I2C_Mem_Write(&hi2c1, 0xE0, 4, 1, 0, 0, 10); //USTAW ADRES
+ 381              		.loc 1 100 2 view .LVU51
+ 382 0004 0A23     		movs	r3, #10
+ 383 0006 0293     		str	r3, [sp, #8]
+ 384 0008 0023     		movs	r3, #0
+ 385 000a 0193     		str	r3, [sp, #4]
+ 386 000c 0093     		str	r3, [sp]
+ 387 000e 0123     		movs	r3, #1
+ 388 0010 0422     		movs	r2, #4
+ 389 0012 E021     		movs	r1, #224
+ 390 0014 0B48     		ldr	r0, .L32
+ 391 0016 FFF7FEFF 		bl	HAL_I2C_Mem_Write
+ 392              	.LVL29:
+ 101:GUI/Src/displays.c **** 	u8g_FirstPage(&u8g_small);
+ 393              		.loc 1 101 2 view .LVU52
+ 394 001a 0B48     		ldr	r0, .L32+4
+ 395 001c FFF7FEFF 		bl	u8g_FirstPage
+ 396              	.LVL30:
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccc1AQLg.s 			page 10
+
+
+ 397              	.L30:
+ 102:GUI/Src/displays.c **** 		do
+ 398              		.loc 1 102 3 discriminator 1 view .LVU53
+ 103:GUI/Src/displays.c **** 		{
+ 104:GUI/Src/displays.c **** 			u8g_DrawBitmap(&u8g_small, 0, 0, 16, 64, blank_small);
+ 399              		.loc 1 104 4 discriminator 1 view .LVU54
+ 400 0020 094C     		ldr	r4, .L32+4
+ 401 0022 0A4B     		ldr	r3, .L32+8
+ 402 0024 0193     		str	r3, [sp, #4]
+ 403 0026 4023     		movs	r3, #64
+ 404 0028 0093     		str	r3, [sp]
+ 405 002a 1023     		movs	r3, #16
+ 406 002c 0022     		movs	r2, #0
+ 407 002e 1146     		mov	r1, r2
+ 408 0030 2046     		mov	r0, r4
+ 409 0032 FFF7FEFF 		bl	u8g_DrawBitmap
+ 410              	.LVL31:
+ 105:GUI/Src/displays.c **** 		} while ( u8g_NextPage(&u8g_small) );
+ 411              		.loc 1 105 11 discriminator 1 view .LVU55
+ 412              		.loc 1 105 13 is_stmt 0 discriminator 1 view .LVU56
+ 413 0036 2046     		mov	r0, r4
+ 414 0038 FFF7FEFF 		bl	u8g_NextPage
+ 415              	.LVL32:
+ 416              		.loc 1 105 3 discriminator 1 view .LVU57
+ 417 003c 0028     		cmp	r0, #0
+ 418 003e EFD1     		bne	.L30
+ 106:GUI/Src/displays.c **** 
+ 107:GUI/Src/displays.c **** }
+ 419              		.loc 1 107 1 view .LVU58
+ 420 0040 04B0     		add	sp, sp, #16
+ 421              	.LCFI12:
+ 422              		.cfi_def_cfa_offset 8
+ 423              		@ sp needed
+ 424 0042 10BD     		pop	{r4, pc}
+ 425              	.L33:
+ 426              		.align	2
+ 427              	.L32:
+ 428 0044 00000000 		.word	hi2c1
+ 429 0048 00000000 		.word	.LANCHOR0
+ 430 004c 00000000 		.word	blank_small
+ 431              		.cfi_endproc
+ 432              	.LFE68:
+ 434              		.section	.text.display_gear_disable,"ax",%progbits
+ 435              		.align	1
+ 436              		.global	display_gear_disable
+ 437              		.syntax unified
+ 438              		.thumb
+ 439              		.thumb_func
+ 441              	display_gear_disable:
+ 442              	.LFB69:
+ 108:GUI/Src/displays.c **** void display_gear_disable(void)
+ 109:GUI/Src/displays.c **** {
+ 443              		.loc 1 109 1 is_stmt 1 view -0
+ 444              		.cfi_startproc
+ 445              		@ args = 0, pretend = 0, frame = 0
+ 446              		@ frame_needed = 0, uses_anonymous_args = 0
+ 447 0000 10B5     		push	{r4, lr}
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccc1AQLg.s 			page 11
+
+
+ 448              	.LCFI13:
+ 449              		.cfi_def_cfa_offset 8
+ 450              		.cfi_offset 4, -8
+ 451              		.cfi_offset 14, -4
+ 452 0002 84B0     		sub	sp, sp, #16
+ 453              	.LCFI14:
+ 454              		.cfi_def_cfa_offset 24
+ 110:GUI/Src/displays.c **** 	HAL_I2C_Mem_Write(&hi2c1, 0xE0, 10, 10, 0, 0, 10); //USTAW ADRES
+ 455              		.loc 1 110 2 view .LVU60
+ 456 0004 0A22     		movs	r2, #10
+ 457 0006 0292     		str	r2, [sp, #8]
+ 458 0008 0023     		movs	r3, #0
+ 459 000a 0193     		str	r3, [sp, #4]
+ 460 000c 0093     		str	r3, [sp]
+ 461 000e 1346     		mov	r3, r2
+ 462 0010 E021     		movs	r1, #224
+ 463 0012 0C48     		ldr	r0, .L37
+ 464 0014 FFF7FEFF 		bl	HAL_I2C_Mem_Write
+ 465              	.LVL33:
+ 111:GUI/Src/displays.c **** 	u8g_FirstPage(&u8g_small);
+ 466              		.loc 1 111 2 view .LVU61
+ 467 0018 0B48     		ldr	r0, .L37+4
+ 468 001a FFF7FEFF 		bl	u8g_FirstPage
+ 469              	.LVL34:
+ 470              	.L35:
+ 112:GUI/Src/displays.c **** 		do
+ 471              		.loc 1 112 3 discriminator 1 view .LVU62
+ 113:GUI/Src/displays.c **** 		{
+ 114:GUI/Src/displays.c **** 			u8g_DrawBitmap(&u8g_small, 0, 0, 16, 64, blank_small);
+ 472              		.loc 1 114 4 discriminator 1 view .LVU63
+ 473 001e 0A4C     		ldr	r4, .L37+4
+ 474 0020 0A4B     		ldr	r3, .L37+8
+ 475 0022 0193     		str	r3, [sp, #4]
+ 476 0024 4023     		movs	r3, #64
+ 477 0026 0093     		str	r3, [sp]
+ 478 0028 1023     		movs	r3, #16
+ 479 002a 0022     		movs	r2, #0
+ 480 002c 1146     		mov	r1, r2
+ 481 002e 2046     		mov	r0, r4
+ 482 0030 FFF7FEFF 		bl	u8g_DrawBitmap
+ 483              	.LVL35:
+ 115:GUI/Src/displays.c **** 		} while ( u8g_NextPage(&u8g_small) );
+ 484              		.loc 1 115 11 discriminator 1 view .LVU64
+ 485              		.loc 1 115 13 is_stmt 0 discriminator 1 view .LVU65
+ 486 0034 2046     		mov	r0, r4
+ 487 0036 FFF7FEFF 		bl	u8g_NextPage
+ 488              	.LVL36:
+ 489              		.loc 1 115 3 discriminator 1 view .LVU66
+ 490 003a 0028     		cmp	r0, #0
+ 491 003c EFD1     		bne	.L35
+ 116:GUI/Src/displays.c **** 
+ 117:GUI/Src/displays.c **** }
+ 492              		.loc 1 117 1 view .LVU67
+ 493 003e 04B0     		add	sp, sp, #16
+ 494              	.LCFI15:
+ 495              		.cfi_def_cfa_offset 8
+ 496              		@ sp needed
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccc1AQLg.s 			page 12
+
+
+ 497 0040 10BD     		pop	{r4, pc}
+ 498              	.L38:
+ 499 0042 00BF     		.align	2
+ 500              	.L37:
+ 501 0044 00000000 		.word	hi2c1
+ 502 0048 00000000 		.word	.LANCHOR0
+ 503 004c 00000000 		.word	blank_small
+ 504              		.cfi_endproc
+ 505              	.LFE69:
+ 507              		.section	.text.display_power,"ax",%progbits
+ 508              		.align	1
+ 509              		.global	display_power
+ 510              		.syntax unified
+ 511              		.thumb
+ 512              		.thumb_func
+ 514              	display_power:
+ 515              	.LVL37:
+ 516              	.LFB70:
+ 118:GUI/Src/displays.c **** 
+ 119:GUI/Src/displays.c **** 
+ 120:GUI/Src/displays.c **** 
+ 121:GUI/Src/displays.c **** void display_power(double value,uint8_t charging) //USE OLED #3 (RIGHT) to display current power co
+ 122:GUI/Src/displays.c **** {
+ 517              		.loc 1 122 1 is_stmt 1 view -0
+ 518              		.cfi_startproc
+ 519              		@ args = 0, pretend = 0, frame = 16
+ 520              		@ frame_needed = 0, uses_anonymous_args = 0
+ 521              		.loc 1 122 1 is_stmt 0 view .LVU69
+ 522 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 523              	.LCFI16:
+ 524              		.cfi_def_cfa_offset 20
+ 525              		.cfi_offset 4, -20
+ 526              		.cfi_offset 5, -16
+ 527              		.cfi_offset 6, -12
+ 528              		.cfi_offset 7, -8
+ 529              		.cfi_offset 14, -4
+ 530 0002 89B0     		sub	sp, sp, #36
+ 531              	.LCFI17:
+ 532              		.cfi_def_cfa_offset 56
+ 533 0004 0446     		mov	r4, r0
+ 534 0006 0D46     		mov	r5, r1
+ 535 0008 1646     		mov	r6, r2
+ 123:GUI/Src/displays.c **** 
+ 124:GUI/Src/displays.c **** 	char output[10] = "";
+ 536              		.loc 1 124 2 is_stmt 1 view .LVU70
+ 537              		.loc 1 124 7 is_stmt 0 view .LVU71
+ 538 000a 0027     		movs	r7, #0
+ 539 000c 0597     		str	r7, [sp, #20]
+ 540 000e 0697     		str	r7, [sp, #24]
+ 541 0010 ADF81C70 		strh	r7, [sp, #28]	@ movhi
+ 125:GUI/Src/displays.c **** 	snprintf(output, 10, "%4.1f", value); //Convert to string and format
+ 542              		.loc 1 125 2 is_stmt 1 view .LVU72
+ 543 0014 CDE90045 		strd	r4, [sp]
+ 544 0018 1D4A     		ldr	r2, .L51
+ 545              	.LVL38:
+ 546              		.loc 1 125 2 is_stmt 0 view .LVU73
+ 547 001a 0A21     		movs	r1, #10
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccc1AQLg.s 			page 13
+
+
+ 548 001c 05A8     		add	r0, sp, #20
+ 549              	.LVL39:
+ 550              		.loc 1 125 2 view .LVU74
+ 551 001e FFF7FEFF 		bl	snprintf
+ 552              	.LVL40:
+ 126:GUI/Src/displays.c **** 
+ 127:GUI/Src/displays.c **** 	HAL_I2C_Mem_Write(&hi2c1, 0xE0, 1, 1, 0, 0, 10); //USTAW ADRES
+ 553              		.loc 1 127 2 is_stmt 1 view .LVU75
+ 554 0022 0A23     		movs	r3, #10
+ 555 0024 0293     		str	r3, [sp, #8]
+ 556 0026 0197     		str	r7, [sp, #4]
+ 557 0028 0097     		str	r7, [sp]
+ 558 002a 0123     		movs	r3, #1
+ 559 002c 1A46     		mov	r2, r3
+ 560 002e E021     		movs	r1, #224
+ 561 0030 1848     		ldr	r0, .L51+4
+ 562 0032 FFF7FEFF 		bl	HAL_I2C_Mem_Write
+ 563              	.LVL41:
+ 128:GUI/Src/displays.c **** 	//u8g_DrawBitmap(&u8g_small, 0, 0, 16, 64, blank_small);
+ 129:GUI/Src/displays.c **** 
+ 130:GUI/Src/displays.c **** 
+ 131:GUI/Src/displays.c **** 
+ 132:GUI/Src/displays.c **** 	u8g_FirstPage(&u8g_small);
+ 564              		.loc 1 132 2 view .LVU76
+ 565 0036 1848     		ldr	r0, .L51+8
+ 566 0038 FFF7FEFF 		bl	u8g_FirstPage
+ 567              	.LVL42:
+ 568 003c 14E0     		b	.L44
+ 569              	.L49:
+ 133:GUI/Src/displays.c **** 	do
+ 134:GUI/Src/displays.c **** 	{
+ 135:GUI/Src/displays.c **** 		if(charging == 1)
+ 136:GUI/Src/displays.c **** 		{
+ 137:GUI/Src/displays.c **** 			u8g_DrawBitmap(&u8g_small, 0, 0, 16, 64, charge);
+ 570              		.loc 1 137 4 view .LVU77
+ 571 003e 174B     		ldr	r3, .L51+12
+ 572 0040 0193     		str	r3, [sp, #4]
+ 573 0042 4023     		movs	r3, #64
+ 574 0044 0093     		str	r3, [sp]
+ 575 0046 1023     		movs	r3, #16
+ 576 0048 0022     		movs	r2, #0
+ 577 004a 1146     		mov	r1, r2
+ 578 004c 1248     		ldr	r0, .L51+8
+ 579 004e FFF7FEFF 		bl	u8g_DrawBitmap
+ 580              	.LVL43:
+ 581 0052 0BE0     		b	.L40
+ 582              	.L50:
+ 138:GUI/Src/displays.c **** 		}
+ 139:GUI/Src/displays.c **** 
+ 140:GUI/Src/displays.c **** 		if(value <=9)
+ 141:GUI/Src/displays.c **** 		{
+ 142:GUI/Src/displays.c **** 			u8g_DrawStr(&u8g_small, 31, 32, output);
+ 583              		.loc 1 142 4 view .LVU78
+ 584 0054 05AB     		add	r3, sp, #20
+ 585 0056 2022     		movs	r2, #32
+ 586 0058 1F21     		movs	r1, #31
+ 587 005a 0F48     		ldr	r0, .L51+8
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccc1AQLg.s 			page 14
+
+
+ 588 005c FFF7FEFF 		bl	u8g_DrawStr
+ 589              	.LVL44:
+ 590              	.L43:
+ 143:GUI/Src/displays.c **** 		}
+ 144:GUI/Src/displays.c **** 		else
+ 145:GUI/Src/displays.c **** 		{
+ 146:GUI/Src/displays.c **** 			u8g_DrawStr(&u8g_small, 20, 32, output);
+ 147:GUI/Src/displays.c **** 		}
+ 148:GUI/Src/displays.c **** 	} while ( u8g_NextPage(&u8g_small) );
+ 591              		.loc 1 148 10 view .LVU79
+ 592              		.loc 1 148 12 is_stmt 0 view .LVU80
+ 593 0060 0D48     		ldr	r0, .L51+8
+ 594 0062 FFF7FEFF 		bl	u8g_NextPage
+ 595              	.LVL45:
+ 596              		.loc 1 148 2 view .LVU81
+ 597 0066 80B1     		cbz	r0, .L48
+ 598              	.L44:
+ 133:GUI/Src/displays.c **** 	{
+ 599              		.loc 1 133 2 is_stmt 1 view .LVU82
+ 135:GUI/Src/displays.c **** 		{
+ 600              		.loc 1 135 3 view .LVU83
+ 135:GUI/Src/displays.c **** 		{
+ 601              		.loc 1 135 5 is_stmt 0 view .LVU84
+ 602 0068 012E     		cmp	r6, #1
+ 603 006a E8D0     		beq	.L49
+ 604              	.L40:
+ 140:GUI/Src/displays.c **** 		{
+ 605              		.loc 1 140 3 is_stmt 1 view .LVU85
+ 140:GUI/Src/displays.c **** 		{
+ 606              		.loc 1 140 5 is_stmt 0 view .LVU86
+ 607 006c 0022     		movs	r2, #0
+ 608 006e 0C4B     		ldr	r3, .L51+16
+ 609 0070 2046     		mov	r0, r4
+ 610 0072 2946     		mov	r1, r5
+ 611 0074 FFF7FEFF 		bl	__aeabi_dcmple
+ 612              	.LVL46:
+ 613 0078 0028     		cmp	r0, #0
+ 614 007a EBD1     		bne	.L50
+ 146:GUI/Src/displays.c **** 		}
+ 615              		.loc 1 146 4 is_stmt 1 view .LVU87
+ 616 007c 05AB     		add	r3, sp, #20
+ 617 007e 2022     		movs	r2, #32
+ 618 0080 1421     		movs	r1, #20
+ 619 0082 0548     		ldr	r0, .L51+8
+ 620 0084 FFF7FEFF 		bl	u8g_DrawStr
+ 621              	.LVL47:
+ 622 0088 EAE7     		b	.L43
+ 623              	.L48:
+ 149:GUI/Src/displays.c **** 
+ 150:GUI/Src/displays.c **** 
+ 151:GUI/Src/displays.c **** 
+ 152:GUI/Src/displays.c **** }
+ 624              		.loc 1 152 1 is_stmt 0 view .LVU88
+ 625 008a 09B0     		add	sp, sp, #36
+ 626              	.LCFI18:
+ 627              		.cfi_def_cfa_offset 20
+ 628              		@ sp needed
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccc1AQLg.s 			page 15
+
+
+ 629 008c F0BD     		pop	{r4, r5, r6, r7, pc}
+ 630              	.L52:
+ 631 008e 00BF     		.align	2
+ 632              	.L51:
+ 633 0090 00000000 		.word	.LC0
+ 634 0094 00000000 		.word	hi2c1
+ 635 0098 00000000 		.word	.LANCHOR0
+ 636 009c 00000000 		.word	charge
+ 637 00a0 00002240 		.word	1075970048
+ 638              		.cfi_endproc
+ 639              	.LFE70:
+ 641              		.section	.rodata.display_speed.str1.4,"aMS",%progbits,1
+ 642              		.align	2
+ 643              	.LC1:
+ 644 0000 25332E30 		.ascii	"%3.0f\000"
+ 644      6600
+ 645 0006 0000     		.align	2
+ 646              	.LC2:
+ 647 0008 256400   		.ascii	"%d\000"
+ 648              		.global	__aeabi_dcmpgt
+ 649 000b 00       		.align	2
+ 650              	.LC3:
+ 651 000c 6B6D2F68 		.ascii	"km/h\000"
+ 651      00
+ 652 0011 000000   		.align	2
+ 653              	.LC4:
+ 654 0014 73657420 		.ascii	"set \000"
+ 654      00
+ 655              		.section	.text.display_speed,"ax",%progbits
+ 656              		.align	1
+ 657              		.global	display_speed
+ 658              		.syntax unified
+ 659              		.thumb
+ 660              		.thumb_func
+ 662              	display_speed:
+ 663              	.LVL48:
+ 664              	.LFB71:
+ 153:GUI/Src/displays.c **** 
+ 154:GUI/Src/displays.c **** void display_speed(double value, uint8_t cruise)
+ 155:GUI/Src/displays.c **** {
+ 665              		.loc 1 155 1 is_stmt 1 view -0
+ 666              		.cfi_startproc
+ 667              		@ args = 0, pretend = 0, frame = 24
+ 668              		@ frame_needed = 0, uses_anonymous_args = 0
+ 669              		.loc 1 155 1 is_stmt 0 view .LVU90
+ 670 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 671              	.LCFI19:
+ 672              		.cfi_def_cfa_offset 20
+ 673              		.cfi_offset 4, -20
+ 674              		.cfi_offset 5, -16
+ 675              		.cfi_offset 6, -12
+ 676              		.cfi_offset 7, -8
+ 677              		.cfi_offset 14, -4
+ 678 0002 89B0     		sub	sp, sp, #36
+ 679              	.LCFI20:
+ 680              		.cfi_def_cfa_offset 56
+ 681 0004 0646     		mov	r6, r0
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccc1AQLg.s 			page 16
+
+
+ 682 0006 0F46     		mov	r7, r1
+ 683 0008 1546     		mov	r5, r2
+ 156:GUI/Src/displays.c **** 		char output[10];
+ 684              		.loc 1 156 3 is_stmt 1 view .LVU91
+ 157:GUI/Src/displays.c **** 		char output_cruise[10];
+ 685              		.loc 1 157 3 view .LVU92
+ 158:GUI/Src/displays.c **** 
+ 159:GUI/Src/displays.c **** 		snprintf(output, 10, "%3.0f", value); //Convert to string and format
+ 686              		.loc 1 159 3 view .LVU93
+ 687 000a CDE90067 		strd	r6, [sp]
+ 688 000e 3A4A     		ldr	r2, .L72+8
+ 689              	.LVL49:
+ 690              		.loc 1 159 3 is_stmt 0 view .LVU94
+ 691 0010 0A21     		movs	r1, #10
+ 692 0012 05A8     		add	r0, sp, #20
+ 693              	.LVL50:
+ 694              		.loc 1 159 3 view .LVU95
+ 695 0014 FFF7FEFF 		bl	snprintf
+ 696              	.LVL51:
+ 160:GUI/Src/displays.c **** 		snprintf(output_cruise, 10, "%d", cruise); //Convert to string and format
+ 697              		.loc 1 160 3 is_stmt 1 view .LVU96
+ 698 0018 2B46     		mov	r3, r5
+ 699 001a 384A     		ldr	r2, .L72+12
+ 700 001c 0A21     		movs	r1, #10
+ 701 001e 02A8     		add	r0, sp, #8
+ 702 0020 FFF7FEFF 		bl	snprintf
+ 703              	.LVL52:
+ 161:GUI/Src/displays.c **** 		u8g_FirstPage(&u8g_big);
+ 704              		.loc 1 161 3 view .LVU97
+ 705 0024 3648     		ldr	r0, .L72+16
+ 706 0026 FFF7FEFF 		bl	u8g_FirstPage
+ 707              	.LVL53:
+ 708 002a 27E0     		b	.L62
+ 709              	.L71:
+ 162:GUI/Src/displays.c **** 		do
+ 163:GUI/Src/displays.c **** 		{
+ 164:GUI/Src/displays.c **** 
+ 165:GUI/Src/displays.c **** 			if(value <= 9)
+ 166:GUI/Src/displays.c **** 			{
+ 167:GUI/Src/displays.c **** 				u8g_big.font = u8g_font_fur49n;
+ 710              		.loc 1 167 5 view .LVU98
+ 711              		.loc 1 167 18 is_stmt 0 view .LVU99
+ 712 002c 3448     		ldr	r0, .L72+16
+ 713 002e 354B     		ldr	r3, .L72+20
+ 714 0030 8360     		str	r3, [r0, #8]
+ 168:GUI/Src/displays.c **** 				u8g_DrawStr(&u8g_big, 72, 50, output);
+ 715              		.loc 1 168 5 is_stmt 1 view .LVU100
+ 716 0032 05AB     		add	r3, sp, #20
+ 717 0034 3222     		movs	r2, #50
+ 718 0036 4821     		movs	r1, #72
+ 719 0038 FFF7FEFF 		bl	u8g_DrawStr
+ 720              	.LVL54:
+ 721 003c 26E0     		b	.L54
+ 722              	.L56:
+ 169:GUI/Src/displays.c **** 			}
+ 170:GUI/Src/displays.c **** 
+ 171:GUI/Src/displays.c **** 			if((value > 9) && (value <= 99))
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccc1AQLg.s 			page 17
+
+
+ 172:GUI/Src/displays.c **** 			{
+ 173:GUI/Src/displays.c **** 				u8g_big.font = u8g_font_fur49n;
+ 174:GUI/Src/displays.c **** 				u8g_DrawStr(&u8g_big, 34, 50, output);
+ 175:GUI/Src/displays.c **** 			}
+ 176:GUI/Src/displays.c **** 
+ 177:GUI/Src/displays.c **** 			if(value > 99)
+ 723              		.loc 1 177 4 view .LVU101
+ 724              		.loc 1 177 6 is_stmt 0 view .LVU102
+ 725 003e 2CA3     		adr	r3, .L72
+ 726 0040 D3E90023 		ldrd	r2, [r3]
+ 727 0044 3046     		mov	r0, r6
+ 728 0046 3946     		mov	r1, r7
+ 729 0048 FFF7FEFF 		bl	__aeabi_dcmpgt
+ 730              	.LVL55:
+ 731 004c 0028     		cmp	r0, #0
+ 732 004e 37D1     		bne	.L68
+ 733              	.L59:
+ 178:GUI/Src/displays.c **** 			{
+ 179:GUI/Src/displays.c **** 				u8g_big.font = u8g_font_fur49n;
+ 180:GUI/Src/displays.c **** 				u8g_DrawStr(&u8g_big, 1, 50, output);
+ 181:GUI/Src/displays.c **** 			}
+ 182:GUI/Src/displays.c **** 
+ 183:GUI/Src/displays.c **** 
+ 184:GUI/Src/displays.c **** 
+ 185:GUI/Src/displays.c **** 			u8g_DrawHLine(&u8g_big, 0, 54, 128);
+ 734              		.loc 1 185 4 is_stmt 1 view .LVU103
+ 735 0050 2B4C     		ldr	r4, .L72+16
+ 736 0052 8023     		movs	r3, #128
+ 737 0054 3622     		movs	r2, #54
+ 738 0056 0021     		movs	r1, #0
+ 739 0058 2046     		mov	r0, r4
+ 740 005a FFF7FEFF 		bl	u8g_DrawHLine
+ 741              	.LVL56:
+ 186:GUI/Src/displays.c **** 
+ 187:GUI/Src/displays.c **** 			u8g_big.font = u8g_font_6x10;
+ 742              		.loc 1 187 4 view .LVU104
+ 743              		.loc 1 187 17 is_stmt 0 view .LVU105
+ 744 005e 2A49     		ldr	r1, .L72+24
+ 745 0060 A160     		str	r1, [r4, #8]
+ 188:GUI/Src/displays.c **** 			u8g_DrawStr(&u8g_big, 104,63, "km/h");
+ 746              		.loc 1 188 4 is_stmt 1 view .LVU106
+ 747 0062 2A4B     		ldr	r3, .L72+28
+ 748 0064 3F22     		movs	r2, #63
+ 749 0066 6821     		movs	r1, #104
+ 750 0068 2046     		mov	r0, r4
+ 751 006a FFF7FEFF 		bl	u8g_DrawStr
+ 752              	.LVL57:
+ 189:GUI/Src/displays.c **** 
+ 190:GUI/Src/displays.c **** 
+ 191:GUI/Src/displays.c **** 			if(cruise > 0)
+ 753              		.loc 1 191 4 view .LVU107
+ 754              		.loc 1 191 6 is_stmt 0 view .LVU108
+ 755 006e 002D     		cmp	r5, #0
+ 756 0070 2FD1     		bne	.L69
+ 757              	.L61:
+ 192:GUI/Src/displays.c **** 			{
+ 193:GUI/Src/displays.c **** 
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccc1AQLg.s 			page 18
+
+
+ 194:GUI/Src/displays.c **** 				u8g_DrawStr(&u8g_big, 1,63, "set ");
+ 195:GUI/Src/displays.c **** 				u8g_DrawStr(&u8g_big, 22,63, output_cruise);
+ 196:GUI/Src/displays.c **** 
+ 197:GUI/Src/displays.c **** 			}
+ 198:GUI/Src/displays.c **** 
+ 199:GUI/Src/displays.c **** 
+ 200:GUI/Src/displays.c **** 
+ 201:GUI/Src/displays.c **** 
+ 202:GUI/Src/displays.c **** 
+ 203:GUI/Src/displays.c **** 		} while ( u8g_NextPage(&u8g_big) );
+ 758              		.loc 1 203 11 is_stmt 1 view .LVU109
+ 759              		.loc 1 203 13 is_stmt 0 view .LVU110
+ 760 0072 2348     		ldr	r0, .L72+16
+ 761 0074 FFF7FEFF 		bl	u8g_NextPage
+ 762              	.LVL58:
+ 763              		.loc 1 203 3 view .LVU111
+ 764 0078 0028     		cmp	r0, #0
+ 765 007a 37D0     		beq	.L70
+ 766              	.L62:
+ 162:GUI/Src/displays.c **** 		{
+ 767              		.loc 1 162 3 is_stmt 1 view .LVU112
+ 165:GUI/Src/displays.c **** 			{
+ 768              		.loc 1 165 4 view .LVU113
+ 165:GUI/Src/displays.c **** 			{
+ 769              		.loc 1 165 6 is_stmt 0 view .LVU114
+ 770 007c 0022     		movs	r2, #0
+ 771 007e 244B     		ldr	r3, .L72+32
+ 772 0080 3046     		mov	r0, r6
+ 773 0082 3946     		mov	r1, r7
+ 774 0084 FFF7FEFF 		bl	__aeabi_dcmple
+ 775              	.LVL59:
+ 776 0088 0028     		cmp	r0, #0
+ 777 008a CFD1     		bne	.L71
+ 778              	.L54:
+ 171:GUI/Src/displays.c **** 			{
+ 779              		.loc 1 171 4 is_stmt 1 view .LVU115
+ 171:GUI/Src/displays.c **** 			{
+ 780              		.loc 1 171 6 is_stmt 0 view .LVU116
+ 781 008c 0022     		movs	r2, #0
+ 782 008e 204B     		ldr	r3, .L72+32
+ 783 0090 3046     		mov	r0, r6
+ 784 0092 3946     		mov	r1, r7
+ 785 0094 FFF7FEFF 		bl	__aeabi_dcmpgt
+ 786              	.LVL60:
+ 787 0098 0028     		cmp	r0, #0
+ 788 009a D0D0     		beq	.L56
+ 171:GUI/Src/displays.c **** 			{
+ 789              		.loc 1 171 19 discriminator 1 view .LVU117
+ 790 009c 14A3     		adr	r3, .L72
+ 791 009e D3E90023 		ldrd	r2, [r3]
+ 792 00a2 3046     		mov	r0, r6
+ 793 00a4 3946     		mov	r1, r7
+ 794 00a6 FFF7FEFF 		bl	__aeabi_dcmple
+ 795              	.LVL61:
+ 796 00aa 0028     		cmp	r0, #0
+ 797 00ac C7D0     		beq	.L56
+ 173:GUI/Src/displays.c **** 				u8g_DrawStr(&u8g_big, 34, 50, output);
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccc1AQLg.s 			page 19
+
+
+ 798              		.loc 1 173 5 is_stmt 1 view .LVU118
+ 173:GUI/Src/displays.c **** 				u8g_DrawStr(&u8g_big, 34, 50, output);
+ 799              		.loc 1 173 18 is_stmt 0 view .LVU119
+ 800 00ae 1448     		ldr	r0, .L72+16
+ 801 00b0 144B     		ldr	r3, .L72+20
+ 802 00b2 8360     		str	r3, [r0, #8]
+ 174:GUI/Src/displays.c **** 			}
+ 803              		.loc 1 174 5 is_stmt 1 view .LVU120
+ 804 00b4 05AB     		add	r3, sp, #20
+ 805 00b6 3222     		movs	r2, #50
+ 806 00b8 2221     		movs	r1, #34
+ 807 00ba FFF7FEFF 		bl	u8g_DrawStr
+ 808              	.LVL62:
+ 809 00be BEE7     		b	.L56
+ 810              	.L68:
+ 179:GUI/Src/displays.c **** 				u8g_DrawStr(&u8g_big, 1, 50, output);
+ 811              		.loc 1 179 5 view .LVU121
+ 179:GUI/Src/displays.c **** 				u8g_DrawStr(&u8g_big, 1, 50, output);
+ 812              		.loc 1 179 18 is_stmt 0 view .LVU122
+ 813 00c0 0F48     		ldr	r0, .L72+16
+ 814 00c2 104B     		ldr	r3, .L72+20
+ 815 00c4 8360     		str	r3, [r0, #8]
+ 180:GUI/Src/displays.c **** 			}
+ 816              		.loc 1 180 5 is_stmt 1 view .LVU123
+ 817 00c6 05AB     		add	r3, sp, #20
+ 818 00c8 3222     		movs	r2, #50
+ 819 00ca 0121     		movs	r1, #1
+ 820 00cc FFF7FEFF 		bl	u8g_DrawStr
+ 821              	.LVL63:
+ 822 00d0 BEE7     		b	.L59
+ 823              	.L69:
+ 194:GUI/Src/displays.c **** 				u8g_DrawStr(&u8g_big, 22,63, output_cruise);
+ 824              		.loc 1 194 5 view .LVU124
+ 825 00d2 104B     		ldr	r3, .L72+36
+ 826 00d4 3F22     		movs	r2, #63
+ 827 00d6 0121     		movs	r1, #1
+ 828 00d8 2046     		mov	r0, r4
+ 829 00da FFF7FEFF 		bl	u8g_DrawStr
+ 830              	.LVL64:
+ 195:GUI/Src/displays.c **** 
+ 831              		.loc 1 195 5 view .LVU125
+ 832 00de 02AB     		add	r3, sp, #8
+ 833 00e0 3F22     		movs	r2, #63
+ 834 00e2 1621     		movs	r1, #22
+ 835 00e4 2046     		mov	r0, r4
+ 836 00e6 FFF7FEFF 		bl	u8g_DrawStr
+ 837              	.LVL65:
+ 838 00ea C2E7     		b	.L61
+ 839              	.L70:
+ 204:GUI/Src/displays.c **** 
+ 205:GUI/Src/displays.c **** 
+ 206:GUI/Src/displays.c **** 
+ 207:GUI/Src/displays.c **** }
+ 840              		.loc 1 207 1 is_stmt 0 view .LVU126
+ 841 00ec 09B0     		add	sp, sp, #36
+ 842              	.LCFI21:
+ 843              		.cfi_def_cfa_offset 20
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccc1AQLg.s 			page 20
+
+
+ 844              		@ sp needed
+ 845 00ee F0BD     		pop	{r4, r5, r6, r7, pc}
+ 846              	.L73:
+ 847              		.align	3
+ 848              	.L72:
+ 849 00f0 00000000 		.word	0
+ 850 00f4 00C05840 		.word	1079558144
+ 851 00f8 00000000 		.word	.LC1
+ 852 00fc 08000000 		.word	.LC2
+ 853 0100 00000000 		.word	.LANCHOR1
+ 854 0104 00000000 		.word	u8g_font_fur49n
+ 855 0108 00000000 		.word	u8g_font_6x10
+ 856 010c 0C000000 		.word	.LC3
+ 857 0110 00002240 		.word	1075970048
+ 858 0114 14000000 		.word	.LC4
+ 859              		.cfi_endproc
+ 860              	.LFE71:
+ 862              		.section	.text.displays_init,"ax",%progbits
+ 863              		.align	1
+ 864              		.global	displays_init
+ 865              		.syntax unified
+ 866              		.thumb
+ 867              		.thumb_func
+ 869              	displays_init:
+ 870              	.LFB72:
+ 208:GUI/Src/displays.c **** 
+ 209:GUI/Src/displays.c **** void displays_init(void)
+ 210:GUI/Src/displays.c **** {
+ 871              		.loc 1 210 1 is_stmt 1 view -0
+ 872              		.cfi_startproc
+ 873              		@ args = 0, pretend = 0, frame = 0
+ 874              		@ frame_needed = 0, uses_anonymous_args = 0
+ 875 0000 2DE9F047 		push	{r4, r5, r6, r7, r8, r9, r10, lr}
+ 876              	.LCFI22:
+ 877              		.cfi_def_cfa_offset 32
+ 878              		.cfi_offset 4, -32
+ 879              		.cfi_offset 5, -28
+ 880              		.cfi_offset 6, -24
+ 881              		.cfi_offset 7, -20
+ 882              		.cfi_offset 8, -16
+ 883              		.cfi_offset 9, -12
+ 884              		.cfi_offset 10, -8
+ 885              		.cfi_offset 14, -4
+ 886 0004 84B0     		sub	sp, sp, #16
+ 887              	.LCFI23:
+ 888              		.cfi_def_cfa_offset 48
+ 211:GUI/Src/displays.c **** 
+ 212:GUI/Src/displays.c **** 
+ 213:GUI/Src/displays.c **** 
+ 214:GUI/Src/displays.c **** 
+ 215:GUI/Src/displays.c **** 	  HAL_GPIO_WritePin(GPIOA,GPIO_PIN_15,GPIO_PIN_SET);// MUSI BYC
+ 889              		.loc 1 215 4 view .LVU128
+ 890 0006 0122     		movs	r2, #1
+ 891 0008 4FF40041 		mov	r1, #32768
+ 892 000c 3448     		ldr	r0, .L76
+ 893 000e FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 894              	.LVL66:
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccc1AQLg.s 			page 21
+
+
+ 216:GUI/Src/displays.c **** 
+ 217:GUI/Src/displays.c **** 	  HAL_GPIO_WritePin(GPIOC,GPIO_PIN_12,GPIO_PIN_SET); // (reset i2c)
+ 895              		.loc 1 217 4 view .LVU129
+ 896 0012 0122     		movs	r2, #1
+ 897 0014 4FF48051 		mov	r1, #4096
+ 898 0018 3248     		ldr	r0, .L76+4
+ 899 001a FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 900              	.LVL67:
+ 218:GUI/Src/displays.c **** 
+ 219:GUI/Src/displays.c **** 
+ 220:GUI/Src/displays.c **** 	  HAL_GPIO_WritePin(GPIOB,GPIO_PIN_8,GPIO_PIN_RESET); // MUSI BYC mux+
+ 901              		.loc 1 220 4 view .LVU130
+ 902 001e 324C     		ldr	r4, .L76+8
+ 903 0020 0022     		movs	r2, #0
+ 904 0022 4FF48071 		mov	r1, #256
+ 905 0026 2046     		mov	r0, r4
+ 906 0028 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 907              	.LVL68:
+ 221:GUI/Src/displays.c **** 	  HAL_GPIO_WritePin(GPIOB,GPIO_PIN_9,GPIO_PIN_RESET); // MUSI BYC mux
+ 908              		.loc 1 221 4 view .LVU131
+ 909 002c 0022     		movs	r2, #0
+ 910 002e 4FF40071 		mov	r1, #512
+ 911 0032 2046     		mov	r0, r4
+ 912 0034 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 913              	.LVL69:
+ 222:GUI/Src/displays.c **** 
+ 223:GUI/Src/displays.c **** 	  	u8g_InitComFn(&u8g_big, &u8g_dev_ssd1309_128x64_hw_spi, u8g_com_hw_spi_fn);
+ 914              		.loc 1 223 5 view .LVU132
+ 915 0038 2C4A     		ldr	r2, .L76+12
+ 916 003a 2D49     		ldr	r1, .L76+16
+ 917 003c 2D48     		ldr	r0, .L76+20
+ 918 003e FFF7FEFF 		bl	u8g_InitComFn
+ 919              	.LVL70:
+ 224:GUI/Src/displays.c **** 
+ 225:GUI/Src/displays.c **** 
+ 226:GUI/Src/displays.c **** 		HAL_I2C_Mem_Write(&hi2c1, 0xE0, 1, 1, 0, 0, HAL_MAX_DELAY); //USTAW ADRES
+ 920              		.loc 1 226 3 view .LVU133
+ 921 0042 DFF8B490 		ldr	r9, .L76+24
+ 922 0046 4FF0FF3A 		mov	r10, #-1
+ 923 004a CDF808A0 		str	r10, [sp, #8]
+ 924 004e 0025     		movs	r5, #0
+ 925 0050 0195     		str	r5, [sp, #4]
+ 926 0052 0095     		str	r5, [sp]
+ 927 0054 0123     		movs	r3, #1
+ 928 0056 1A46     		mov	r2, r3
+ 929 0058 E021     		movs	r1, #224
+ 930 005a 4846     		mov	r0, r9
+ 931 005c FFF7FEFF 		bl	HAL_I2C_Mem_Write
+ 932              	.LVL71:
+ 227:GUI/Src/displays.c **** 		HAL_Delay(5);
+ 933              		.loc 1 227 3 view .LVU134
+ 934 0060 0520     		movs	r0, #5
+ 935 0062 FFF7FEFF 		bl	HAL_Delay
+ 936              	.LVL72:
+ 228:GUI/Src/displays.c **** 		u8g_InitComFn(&u8g_small, &u8g_dev_ssd1306_128x32_2x_i2c, u8g_com_hw_i2c_fn); //here we init our 
+ 937              		.loc 1 228 3 view .LVU135
+ 938 0066 DFF89480 		ldr	r8, .L76+28
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccc1AQLg.s 			page 22
+
+
+ 939 006a 254F     		ldr	r7, .L76+32
+ 940 006c 254C     		ldr	r4, .L76+36
+ 941 006e 4246     		mov	r2, r8
+ 942 0070 3946     		mov	r1, r7
+ 943 0072 2046     		mov	r0, r4
+ 944 0074 FFF7FEFF 		bl	u8g_InitComFn
+ 945              	.LVL73:
+ 229:GUI/Src/displays.c **** 		u8g_small.font = u8g_font_fub30r;
+ 946              		.loc 1 229 3 view .LVU136
+ 947              		.loc 1 229 18 is_stmt 0 view .LVU137
+ 948 0078 234E     		ldr	r6, .L76+40
+ 949 007a A660     		str	r6, [r4, #8]
+ 230:GUI/Src/displays.c **** 		HAL_Delay(5);
+ 950              		.loc 1 230 3 is_stmt 1 view .LVU138
+ 951 007c 0520     		movs	r0, #5
+ 952 007e FFF7FEFF 		bl	HAL_Delay
+ 953              	.LVL74:
+ 231:GUI/Src/displays.c **** 		HAL_I2C_Mem_Write(&hi2c1, 0xE0, 2, 1, 0, 0, HAL_MAX_DELAY); //USTAW ADRES
+ 954              		.loc 1 231 3 view .LVU139
+ 955 0082 CDF808A0 		str	r10, [sp, #8]
+ 956 0086 0195     		str	r5, [sp, #4]
+ 957 0088 0095     		str	r5, [sp]
+ 958 008a 0123     		movs	r3, #1
+ 959 008c 0222     		movs	r2, #2
+ 960 008e E021     		movs	r1, #224
+ 961 0090 4846     		mov	r0, r9
+ 962 0092 FFF7FEFF 		bl	HAL_I2C_Mem_Write
+ 963              	.LVL75:
+ 232:GUI/Src/displays.c **** 		HAL_Delay(5);
+ 964              		.loc 1 232 3 view .LVU140
+ 965 0096 0520     		movs	r0, #5
+ 966 0098 FFF7FEFF 		bl	HAL_Delay
+ 967              	.LVL76:
+ 233:GUI/Src/displays.c **** 		u8g_InitComFn(&u8g_small, &u8g_dev_ssd1306_128x32_2x_i2c, u8g_com_hw_i2c_fn); //here we init our 
+ 968              		.loc 1 233 3 view .LVU141
+ 969 009c 4246     		mov	r2, r8
+ 970 009e 3946     		mov	r1, r7
+ 971 00a0 2046     		mov	r0, r4
+ 972 00a2 FFF7FEFF 		bl	u8g_InitComFn
+ 973              	.LVL77:
+ 234:GUI/Src/displays.c **** 		u8g_small.font = u8g_font_fub30r;
+ 974              		.loc 1 234 3 view .LVU142
+ 975              		.loc 1 234 18 is_stmt 0 view .LVU143
+ 976 00a6 A660     		str	r6, [r4, #8]
+ 235:GUI/Src/displays.c **** 		HAL_Delay(5);
+ 977              		.loc 1 235 3 is_stmt 1 view .LVU144
+ 978 00a8 0520     		movs	r0, #5
+ 979 00aa FFF7FEFF 		bl	HAL_Delay
+ 980              	.LVL78:
+ 236:GUI/Src/displays.c **** 	  	HAL_I2C_Mem_Write(&hi2c1, 0xE0, 4, 1, 0, 0, HAL_MAX_DELAY); //USTAW ADRES
+ 981              		.loc 1 236 5 view .LVU145
+ 982 00ae CDF808A0 		str	r10, [sp, #8]
+ 983 00b2 0195     		str	r5, [sp, #4]
+ 984 00b4 0095     		str	r5, [sp]
+ 985 00b6 0123     		movs	r3, #1
+ 986 00b8 0422     		movs	r2, #4
+ 987 00ba E021     		movs	r1, #224
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccc1AQLg.s 			page 23
+
+
+ 988 00bc 4846     		mov	r0, r9
+ 989 00be FFF7FEFF 		bl	HAL_I2C_Mem_Write
+ 990              	.LVL79:
+ 237:GUI/Src/displays.c **** 		HAL_Delay(5);
+ 991              		.loc 1 237 3 view .LVU146
+ 992 00c2 0520     		movs	r0, #5
+ 993 00c4 FFF7FEFF 		bl	HAL_Delay
+ 994              	.LVL80:
+ 238:GUI/Src/displays.c **** 	  	u8g_InitComFn(&u8g_small, &u8g_dev_ssd1306_128x32_2x_i2c, u8g_com_hw_i2c_fn); //here we init ou
+ 995              		.loc 1 238 5 view .LVU147
+ 996 00c8 4246     		mov	r2, r8
+ 997 00ca 3946     		mov	r1, r7
+ 998 00cc 2046     		mov	r0, r4
+ 999 00ce FFF7FEFF 		bl	u8g_InitComFn
+ 1000              	.LVL81:
+ 239:GUI/Src/displays.c **** 		u8g_small.font = u8g_font_fub30r;
+ 1001              		.loc 1 239 3 view .LVU148
+ 1002              		.loc 1 239 18 is_stmt 0 view .LVU149
+ 1003 00d2 A660     		str	r6, [r4, #8]
+ 240:GUI/Src/displays.c **** 
+ 241:GUI/Src/displays.c **** 	  HAL_Delay(100);
+ 1004              		.loc 1 241 4 is_stmt 1 view .LVU150
+ 1005 00d4 6420     		movs	r0, #100
+ 1006 00d6 FFF7FEFF 		bl	HAL_Delay
+ 1007              	.LVL82:
+ 242:GUI/Src/displays.c **** }
+ 1008              		.loc 1 242 1 is_stmt 0 view .LVU151
+ 1009 00da 04B0     		add	sp, sp, #16
+ 1010              	.LCFI24:
+ 1011              		.cfi_def_cfa_offset 32
+ 1012              		@ sp needed
+ 1013 00dc BDE8F087 		pop	{r4, r5, r6, r7, r8, r9, r10, pc}
+ 1014              	.L77:
+ 1015              		.align	2
+ 1016              	.L76:
+ 1017 00e0 00080140 		.word	1073809408
+ 1018 00e4 00100140 		.word	1073811456
+ 1019 00e8 000C0140 		.word	1073810432
+ 1020 00ec 00000000 		.word	u8g_com_hw_spi_fn
+ 1021 00f0 00000000 		.word	u8g_dev_ssd1309_128x64_hw_spi
+ 1022 00f4 00000000 		.word	.LANCHOR1
+ 1023 00f8 00000000 		.word	hi2c1
+ 1024 00fc 00000000 		.word	u8g_com_hw_i2c_fn
+ 1025 0100 00000000 		.word	u8g_dev_ssd1306_128x32_2x_i2c
+ 1026 0104 00000000 		.word	.LANCHOR0
+ 1027 0108 00000000 		.word	u8g_font_fub30r
+ 1028              		.cfi_endproc
+ 1029              	.LFE72:
+ 1031              		.section	.text.display_logo,"ax",%progbits
+ 1032              		.align	1
+ 1033              		.global	display_logo
+ 1034              		.syntax unified
+ 1035              		.thumb
+ 1036              		.thumb_func
+ 1038              	display_logo:
+ 1039              	.LFB73:
+ 243:GUI/Src/displays.c **** 
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccc1AQLg.s 			page 24
+
+
+ 244:GUI/Src/displays.c **** void display_logo(void)
+ 245:GUI/Src/displays.c **** {
+ 1040              		.loc 1 245 1 is_stmt 1 view -0
+ 1041              		.cfi_startproc
+ 1042              		@ args = 0, pretend = 0, frame = 0
+ 1043              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1044 0000 10B5     		push	{r4, lr}
+ 1045              	.LCFI25:
+ 1046              		.cfi_def_cfa_offset 8
+ 1047              		.cfi_offset 4, -8
+ 1048              		.cfi_offset 14, -4
+ 1049 0002 82B0     		sub	sp, sp, #8
+ 1050              	.LCFI26:
+ 1051              		.cfi_def_cfa_offset 16
+ 246:GUI/Src/displays.c **** 	u8g_FirstPage(&u8g_big);
+ 1052              		.loc 1 246 2 view .LVU153
+ 1053 0004 0A48     		ldr	r0, .L81
+ 1054 0006 FFF7FEFF 		bl	u8g_FirstPage
+ 1055              	.LVL83:
+ 1056              	.L79:
+ 247:GUI/Src/displays.c **** 	do
+ 1057              		.loc 1 247 2 discriminator 1 view .LVU154
+ 248:GUI/Src/displays.c **** 	{
+ 249:GUI/Src/displays.c **** 	u8g_DrawBitmap(&u8g_big, 0, 0, 16, 64, psd_logo_big);
+ 1058              		.loc 1 249 2 discriminator 1 view .LVU155
+ 1059 000a 094C     		ldr	r4, .L81
+ 1060 000c 094B     		ldr	r3, .L81+4
+ 1061 000e 0193     		str	r3, [sp, #4]
+ 1062 0010 4023     		movs	r3, #64
+ 1063 0012 0093     		str	r3, [sp]
+ 1064 0014 1023     		movs	r3, #16
+ 1065 0016 0022     		movs	r2, #0
+ 1066 0018 1146     		mov	r1, r2
+ 1067 001a 2046     		mov	r0, r4
+ 1068 001c FFF7FEFF 		bl	u8g_DrawBitmap
+ 1069              	.LVL84:
+ 250:GUI/Src/displays.c **** 	} while ( u8g_NextPage(&u8g_big) );
+ 1070              		.loc 1 250 10 discriminator 1 view .LVU156
+ 1071              		.loc 1 250 12 is_stmt 0 discriminator 1 view .LVU157
+ 1072 0020 2046     		mov	r0, r4
+ 1073 0022 FFF7FEFF 		bl	u8g_NextPage
+ 1074              	.LVL85:
+ 1075              		.loc 1 250 2 discriminator 1 view .LVU158
+ 1076 0026 0028     		cmp	r0, #0
+ 1077 0028 EFD1     		bne	.L79
+ 251:GUI/Src/displays.c **** 
+ 252:GUI/Src/displays.c **** }
+ 1078              		.loc 1 252 1 view .LVU159
+ 1079 002a 02B0     		add	sp, sp, #8
+ 1080              	.LCFI27:
+ 1081              		.cfi_def_cfa_offset 8
+ 1082              		@ sp needed
+ 1083 002c 10BD     		pop	{r4, pc}
+ 1084              	.L82:
+ 1085 002e 00BF     		.align	2
+ 1086              	.L81:
+ 1087 0030 00000000 		.word	.LANCHOR1
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccc1AQLg.s 			page 25
+
+
+ 1088 0034 00000000 		.word	psd_logo_big
+ 1089              		.cfi_endproc
+ 1090              	.LFE73:
+ 1092              		.section	.text.displays_set_brightness,"ax",%progbits
+ 1093              		.align	1
+ 1094              		.global	displays_set_brightness
+ 1095              		.syntax unified
+ 1096              		.thumb
+ 1097              		.thumb_func
+ 1099              	displays_set_brightness:
+ 1100              	.LVL86:
+ 1101              	.LFB74:
+ 253:GUI/Src/displays.c **** 
+ 254:GUI/Src/displays.c **** void displays_set_brightness(uint8_t val)
+ 255:GUI/Src/displays.c **** {
+ 1102              		.loc 1 255 1 is_stmt 1 view -0
+ 1103              		.cfi_startproc
+ 1104              		@ args = 0, pretend = 0, frame = 0
+ 1105              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1106              		.loc 1 255 1 is_stmt 0 view .LVU161
+ 1107 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 1108              	.LCFI28:
+ 1109              		.cfi_def_cfa_offset 24
+ 1110              		.cfi_offset 4, -24
+ 1111              		.cfi_offset 5, -20
+ 1112              		.cfi_offset 6, -16
+ 1113              		.cfi_offset 7, -12
+ 1114              		.cfi_offset 8, -8
+ 1115              		.cfi_offset 14, -4
+ 1116 0004 84B0     		sub	sp, sp, #16
+ 1117              	.LCFI29:
+ 1118              		.cfi_def_cfa_offset 40
+ 1119 0006 0446     		mov	r4, r0
+ 256:GUI/Src/displays.c **** 
+ 257:GUI/Src/displays.c **** 	u8g_SetContrast(&u8g_big, val);
+ 1120              		.loc 1 257 2 is_stmt 1 view .LVU162
+ 1121 0008 0146     		mov	r1, r0
+ 1122 000a 1A48     		ldr	r0, .L85
+ 1123              	.LVL87:
+ 1124              		.loc 1 257 2 is_stmt 0 view .LVU163
+ 1125 000c FFF7FEFF 		bl	u8g_SetContrast
+ 1126              	.LVL88:
+ 258:GUI/Src/displays.c **** 
+ 259:GUI/Src/displays.c **** 	HAL_I2C_Mem_Write(&hi2c1, 0xE0, 1, 1, 0, 0, HAL_MAX_DELAY); //USTAW ADRES
+ 1127              		.loc 1 259 2 is_stmt 1 view .LVU164
+ 1128 0010 194F     		ldr	r7, .L85+4
+ 1129 0012 4FF0FF38 		mov	r8, #-1
+ 1130 0016 CDF80880 		str	r8, [sp, #8]
+ 1131 001a 0025     		movs	r5, #0
+ 1132 001c 0195     		str	r5, [sp, #4]
+ 1133 001e 0095     		str	r5, [sp]
+ 1134 0020 0123     		movs	r3, #1
+ 1135 0022 1A46     		mov	r2, r3
+ 1136 0024 E021     		movs	r1, #224
+ 1137 0026 3846     		mov	r0, r7
+ 1138 0028 FFF7FEFF 		bl	HAL_I2C_Mem_Write
+ 1139              	.LVL89:
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccc1AQLg.s 			page 26
+
+
+ 260:GUI/Src/displays.c **** 	u8g_SetContrast(&u8g_small, val);
+ 1140              		.loc 1 260 2 view .LVU165
+ 1141 002c 134E     		ldr	r6, .L85+8
+ 1142 002e 2146     		mov	r1, r4
+ 1143 0030 3046     		mov	r0, r6
+ 1144 0032 FFF7FEFF 		bl	u8g_SetContrast
+ 1145              	.LVL90:
+ 261:GUI/Src/displays.c **** 	HAL_I2C_Mem_Write(&hi2c1, 0xE0, 2, 1, 0, 0, HAL_MAX_DELAY); //USTAW ADRES
+ 1146              		.loc 1 261 2 view .LVU166
+ 1147 0036 CDF80880 		str	r8, [sp, #8]
+ 1148 003a 0195     		str	r5, [sp, #4]
+ 1149 003c 0095     		str	r5, [sp]
+ 1150 003e 0123     		movs	r3, #1
+ 1151 0040 0222     		movs	r2, #2
+ 1152 0042 E021     		movs	r1, #224
+ 1153 0044 3846     		mov	r0, r7
+ 1154 0046 FFF7FEFF 		bl	HAL_I2C_Mem_Write
+ 1155              	.LVL91:
+ 262:GUI/Src/displays.c **** 	u8g_SetContrast(&u8g_small, val);
+ 1156              		.loc 1 262 2 view .LVU167
+ 1157 004a 2146     		mov	r1, r4
+ 1158 004c 3046     		mov	r0, r6
+ 1159 004e FFF7FEFF 		bl	u8g_SetContrast
+ 1160              	.LVL92:
+ 263:GUI/Src/displays.c **** 	HAL_I2C_Mem_Write(&hi2c1, 0xE0, 4, 1, 0, 0, HAL_MAX_DELAY); //USTAW ADRES
+ 1161              		.loc 1 263 2 view .LVU168
+ 1162 0052 CDF80880 		str	r8, [sp, #8]
+ 1163 0056 0195     		str	r5, [sp, #4]
+ 1164 0058 0095     		str	r5, [sp]
+ 1165 005a 0123     		movs	r3, #1
+ 1166 005c 0422     		movs	r2, #4
+ 1167 005e E021     		movs	r1, #224
+ 1168 0060 3846     		mov	r0, r7
+ 1169 0062 FFF7FEFF 		bl	HAL_I2C_Mem_Write
+ 1170              	.LVL93:
+ 264:GUI/Src/displays.c **** 	u8g_SetContrast(&u8g_small, val);
+ 1171              		.loc 1 264 2 view .LVU169
+ 1172 0066 2146     		mov	r1, r4
+ 1173 0068 3046     		mov	r0, r6
+ 1174 006a FFF7FEFF 		bl	u8g_SetContrast
+ 1175              	.LVL94:
+ 265:GUI/Src/displays.c **** 
+ 266:GUI/Src/displays.c **** }
+ 1176              		.loc 1 266 1 is_stmt 0 view .LVU170
+ 1177 006e 04B0     		add	sp, sp, #16
+ 1178              	.LCFI30:
+ 1179              		.cfi_def_cfa_offset 24
+ 1180              		@ sp needed
+ 1181 0070 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 1182              	.L86:
+ 1183              		.align	2
+ 1184              	.L85:
+ 1185 0074 00000000 		.word	.LANCHOR1
+ 1186 0078 00000000 		.word	hi2c1
+ 1187 007c 00000000 		.word	.LANCHOR0
+ 1188              		.cfi_endproc
+ 1189              	.LFE74:
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccc1AQLg.s 			page 27
+
+
+ 1191              		.global	u8g_small
+ 1192              		.global	u8g_big
+ 1193              		.section	.bss.u8g_big,"aw",%nobits
+ 1194              		.align	2
+ 1195              		.set	.LANCHOR1,. + 0
+ 1198              	u8g_big:
+ 1199 0000 00000000 		.space	60
+ 1199      00000000 
+ 1199      00000000 
+ 1199      00000000 
+ 1199      00000000 
+ 1200              		.section	.bss.u8g_small,"aw",%nobits
+ 1201              		.align	2
+ 1202              		.set	.LANCHOR0,. + 0
+ 1205              	u8g_small:
+ 1206 0000 00000000 		.space	60
+ 1206      00000000 
+ 1206      00000000 
+ 1206      00000000 
+ 1206      00000000 
+ 1207              		.text
+ 1208              	.Letext0:
+ 1209              		.file 2 "c:\\users\\zbigniew\\appdata\\roaming\\code\\user\\globalstorage\\bmd.stm32-for-vscode\\@
+ 1210              		.file 3 "c:\\users\\zbigniew\\appdata\\roaming\\code\\user\\globalstorage\\bmd.stm32-for-vscode\\@
+ 1211              		.file 4 "Inc/../Drivers/u8glib/inc/u8g.h"
+ 1212              		.file 5 "Inc/../GUI/Inc/displays.h"
+ 1213              		.file 6 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xe.h"
+ 1214              		.file 7 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_def.h"
+ 1215              		.file 8 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_gpio.h"
+ 1216              		.file 9 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_dma.h"
+ 1217              		.file 10 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_i2c.h"
+ 1218              		.file 11 "Inc/../Drivers/u8glib/inc/u8g_arm.h"
+ 1219              		.file 12 "Inc/../Drivers/u8glib/pictures.h"
+ 1220              		.file 13 "<built-in>"
+ 1221              		.file 14 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h"
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccc1AQLg.s 			page 28
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 displays.c
+C:\Users\Zbigniew\AppData\Local\Temp\ccc1AQLg.s:18     .rodata.display_battery.str1.4:0000000000000000 $d
+C:\Users\Zbigniew\AppData\Local\Temp\ccc1AQLg.s:23     .text.display_battery:0000000000000000 $t
+C:\Users\Zbigniew\AppData\Local\Temp\ccc1AQLg.s:29     .text.display_battery:0000000000000000 display_battery
+C:\Users\Zbigniew\AppData\Local\Temp\ccc1AQLg.s:127    .text.display_battery:0000000000000074 $d
+C:\Users\Zbigniew\AppData\Local\Temp\ccc1AQLg.s:135    .text.display_gear:0000000000000000 $t
+C:\Users\Zbigniew\AppData\Local\Temp\ccc1AQLg.s:141    .text.display_gear:0000000000000000 display_gear
+C:\Users\Zbigniew\AppData\Local\Temp\ccc1AQLg.s:278    .text.display_gear:00000000000000a0 $d
+C:\Users\Zbigniew\AppData\Local\Temp\ccc1AQLg.s:287    .text.display_power_disable:0000000000000000 $t
+C:\Users\Zbigniew\AppData\Local\Temp\ccc1AQLg.s:293    .text.display_power_disable:0000000000000000 display_power_disable
+C:\Users\Zbigniew\AppData\Local\Temp\ccc1AQLg.s:354    .text.display_power_disable:0000000000000044 $d
+C:\Users\Zbigniew\AppData\Local\Temp\ccc1AQLg.s:361    .text.display_battery_disable:0000000000000000 $t
+C:\Users\Zbigniew\AppData\Local\Temp\ccc1AQLg.s:367    .text.display_battery_disable:0000000000000000 display_battery_disable
+C:\Users\Zbigniew\AppData\Local\Temp\ccc1AQLg.s:428    .text.display_battery_disable:0000000000000044 $d
+C:\Users\Zbigniew\AppData\Local\Temp\ccc1AQLg.s:435    .text.display_gear_disable:0000000000000000 $t
+C:\Users\Zbigniew\AppData\Local\Temp\ccc1AQLg.s:441    .text.display_gear_disable:0000000000000000 display_gear_disable
+C:\Users\Zbigniew\AppData\Local\Temp\ccc1AQLg.s:501    .text.display_gear_disable:0000000000000044 $d
+C:\Users\Zbigniew\AppData\Local\Temp\ccc1AQLg.s:508    .text.display_power:0000000000000000 $t
+C:\Users\Zbigniew\AppData\Local\Temp\ccc1AQLg.s:514    .text.display_power:0000000000000000 display_power
+C:\Users\Zbigniew\AppData\Local\Temp\ccc1AQLg.s:633    .text.display_power:0000000000000090 $d
+C:\Users\Zbigniew\AppData\Local\Temp\ccc1AQLg.s:642    .rodata.display_speed.str1.4:0000000000000000 $d
+C:\Users\Zbigniew\AppData\Local\Temp\ccc1AQLg.s:656    .text.display_speed:0000000000000000 $t
+C:\Users\Zbigniew\AppData\Local\Temp\ccc1AQLg.s:662    .text.display_speed:0000000000000000 display_speed
+C:\Users\Zbigniew\AppData\Local\Temp\ccc1AQLg.s:849    .text.display_speed:00000000000000f0 $d
+C:\Users\Zbigniew\AppData\Local\Temp\ccc1AQLg.s:863    .text.displays_init:0000000000000000 $t
+C:\Users\Zbigniew\AppData\Local\Temp\ccc1AQLg.s:869    .text.displays_init:0000000000000000 displays_init
+C:\Users\Zbigniew\AppData\Local\Temp\ccc1AQLg.s:1017   .text.displays_init:00000000000000e0 $d
+C:\Users\Zbigniew\AppData\Local\Temp\ccc1AQLg.s:1032   .text.display_logo:0000000000000000 $t
+C:\Users\Zbigniew\AppData\Local\Temp\ccc1AQLg.s:1038   .text.display_logo:0000000000000000 display_logo
+C:\Users\Zbigniew\AppData\Local\Temp\ccc1AQLg.s:1087   .text.display_logo:0000000000000030 $d
+C:\Users\Zbigniew\AppData\Local\Temp\ccc1AQLg.s:1093   .text.displays_set_brightness:0000000000000000 $t
+C:\Users\Zbigniew\AppData\Local\Temp\ccc1AQLg.s:1099   .text.displays_set_brightness:0000000000000000 displays_set_brightness
+C:\Users\Zbigniew\AppData\Local\Temp\ccc1AQLg.s:1185   .text.displays_set_brightness:0000000000000074 $d
+C:\Users\Zbigniew\AppData\Local\Temp\ccc1AQLg.s:1205   .bss.u8g_small:0000000000000000 u8g_small
+C:\Users\Zbigniew\AppData\Local\Temp\ccc1AQLg.s:1198   .bss.u8g_big:0000000000000000 u8g_big
+C:\Users\Zbigniew\AppData\Local\Temp\ccc1AQLg.s:1194   .bss.u8g_big:0000000000000000 $d
+C:\Users\Zbigniew\AppData\Local\Temp\ccc1AQLg.s:1201   .bss.u8g_small:0000000000000000 $d
+
+UNDEFINED SYMBOLS
+__aeabi_dcmple
+snprintf
+HAL_I2C_Mem_Write
+u8g_FirstPage
+u8g_DrawStr
+u8g_NextPage
+hi2c1
+u8g_DrawBitmap
+neutral
+drive
+reverse
+blank_small
+charge
+__aeabi_dcmpgt
+u8g_DrawHLine
+u8g_font_fur49n
+u8g_font_6x10
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccc1AQLg.s 			page 29
+
+
+HAL_GPIO_WritePin
+u8g_InitComFn
+HAL_Delay
+u8g_com_hw_spi_fn
+u8g_dev_ssd1309_128x64_hw_spi
+u8g_com_hw_i2c_fn
+u8g_dev_ssd1306_128x32_2x_i2c
+u8g_font_fub30r
+psd_logo_big
+u8g_SetContrast

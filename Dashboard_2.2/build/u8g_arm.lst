@@ -1,0 +1,742 @@
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccwZoY5f.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.arch armv7-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"u8g_arm.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.u8g_Delay,"ax",%progbits
+  18              		.align	1
+  19              		.global	u8g_Delay
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  24              	u8g_Delay:
+  25              	.LVL0:
+  26              	.LFB65:
+  27              		.file 1 "Drivers/u8glib/src/u8g_arm.c"
+   1:Drivers/u8glib/src/u8g_arm.c ****  #include "../Drivers/u8glib/inc/u8g_arm.h"
+   2:Drivers/u8glib/src/u8g_arm.c **** 
+   3:Drivers/u8glib/src/u8g_arm.c ****  static uint8_t control = 0;
+   4:Drivers/u8glib/src/u8g_arm.c **** 
+   5:Drivers/u8glib/src/u8g_arm.c ****  void u8g_Delay(uint16_t val)  
+   6:Drivers/u8glib/src/u8g_arm.c ****  {  
+  28              		.loc 1 6 2 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		.loc 1 6 2 is_stmt 0 view .LVU1
+  33 0000 08B5     		push	{r3, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 8
+  36              		.cfi_offset 3, -8
+  37              		.cfi_offset 14, -4
+   7:Drivers/u8glib/src/u8g_arm.c **** 
+   8:Drivers/u8glib/src/u8g_arm.c **** 
+   9:Drivers/u8glib/src/u8g_arm.c **** 	 HAL_Delay(val/25);
+  38              		.loc 1 9 3 is_stmt 1 view .LVU2
+  39 0002 034B     		ldr	r3, .L3
+  40 0004 A3FB0030 		umull	r3, r0, r3, r0
+  41              	.LVL1:
+  42              		.loc 1 9 3 is_stmt 0 view .LVU3
+  43 0008 C008     		lsrs	r0, r0, #3
+  44 000a FFF7FEFF 		bl	HAL_Delay
+  45              	.LVL2:
+  10:Drivers/u8glib/src/u8g_arm.c ****  }  
+  46              		.loc 1 10 2 view .LVU4
+  47 000e 08BD     		pop	{r3, pc}
+  48              	.L4:
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccwZoY5f.s 			page 2
+
+
+  49              		.align	2
+  50              	.L3:
+  51 0010 1F85EB51 		.word	1374389535
+  52              		.cfi_endproc
+  53              	.LFE65:
+  55              		.section	.text.u8g_MicroDelay,"ax",%progbits
+  56              		.align	1
+  57              		.global	u8g_MicroDelay
+  58              		.syntax unified
+  59              		.thumb
+  60              		.thumb_func
+  62              	u8g_MicroDelay:
+  63              	.LFB66:
+  11:Drivers/u8glib/src/u8g_arm.c ****  void u8g_MicroDelay(void)  
+  12:Drivers/u8glib/src/u8g_arm.c ****  {  
+  64              		.loc 1 12 2 is_stmt 1 view -0
+  65              		.cfi_startproc
+  66              		@ args = 0, pretend = 0, frame = 0
+  67              		@ frame_needed = 0, uses_anonymous_args = 0
+  68              		@ link register save eliminated.
+  13:Drivers/u8glib/src/u8g_arm.c ****       asm("nop");
+  69              		.loc 1 13 7 view .LVU6
+  70              		.syntax unified
+  71              	@ 13 "Drivers/u8glib/src/u8g_arm.c" 1
+  72 0000 00BF     		nop
+  73              	@ 0 "" 2
+  14:Drivers/u8glib/src/u8g_arm.c ****       asm("nop");
+  74              		.loc 1 14 7 view .LVU7
+  75              	@ 14 "Drivers/u8glib/src/u8g_arm.c" 1
+  76 0002 00BF     		nop
+  77              	@ 0 "" 2
+  15:Drivers/u8glib/src/u8g_arm.c ****       asm("nop");
+  78              		.loc 1 15 7 view .LVU8
+  79              	@ 15 "Drivers/u8glib/src/u8g_arm.c" 1
+  80 0004 00BF     		nop
+  81              	@ 0 "" 2
+  16:Drivers/u8glib/src/u8g_arm.c **** 
+  17:Drivers/u8glib/src/u8g_arm.c **** 	 //HAL_Delay(1);
+  18:Drivers/u8glib/src/u8g_arm.c ****  }  
+  82              		.loc 1 18 2 is_stmt 0 view .LVU9
+  83              		.thumb
+  84              		.syntax unified
+  85 0006 7047     		bx	lr
+  86              		.cfi_endproc
+  87              	.LFE66:
+  89              		.section	.text.u8g_10MicroDelay,"ax",%progbits
+  90              		.align	1
+  91              		.global	u8g_10MicroDelay
+  92              		.syntax unified
+  93              		.thumb
+  94              		.thumb_func
+  96              	u8g_10MicroDelay:
+  97              	.LFB67:
+  19:Drivers/u8glib/src/u8g_arm.c ****  void u8g_10MicroDelay(void)  
+  20:Drivers/u8glib/src/u8g_arm.c ****  {  
+  98              		.loc 1 20 2 is_stmt 1 view -0
+  99              		.cfi_startproc
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccwZoY5f.s 			page 3
+
+
+ 100              		@ args = 0, pretend = 0, frame = 0
+ 101              		@ frame_needed = 0, uses_anonymous_args = 0
+ 102              		@ link register save eliminated.
+  21:Drivers/u8glib/src/u8g_arm.c ****      asm("nop");
+ 103              		.loc 1 21 6 view .LVU11
+ 104              		.syntax unified
+ 105              	@ 21 "Drivers/u8glib/src/u8g_arm.c" 1
+ 106 0000 00BF     		nop
+ 107              	@ 0 "" 2
+  22:Drivers/u8glib/src/u8g_arm.c ****      asm("nop");
+ 108              		.loc 1 22 6 view .LVU12
+ 109              	@ 22 "Drivers/u8glib/src/u8g_arm.c" 1
+ 110 0002 00BF     		nop
+ 111              	@ 0 "" 2
+  23:Drivers/u8glib/src/u8g_arm.c ****      asm("nop");
+ 112              		.loc 1 23 6 view .LVU13
+ 113              	@ 23 "Drivers/u8glib/src/u8g_arm.c" 1
+ 114 0004 00BF     		nop
+ 115              	@ 0 "" 2
+  24:Drivers/u8glib/src/u8g_arm.c ****      asm("nop");
+ 116              		.loc 1 24 6 view .LVU14
+ 117              	@ 24 "Drivers/u8glib/src/u8g_arm.c" 1
+ 118 0006 00BF     		nop
+ 119              	@ 0 "" 2
+  25:Drivers/u8glib/src/u8g_arm.c ****      asm("nop");
+ 120              		.loc 1 25 6 view .LVU15
+ 121              	@ 25 "Drivers/u8glib/src/u8g_arm.c" 1
+ 122 0008 00BF     		nop
+ 123              	@ 0 "" 2
+  26:Drivers/u8glib/src/u8g_arm.c ****      asm("nop");
+ 124              		.loc 1 26 6 view .LVU16
+ 125              	@ 26 "Drivers/u8glib/src/u8g_arm.c" 1
+ 126 000a 00BF     		nop
+ 127              	@ 0 "" 2
+  27:Drivers/u8glib/src/u8g_arm.c **** 
+  28:Drivers/u8glib/src/u8g_arm.c ****       //HAL_Delay(1);
+  29:Drivers/u8glib/src/u8g_arm.c ****  }  
+ 128              		.loc 1 29 2 is_stmt 0 view .LVU17
+ 129              		.thumb
+ 130              		.syntax unified
+ 131 000c 7047     		bx	lr
+ 132              		.cfi_endproc
+ 133              	.LFE67:
+ 135              		.section	.text.u8g_com_hw_spi_fn,"ax",%progbits
+ 136              		.align	1
+ 137              		.global	u8g_com_hw_spi_fn
+ 138              		.syntax unified
+ 139              		.thumb
+ 140              		.thumb_func
+ 142              	u8g_com_hw_spi_fn:
+ 143              	.LVL3:
+ 144              	.LFB68:
+  30:Drivers/u8glib/src/u8g_arm.c ****  uint8_t u8g_com_hw_spi_fn(u8g_t *u8g, uint8_t msg, uint8_t arg_val, void *arg_ptr)  
+  31:Drivers/u8glib/src/u8g_arm.c ****  {  
+ 145              		.loc 1 31 2 is_stmt 1 view -0
+ 146              		.cfi_startproc
+ 147              		@ args = 0, pretend = 0, frame = 8
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccwZoY5f.s 			page 4
+
+
+ 148              		@ frame_needed = 0, uses_anonymous_args = 0
+ 149              		.loc 1 31 2 is_stmt 0 view .LVU19
+ 150 0000 00B5     		push	{lr}
+ 151              	.LCFI1:
+ 152              		.cfi_def_cfa_offset 4
+ 153              		.cfi_offset 14, -4
+ 154 0002 83B0     		sub	sp, sp, #12
+ 155              	.LCFI2:
+ 156              		.cfi_def_cfa_offset 16
+ 157 0004 1846     		mov	r0, r3
+ 158              	.LVL4:
+ 159              		.loc 1 31 2 view .LVU20
+ 160 0006 8DF80720 		strb	r2, [sp, #7]
+  32:Drivers/u8glib/src/u8g_arm.c ****   switch(msg)  
+ 161              		.loc 1 32 3 is_stmt 1 view .LVU21
+ 162 000a 4A1E     		subs	r2, r1, #1
+ 163              	.LVL5:
+ 164              		.loc 1 32 3 is_stmt 0 view .LVU22
+ 165 000c 062A     		cmp	r2, #6
+ 166 000e 07D8     		bhi	.L8
+ 167 0010 DFE802F0 		tbb	[pc, r2]
+ 168              	.LVL6:
+ 169              	.L10:
+ 170 0014 04       		.byte	(.L14-.L10)/2
+ 171 0015 0A       		.byte	(.L13-.L10)/2
+ 172 0016 15       		.byte	(.L12-.L10)/2
+ 173 0017 06       		.byte	(.L8-.L10)/2
+ 174 0018 2A       		.byte	(.L11-.L10)/2
+ 175 0019 39       		.byte	(.L9-.L10)/2
+ 176 001a 39       		.byte	(.L9-.L10)/2
+ 177 001b 00       		.p2align 1
+ 178              	.L14:
+  33:Drivers/u8glib/src/u8g_arm.c ****   {  
+  34:Drivers/u8glib/src/u8g_arm.c ****    case U8G_COM_MSG_STOP:  
+  35:Drivers/u8glib/src/u8g_arm.c ****     break;  
+  36:Drivers/u8glib/src/u8g_arm.c ****    case U8G_COM_MSG_INIT:  
+  37:Drivers/u8glib/src/u8g_arm.c ****     u8g_MicroDelay();  
+ 179              		.loc 1 37 5 is_stmt 1 view .LVU23
+ 180 001c FFF7FEFF 		bl	u8g_MicroDelay
+ 181              	.LVL7:
+  38:Drivers/u8glib/src/u8g_arm.c ****     break;  
+ 182              		.loc 1 38 5 view .LVU24
+ 183              	.L8:
+  39:Drivers/u8glib/src/u8g_arm.c ****    case U8G_COM_MSG_ADDRESS:           /* define cmd (arg_val = 0) or data mode (arg_val = 1) */  
+  40:Drivers/u8glib/src/u8g_arm.c ****     u8g_10MicroDelay();  
+  41:Drivers/u8glib/src/u8g_arm.c ****     HAL_GPIO_WritePin(PORT_DC, DC, arg_val);  
+  42:Drivers/u8glib/src/u8g_arm.c ****     u8g_10MicroDelay();  
+  43:Drivers/u8glib/src/u8g_arm.c ****     break;  
+  44:Drivers/u8glib/src/u8g_arm.c ****    case U8G_COM_MSG_CHIP_SELECT:  
+  45:Drivers/u8glib/src/u8g_arm.c ****     if ( arg_val == 0 )  
+  46:Drivers/u8glib/src/u8g_arm.c ****     {  
+  47:Drivers/u8glib/src/u8g_arm.c ****     	 u8g_MicroDelay();
+  48:Drivers/u8glib/src/u8g_arm.c ****          //HAL_Delay(1);
+  49:Drivers/u8glib/src/u8g_arm.c ****          HAL_GPIO_WritePin(PORT_CS, CS, GPIO_PIN_SET);  
+  50:Drivers/u8glib/src/u8g_arm.c ****     }  
+  51:Drivers/u8glib/src/u8g_arm.c ****     else  
+  52:Drivers/u8glib/src/u8g_arm.c ****       HAL_GPIO_WritePin(PORT_CS, CS, GPIO_PIN_RESET);  
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccwZoY5f.s 			page 5
+
+
+  53:Drivers/u8glib/src/u8g_arm.c ****     u8g_MicroDelay();  
+  54:Drivers/u8glib/src/u8g_arm.c ****     break;  
+  55:Drivers/u8glib/src/u8g_arm.c ****    case U8G_COM_MSG_RESET:  
+  56:Drivers/u8glib/src/u8g_arm.c ****     break;  
+  57:Drivers/u8glib/src/u8g_arm.c ****    case U8G_COM_MSG_WRITE_BYTE:  
+  58:Drivers/u8glib/src/u8g_arm.c ****      HAL_SPI_Transmit(&SPI_HANDLER, &arg_val, 1, 100);
+  59:Drivers/u8glib/src/u8g_arm.c ****      while(HAL_SPI_GetState(&SPI_HANDLER) != HAL_SPI_STATE_READY);  
+  60:Drivers/u8glib/src/u8g_arm.c ****      u8g_MicroDelay();  
+  61:Drivers/u8glib/src/u8g_arm.c ****      break;  
+  62:Drivers/u8glib/src/u8g_arm.c ****    case U8G_COM_MSG_WRITE_SEQ:  
+  63:Drivers/u8glib/src/u8g_arm.c ****    case U8G_COM_MSG_WRITE_SEQ_P:  
+  64:Drivers/u8glib/src/u8g_arm.c ****     {  
+  65:Drivers/u8glib/src/u8g_arm.c ****          HAL_SPI_Transmit(&SPI_HANDLER, (uint8_t *)arg_ptr, arg_val, 100);
+  66:Drivers/u8glib/src/u8g_arm.c ****          //while(HAL_SPI_GetState(&SPI_HANDLER) != HAL_SPI_STATE_READY);
+  67:Drivers/u8glib/src/u8g_arm.c ****          u8g_MicroDelay();  
+  68:Drivers/u8glib/src/u8g_arm.c ****          arg_val = 0;  
+  69:Drivers/u8glib/src/u8g_arm.c ****     }  
+  70:Drivers/u8glib/src/u8g_arm.c ****     break;  
+  71:Drivers/u8glib/src/u8g_arm.c ****   }  
+  72:Drivers/u8glib/src/u8g_arm.c ****   return 1;  
+ 184              		.loc 1 72 3 view .LVU25
+  73:Drivers/u8glib/src/u8g_arm.c ****  }  
+ 185              		.loc 1 73 2 is_stmt 0 view .LVU26
+ 186 0020 0120     		movs	r0, #1
+ 187 0022 03B0     		add	sp, sp, #12
+ 188              	.LCFI3:
+ 189              		.cfi_remember_state
+ 190              		.cfi_def_cfa_offset 4
+ 191              		@ sp needed
+ 192 0024 5DF804FB 		ldr	pc, [sp], #4
+ 193              	.LVL8:
+ 194              	.L13:
+ 195              	.LCFI4:
+ 196              		.cfi_restore_state
+  40:Drivers/u8glib/src/u8g_arm.c ****     HAL_GPIO_WritePin(PORT_DC, DC, arg_val);  
+ 197              		.loc 1 40 5 is_stmt 1 view .LVU27
+ 198 0028 FFF7FEFF 		bl	u8g_10MicroDelay
+ 199              	.LVL9:
+  41:Drivers/u8glib/src/u8g_arm.c ****     u8g_10MicroDelay();  
+ 200              		.loc 1 41 5 view .LVU28
+ 201 002c 9DF80720 		ldrb	r2, [sp, #7]	@ zero_extendqisi2
+ 202 0030 0421     		movs	r1, #4
+ 203 0032 1B48     		ldr	r0, .L19
+ 204 0034 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 205              	.LVL10:
+  42:Drivers/u8glib/src/u8g_arm.c ****     break;  
+ 206              		.loc 1 42 5 view .LVU29
+ 207 0038 FFF7FEFF 		bl	u8g_10MicroDelay
+ 208              	.LVL11:
+  43:Drivers/u8glib/src/u8g_arm.c ****    case U8G_COM_MSG_CHIP_SELECT:  
+ 209              		.loc 1 43 5 view .LVU30
+ 210 003c F0E7     		b	.L8
+ 211              	.LVL12:
+ 212              	.L12:
+  45:Drivers/u8glib/src/u8g_arm.c ****     {  
+ 213              		.loc 1 45 5 view .LVU31
+  45:Drivers/u8glib/src/u8g_arm.c ****     {  
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccwZoY5f.s 			page 6
+
+
+ 214              		.loc 1 45 18 is_stmt 0 view .LVU32
+ 215 003e 9DF80730 		ldrb	r3, [sp, #7]	@ zero_extendqisi2
+  45:Drivers/u8glib/src/u8g_arm.c ****     {  
+ 216              		.loc 1 45 8 view .LVU33
+ 217 0042 53B9     		cbnz	r3, .L15
+  47:Drivers/u8glib/src/u8g_arm.c ****          //HAL_Delay(1);
+ 218              		.loc 1 47 7 is_stmt 1 view .LVU34
+ 219 0044 FFF7FEFF 		bl	u8g_MicroDelay
+ 220              	.LVL13:
+  49:Drivers/u8glib/src/u8g_arm.c ****     }  
+ 221              		.loc 1 49 10 view .LVU35
+ 222 0048 0122     		movs	r2, #1
+ 223 004a 4FF48061 		mov	r1, #1024
+ 224 004e 1548     		ldr	r0, .L19+4
+ 225 0050 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 226              	.LVL14:
+ 227              	.L16:
+  53:Drivers/u8glib/src/u8g_arm.c ****     break;  
+ 228              		.loc 1 53 5 view .LVU36
+ 229 0054 FFF7FEFF 		bl	u8g_MicroDelay
+ 230              	.LVL15:
+  54:Drivers/u8glib/src/u8g_arm.c ****    case U8G_COM_MSG_RESET:  
+ 231              		.loc 1 54 5 view .LVU37
+ 232 0058 E2E7     		b	.L8
+ 233              	.LVL16:
+ 234              	.L15:
+  52:Drivers/u8glib/src/u8g_arm.c ****     u8g_MicroDelay();  
+ 235              		.loc 1 52 7 view .LVU38
+ 236 005a 0022     		movs	r2, #0
+ 237 005c 4FF48061 		mov	r1, #1024
+ 238              	.LVL17:
+  52:Drivers/u8glib/src/u8g_arm.c ****     u8g_MicroDelay();  
+ 239              		.loc 1 52 7 is_stmt 0 view .LVU39
+ 240 0060 1048     		ldr	r0, .L19+4
+ 241              	.LVL18:
+  52:Drivers/u8glib/src/u8g_arm.c ****     u8g_MicroDelay();  
+ 242              		.loc 1 52 7 view .LVU40
+ 243 0062 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 244              	.LVL19:
+  52:Drivers/u8glib/src/u8g_arm.c ****     u8g_MicroDelay();  
+ 245              		.loc 1 52 7 view .LVU41
+ 246 0066 F5E7     		b	.L16
+ 247              	.LVL20:
+ 248              	.L11:
+  58:Drivers/u8glib/src/u8g_arm.c ****      while(HAL_SPI_GetState(&SPI_HANDLER) != HAL_SPI_STATE_READY);  
+ 249              		.loc 1 58 6 is_stmt 1 view .LVU42
+ 250 0068 6423     		movs	r3, #100
+ 251 006a 0122     		movs	r2, #1
+ 252 006c 0DF10701 		add	r1, sp, #7
+ 253              	.LVL21:
+  58:Drivers/u8glib/src/u8g_arm.c ****      while(HAL_SPI_GetState(&SPI_HANDLER) != HAL_SPI_STATE_READY);  
+ 254              		.loc 1 58 6 is_stmt 0 view .LVU43
+ 255 0070 0D48     		ldr	r0, .L19+8
+ 256              	.LVL22:
+  58:Drivers/u8glib/src/u8g_arm.c ****      while(HAL_SPI_GetState(&SPI_HANDLER) != HAL_SPI_STATE_READY);  
+ 257              		.loc 1 58 6 view .LVU44
+ 258 0072 FFF7FEFF 		bl	HAL_SPI_Transmit
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccwZoY5f.s 			page 7
+
+
+ 259              	.LVL23:
+  59:Drivers/u8glib/src/u8g_arm.c ****      u8g_MicroDelay();  
+ 260              		.loc 1 59 6 is_stmt 1 view .LVU45
+ 261              	.L17:
+  59:Drivers/u8glib/src/u8g_arm.c ****      u8g_MicroDelay();  
+ 262              		.loc 1 59 66 discriminator 1 view .LVU46
+  59:Drivers/u8glib/src/u8g_arm.c ****      u8g_MicroDelay();  
+ 263              		.loc 1 59 11 discriminator 1 view .LVU47
+  59:Drivers/u8glib/src/u8g_arm.c ****      u8g_MicroDelay();  
+ 264              		.loc 1 59 12 is_stmt 0 discriminator 1 view .LVU48
+ 265 0076 0C48     		ldr	r0, .L19+8
+ 266 0078 FFF7FEFF 		bl	HAL_SPI_GetState
+ 267              	.LVL24:
+  59:Drivers/u8glib/src/u8g_arm.c ****      u8g_MicroDelay();  
+ 268              		.loc 1 59 11 discriminator 1 view .LVU49
+ 269 007c 0128     		cmp	r0, #1
+ 270 007e FAD1     		bne	.L17
+  60:Drivers/u8glib/src/u8g_arm.c ****      break;  
+ 271              		.loc 1 60 6 is_stmt 1 view .LVU50
+ 272 0080 FFF7FEFF 		bl	u8g_MicroDelay
+ 273              	.LVL25:
+  61:Drivers/u8glib/src/u8g_arm.c ****    case U8G_COM_MSG_WRITE_SEQ:  
+ 274              		.loc 1 61 6 view .LVU51
+ 275 0084 CCE7     		b	.L8
+ 276              	.LVL26:
+ 277              	.L9:
+  65:Drivers/u8glib/src/u8g_arm.c ****          //while(HAL_SPI_GetState(&SPI_HANDLER) != HAL_SPI_STATE_READY);
+ 278              		.loc 1 65 10 view .LVU52
+ 279 0086 6423     		movs	r3, #100
+ 280 0088 9DF80720 		ldrb	r2, [sp, #7]	@ zero_extendqisi2
+ 281 008c 0146     		mov	r1, r0
+ 282              	.LVL27:
+  65:Drivers/u8glib/src/u8g_arm.c ****          //while(HAL_SPI_GetState(&SPI_HANDLER) != HAL_SPI_STATE_READY);
+ 283              		.loc 1 65 10 is_stmt 0 view .LVU53
+ 284 008e 0648     		ldr	r0, .L19+8
+ 285              	.LVL28:
+  65:Drivers/u8glib/src/u8g_arm.c ****          //while(HAL_SPI_GetState(&SPI_HANDLER) != HAL_SPI_STATE_READY);
+ 286              		.loc 1 65 10 view .LVU54
+ 287 0090 FFF7FEFF 		bl	HAL_SPI_Transmit
+ 288              	.LVL29:
+  67:Drivers/u8glib/src/u8g_arm.c ****          arg_val = 0;  
+ 289              		.loc 1 67 10 is_stmt 1 view .LVU55
+ 290 0094 FFF7FEFF 		bl	u8g_MicroDelay
+ 291              	.LVL30:
+  68:Drivers/u8glib/src/u8g_arm.c ****     }  
+ 292              		.loc 1 68 10 view .LVU56
+  68:Drivers/u8glib/src/u8g_arm.c ****     }  
+ 293              		.loc 1 68 18 is_stmt 0 view .LVU57
+ 294 0098 0023     		movs	r3, #0
+ 295 009a 8DF80730 		strb	r3, [sp, #7]
+  70:Drivers/u8glib/src/u8g_arm.c ****   }  
+ 296              		.loc 1 70 5 is_stmt 1 view .LVU58
+ 297 009e BFE7     		b	.L8
+ 298              	.L20:
+ 299              		.align	2
+ 300              	.L19:
+ 301 00a0 00140140 		.word	1073812480
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccwZoY5f.s 			page 8
+
+
+ 302 00a4 00100140 		.word	1073811456
+ 303 00a8 00000000 		.word	hspi3
+ 304              		.cfi_endproc
+ 305              	.LFE68:
+ 307              		.section	.text.u8g_com_hw_i2c_fn,"ax",%progbits
+ 308              		.align	1
+ 309              		.global	u8g_com_hw_i2c_fn
+ 310              		.syntax unified
+ 311              		.thumb
+ 312              		.thumb_func
+ 314              	u8g_com_hw_i2c_fn:
+ 315              	.LVL31:
+ 316              	.LFB69:
+  74:Drivers/u8glib/src/u8g_arm.c **** 
+  75:Drivers/u8glib/src/u8g_arm.c ****  uint8_t u8g_com_hw_i2c_fn(u8g_t *u8g, uint8_t msg, uint8_t arg_val, void *arg_ptr)
+  76:Drivers/u8glib/src/u8g_arm.c ****  {
+ 317              		.loc 1 76 2 view -0
+ 318              		.cfi_startproc
+ 319              		@ args = 0, pretend = 0, frame = 1000
+ 320              		@ frame_needed = 0, uses_anonymous_args = 0
+ 321              		.loc 1 76 2 is_stmt 0 view .LVU60
+ 322 0000 10B5     		push	{r4, lr}
+ 323              	.LCFI5:
+ 324              		.cfi_def_cfa_offset 8
+ 325              		.cfi_offset 4, -8
+ 326              		.cfi_offset 14, -4
+ 327 0002 ADF57C7D 		sub	sp, sp, #1008
+ 328              	.LCFI6:
+ 329              		.cfi_def_cfa_offset 1016
+ 330 0006 1446     		mov	r4, r2
+  77:Drivers/u8glib/src/u8g_arm.c ****   switch(msg)
+ 331              		.loc 1 77 3 is_stmt 1 view .LVU61
+ 332 0008 0139     		subs	r1, r1, #1
+ 333              	.LVL32:
+ 334              		.loc 1 77 3 is_stmt 0 view .LVU62
+ 335 000a 0629     		cmp	r1, #6
+ 336 000c 07D8     		bhi	.L22
+ 337 000e DFE801F0 		tbb	[pc, r1]
+ 338              	.LVL33:
+ 339              	.L24:
+ 340 0012 04       		.byte	(.L27-.L24)/2
+ 341 0013 0A       		.byte	(.L26-.L24)/2
+ 342 0014 06       		.byte	(.L22-.L24)/2
+ 343 0015 06       		.byte	(.L22-.L24)/2
+ 344 0016 15       		.byte	(.L25-.L24)/2
+ 345 0017 25       		.byte	(.L23-.L24)/2
+ 346 0018 25       		.byte	(.L23-.L24)/2
+ 347 0019 00       		.p2align 1
+ 348              	.L27:
+  78:Drivers/u8glib/src/u8g_arm.c ****   {
+  79:Drivers/u8glib/src/u8g_arm.c ****    case U8G_COM_MSG_STOP:
+  80:Drivers/u8glib/src/u8g_arm.c ****     break;
+  81:Drivers/u8glib/src/u8g_arm.c **** 
+  82:Drivers/u8glib/src/u8g_arm.c ****    case U8G_COM_MSG_INIT:
+  83:Drivers/u8glib/src/u8g_arm.c ****     u8g_MicroDelay();
+ 349              		.loc 1 83 5 is_stmt 1 view .LVU63
+ 350 001a FFF7FEFF 		bl	u8g_MicroDelay
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccwZoY5f.s 			page 9
+
+
+ 351              	.LVL34:
+  84:Drivers/u8glib/src/u8g_arm.c ****     break;
+ 352              		.loc 1 84 5 view .LVU64
+ 353              	.L22:
+  85:Drivers/u8glib/src/u8g_arm.c **** 
+  86:Drivers/u8glib/src/u8g_arm.c ****    case U8G_COM_MSG_ADDRESS:           /* define cmd (arg_val = 0) or data mode (arg_val = 1) */
+  87:Drivers/u8glib/src/u8g_arm.c ****     u8g_10MicroDelay();
+  88:Drivers/u8glib/src/u8g_arm.c ****     if (arg_val == 0)
+  89:Drivers/u8glib/src/u8g_arm.c ****     {
+  90:Drivers/u8glib/src/u8g_arm.c ****          control = 0;
+  91:Drivers/u8glib/src/u8g_arm.c ****     }
+  92:Drivers/u8glib/src/u8g_arm.c ****     else
+  93:Drivers/u8glib/src/u8g_arm.c ****     {
+  94:Drivers/u8glib/src/u8g_arm.c ****          control = 0x40;
+  95:Drivers/u8glib/src/u8g_arm.c ****     }
+  96:Drivers/u8glib/src/u8g_arm.c ****     break;
+  97:Drivers/u8glib/src/u8g_arm.c **** 
+  98:Drivers/u8glib/src/u8g_arm.c ****    case U8G_COM_MSG_WRITE_BYTE:
+  99:Drivers/u8glib/src/u8g_arm.c ****    {
+ 100:Drivers/u8glib/src/u8g_arm.c ****         uint8_t buffer[2];
+ 101:Drivers/u8glib/src/u8g_arm.c ****         buffer[0] = control;
+ 102:Drivers/u8glib/src/u8g_arm.c ****         buffer[1] = arg_val;
+ 103:Drivers/u8glib/src/u8g_arm.c ****         HAL_I2C_Master_Transmit(&I2C_HANDLER, DEVICE_ADDRESS, (uint8_t*) buffer, 2, I2C_TIMEOUT);
+ 104:Drivers/u8glib/src/u8g_arm.c ****    }
+ 105:Drivers/u8glib/src/u8g_arm.c ****         break;
+ 106:Drivers/u8glib/src/u8g_arm.c **** 
+ 107:Drivers/u8glib/src/u8g_arm.c ****    case U8G_COM_MSG_WRITE_SEQ:
+ 108:Drivers/u8glib/src/u8g_arm.c ****    case U8G_COM_MSG_WRITE_SEQ_P:
+ 109:Drivers/u8glib/src/u8g_arm.c ****    {
+ 110:Drivers/u8glib/src/u8g_arm.c ****         uint8_t buffer[DATA_BUFFER_SIZE];
+ 111:Drivers/u8glib/src/u8g_arm.c ****            uint8_t *ptr = arg_ptr;
+ 112:Drivers/u8glib/src/u8g_arm.c ****            buffer[0] = control;
+ 113:Drivers/u8glib/src/u8g_arm.c ****            for (int i = 1; i <= arg_val; i++)
+ 114:Drivers/u8glib/src/u8g_arm.c ****            {
+ 115:Drivers/u8glib/src/u8g_arm.c ****                 buffer[i] = *(ptr++);
+ 116:Drivers/u8glib/src/u8g_arm.c ****            }
+ 117:Drivers/u8glib/src/u8g_arm.c ****            HAL_I2C_Master_Transmit(&I2C_HANDLER, DEVICE_ADDRESS, (uint8_t *)buffer, arg_val, I2C_TI
+ 118:Drivers/u8glib/src/u8g_arm.c ****    }
+ 119:Drivers/u8glib/src/u8g_arm.c **** 
+ 120:Drivers/u8glib/src/u8g_arm.c ****     break;
+ 121:Drivers/u8glib/src/u8g_arm.c ****   }
+ 122:Drivers/u8glib/src/u8g_arm.c ****   return 1;
+ 354              		.loc 1 122 3 view .LVU65
+ 123:Drivers/u8glib/src/u8g_arm.c ****  }
+ 355              		.loc 1 123 2 is_stmt 0 view .LVU66
+ 356 001e 0120     		movs	r0, #1
+ 357 0020 0DF57C7D 		add	sp, sp, #1008
+ 358              	.LCFI7:
+ 359              		.cfi_remember_state
+ 360              		.cfi_def_cfa_offset 8
+ 361              		@ sp needed
+ 362 0024 10BD     		pop	{r4, pc}
+ 363              	.LVL35:
+ 364              	.L26:
+ 365              	.LCFI8:
+ 366              		.cfi_restore_state
+  87:Drivers/u8glib/src/u8g_arm.c ****     if (arg_val == 0)
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccwZoY5f.s 			page 10
+
+
+ 367              		.loc 1 87 5 is_stmt 1 view .LVU67
+ 368 0026 FFF7FEFF 		bl	u8g_10MicroDelay
+ 369              	.LVL36:
+  88:Drivers/u8glib/src/u8g_arm.c ****     {
+ 370              		.loc 1 88 5 view .LVU68
+  88:Drivers/u8glib/src/u8g_arm.c ****     {
+ 371              		.loc 1 88 8 is_stmt 0 view .LVU69
+ 372 002a 1CB9     		cbnz	r4, .L28
+  90:Drivers/u8glib/src/u8g_arm.c ****     }
+ 373              		.loc 1 90 10 is_stmt 1 view .LVU70
+  90:Drivers/u8glib/src/u8g_arm.c ****     }
+ 374              		.loc 1 90 18 is_stmt 0 view .LVU71
+ 375 002c 174B     		ldr	r3, .L32
+ 376 002e 0022     		movs	r2, #0
+ 377 0030 1A70     		strb	r2, [r3]
+ 378 0032 F4E7     		b	.L22
+ 379              	.L28:
+  94:Drivers/u8glib/src/u8g_arm.c ****     }
+ 380              		.loc 1 94 10 is_stmt 1 view .LVU72
+  94:Drivers/u8glib/src/u8g_arm.c ****     }
+ 381              		.loc 1 94 18 is_stmt 0 view .LVU73
+ 382 0034 154B     		ldr	r3, .L32
+ 383 0036 4022     		movs	r2, #64
+ 384 0038 1A70     		strb	r2, [r3]
+ 385 003a F0E7     		b	.L22
+ 386              	.LVL37:
+ 387              	.L25:
+ 388              	.LBB2:
+ 100:Drivers/u8glib/src/u8g_arm.c ****         buffer[0] = control;
+ 389              		.loc 1 100 9 is_stmt 1 view .LVU74
+ 101:Drivers/u8glib/src/u8g_arm.c ****         buffer[1] = arg_val;
+ 390              		.loc 1 101 9 view .LVU75
+ 101:Drivers/u8glib/src/u8g_arm.c ****         buffer[1] = arg_val;
+ 391              		.loc 1 101 19 is_stmt 0 view .LVU76
+ 392 003c 134B     		ldr	r3, .L32
+ 393              	.LVL38:
+ 101:Drivers/u8glib/src/u8g_arm.c ****         buffer[1] = arg_val;
+ 394              		.loc 1 101 19 view .LVU77
+ 395 003e 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 396 0040 8DF80830 		strb	r3, [sp, #8]
+ 102:Drivers/u8glib/src/u8g_arm.c ****         HAL_I2C_Master_Transmit(&I2C_HANDLER, DEVICE_ADDRESS, (uint8_t*) buffer, 2, I2C_TIMEOUT);
+ 397              		.loc 1 102 9 is_stmt 1 view .LVU78
+ 102:Drivers/u8glib/src/u8g_arm.c ****         HAL_I2C_Master_Transmit(&I2C_HANDLER, DEVICE_ADDRESS, (uint8_t*) buffer, 2, I2C_TIMEOUT);
+ 398              		.loc 1 102 19 is_stmt 0 view .LVU79
+ 399 0044 8DF80940 		strb	r4, [sp, #9]
+ 103:Drivers/u8glib/src/u8g_arm.c ****    }
+ 400              		.loc 1 103 9 is_stmt 1 view .LVU80
+ 401 0048 42F21073 		movw	r3, #10000
+ 402 004c 0093     		str	r3, [sp]
+ 403 004e 0223     		movs	r3, #2
+ 404 0050 02AA     		add	r2, sp, #8
+ 405 0052 7821     		movs	r1, #120
+ 406 0054 0E48     		ldr	r0, .L32+4
+ 407              	.LVL39:
+ 103:Drivers/u8glib/src/u8g_arm.c ****    }
+ 408              		.loc 1 103 9 is_stmt 0 view .LVU81
+ 409 0056 FFF7FEFF 		bl	HAL_I2C_Master_Transmit
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccwZoY5f.s 			page 11
+
+
+ 410              	.LVL40:
+ 411              	.LBE2:
+ 105:Drivers/u8glib/src/u8g_arm.c **** 
+ 412              		.loc 1 105 9 is_stmt 1 view .LVU82
+ 413 005a E0E7     		b	.L22
+ 414              	.LVL41:
+ 415              	.L23:
+ 416              	.LBB3:
+ 110:Drivers/u8glib/src/u8g_arm.c ****            uint8_t *ptr = arg_ptr;
+ 417              		.loc 1 110 9 view .LVU83
+ 111:Drivers/u8glib/src/u8g_arm.c ****            buffer[0] = control;
+ 418              		.loc 1 111 12 view .LVU84
+ 112:Drivers/u8glib/src/u8g_arm.c ****            for (int i = 1; i <= arg_val; i++)
+ 419              		.loc 1 112 12 view .LVU85
+ 112:Drivers/u8glib/src/u8g_arm.c ****            for (int i = 1; i <= arg_val; i++)
+ 420              		.loc 1 112 22 is_stmt 0 view .LVU86
+ 421 005c 0B4A     		ldr	r2, .L32
+ 422 005e 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 423 0060 8DF80820 		strb	r2, [sp, #8]
+ 113:Drivers/u8glib/src/u8g_arm.c ****            {
+ 424              		.loc 1 113 12 is_stmt 1 view .LVU87
+ 425              	.LBB4:
+ 113:Drivers/u8glib/src/u8g_arm.c ****            {
+ 426              		.loc 1 113 17 view .LVU88
+ 427              	.LVL42:
+ 113:Drivers/u8glib/src/u8g_arm.c ****            {
+ 428              		.loc 1 113 21 is_stmt 0 view .LVU89
+ 429 0064 0121     		movs	r1, #1
+ 113:Drivers/u8glib/src/u8g_arm.c ****            {
+ 430              		.loc 1 113 12 view .LVU90
+ 431 0066 04E0     		b	.L29
+ 432              	.LVL43:
+ 433              	.L30:
+ 115:Drivers/u8glib/src/u8g_arm.c ****            }
+ 434              		.loc 1 115 17 is_stmt 1 discriminator 3 view .LVU91
+ 115:Drivers/u8glib/src/u8g_arm.c ****            }
+ 435              		.loc 1 115 29 is_stmt 0 discriminator 3 view .LVU92
+ 436 0068 13F8010B 		ldrb	r0, [r3], #1	@ zero_extendqisi2
+ 437              	.LVL44:
+ 115:Drivers/u8glib/src/u8g_arm.c ****            }
+ 438              		.loc 1 115 27 discriminator 3 view .LVU93
+ 439 006c 02AA     		add	r2, sp, #8
+ 440 006e 5054     		strb	r0, [r2, r1]
+ 113:Drivers/u8glib/src/u8g_arm.c ****            {
+ 441              		.loc 1 113 42 is_stmt 1 discriminator 3 view .LVU94
+ 113:Drivers/u8glib/src/u8g_arm.c ****            {
+ 442              		.loc 1 113 43 is_stmt 0 discriminator 3 view .LVU95
+ 443 0070 0131     		adds	r1, r1, #1
+ 444              	.LVL45:
+ 445              	.L29:
+ 113:Drivers/u8glib/src/u8g_arm.c ****            {
+ 446              		.loc 1 113 28 is_stmt 1 discriminator 1 view .LVU96
+ 113:Drivers/u8glib/src/u8g_arm.c ****            {
+ 447              		.loc 1 113 12 is_stmt 0 discriminator 1 view .LVU97
+ 448 0072 8C42     		cmp	r4, r1
+ 449 0074 F8DA     		bge	.L30
+ 450              	.LBE4:
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccwZoY5f.s 			page 12
+
+
+ 117:Drivers/u8glib/src/u8g_arm.c ****    }
+ 451              		.loc 1 117 12 is_stmt 1 view .LVU98
+ 452 0076 42F21073 		movw	r3, #10000
+ 453              	.LVL46:
+ 117:Drivers/u8glib/src/u8g_arm.c ****    }
+ 454              		.loc 1 117 12 is_stmt 0 view .LVU99
+ 455 007a 0093     		str	r3, [sp]
+ 456 007c 2346     		mov	r3, r4
+ 457 007e 02AA     		add	r2, sp, #8
+ 458 0080 7821     		movs	r1, #120
+ 459              	.LVL47:
+ 117:Drivers/u8glib/src/u8g_arm.c ****    }
+ 460              		.loc 1 117 12 view .LVU100
+ 461 0082 0348     		ldr	r0, .L32+4
+ 462 0084 FFF7FEFF 		bl	HAL_I2C_Master_Transmit
+ 463              	.LVL48:
+ 464              	.LBE3:
+ 120:Drivers/u8glib/src/u8g_arm.c ****   }
+ 465              		.loc 1 120 5 is_stmt 1 view .LVU101
+ 466 0088 C9E7     		b	.L22
+ 467              	.L33:
+ 468 008a 00BF     		.align	2
+ 469              	.L32:
+ 470 008c 00000000 		.word	.LANCHOR0
+ 471 0090 00000000 		.word	hi2c1
+ 472              		.cfi_endproc
+ 473              	.LFE69:
+ 475              		.section	.bss.control,"aw",%nobits
+ 476              		.set	.LANCHOR0,. + 0
+ 479              	control:
+ 480 0000 00       		.space	1
+ 481              		.text
+ 482              	.Letext0:
+ 483              		.file 2 "c:\\users\\zbigniew\\appdata\\roaming\\code\\user\\globalstorage\\bmd.stm32-for-vscode\\@
+ 484              		.file 3 "c:\\users\\zbigniew\\appdata\\roaming\\code\\user\\globalstorage\\bmd.stm32-for-vscode\\@
+ 485              		.file 4 "Inc/../Drivers/u8glib/inc/u8g.h"
+ 486              		.file 5 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xe.h"
+ 487              		.file 6 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_def.h"
+ 488              		.file 7 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_gpio.h"
+ 489              		.file 8 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_dma.h"
+ 490              		.file 9 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_i2c.h"
+ 491              		.file 10 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_spi.h"
+ 492              		.file 11 "Inc/../Drivers/u8glib/inc/u8g_arm.h"
+ 493              		.file 12 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h"
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccwZoY5f.s 			page 13
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 u8g_arm.c
+C:\Users\Zbigniew\AppData\Local\Temp\ccwZoY5f.s:18     .text.u8g_Delay:0000000000000000 $t
+C:\Users\Zbigniew\AppData\Local\Temp\ccwZoY5f.s:24     .text.u8g_Delay:0000000000000000 u8g_Delay
+C:\Users\Zbigniew\AppData\Local\Temp\ccwZoY5f.s:51     .text.u8g_Delay:0000000000000010 $d
+C:\Users\Zbigniew\AppData\Local\Temp\ccwZoY5f.s:56     .text.u8g_MicroDelay:0000000000000000 $t
+C:\Users\Zbigniew\AppData\Local\Temp\ccwZoY5f.s:62     .text.u8g_MicroDelay:0000000000000000 u8g_MicroDelay
+C:\Users\Zbigniew\AppData\Local\Temp\ccwZoY5f.s:90     .text.u8g_10MicroDelay:0000000000000000 $t
+C:\Users\Zbigniew\AppData\Local\Temp\ccwZoY5f.s:96     .text.u8g_10MicroDelay:0000000000000000 u8g_10MicroDelay
+C:\Users\Zbigniew\AppData\Local\Temp\ccwZoY5f.s:136    .text.u8g_com_hw_spi_fn:0000000000000000 $t
+C:\Users\Zbigniew\AppData\Local\Temp\ccwZoY5f.s:142    .text.u8g_com_hw_spi_fn:0000000000000000 u8g_com_hw_spi_fn
+C:\Users\Zbigniew\AppData\Local\Temp\ccwZoY5f.s:170    .text.u8g_com_hw_spi_fn:0000000000000014 $d
+C:\Users\Zbigniew\AppData\Local\Temp\ccwZoY5f.s:301    .text.u8g_com_hw_spi_fn:00000000000000a0 $d
+C:\Users\Zbigniew\AppData\Local\Temp\ccwZoY5f.s:308    .text.u8g_com_hw_i2c_fn:0000000000000000 $t
+C:\Users\Zbigniew\AppData\Local\Temp\ccwZoY5f.s:314    .text.u8g_com_hw_i2c_fn:0000000000000000 u8g_com_hw_i2c_fn
+C:\Users\Zbigniew\AppData\Local\Temp\ccwZoY5f.s:340    .text.u8g_com_hw_i2c_fn:0000000000000012 $d
+C:\Users\Zbigniew\AppData\Local\Temp\ccwZoY5f.s:470    .text.u8g_com_hw_i2c_fn:000000000000008c $d
+C:\Users\Zbigniew\AppData\Local\Temp\ccwZoY5f.s:479    .bss.control:0000000000000000 control
+C:\Users\Zbigniew\AppData\Local\Temp\ccwZoY5f.s:480    .bss.control:0000000000000000 $d
+C:\Users\Zbigniew\AppData\Local\Temp\ccwZoY5f.s:177    .text.u8g_com_hw_spi_fn:000000000000001b $d
+C:\Users\Zbigniew\AppData\Local\Temp\ccwZoY5f.s:177    .text.u8g_com_hw_spi_fn:000000000000001c $t
+C:\Users\Zbigniew\AppData\Local\Temp\ccwZoY5f.s:347    .text.u8g_com_hw_i2c_fn:0000000000000019 $d
+C:\Users\Zbigniew\AppData\Local\Temp\ccwZoY5f.s:347    .text.u8g_com_hw_i2c_fn:000000000000001a $t
+
+UNDEFINED SYMBOLS
+HAL_Delay
+HAL_GPIO_WritePin
+HAL_SPI_Transmit
+HAL_SPI_GetState
+hspi3
+HAL_I2C_Master_Transmit
+hi2c1

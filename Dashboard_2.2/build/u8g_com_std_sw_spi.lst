@@ -1,0 +1,202 @@
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccpTfHn5.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.arch armv7-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"u8g_com_std_sw_spi.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.u8g_com_std_sw_spi_fn,"ax",%progbits
+  18              		.align	1
+  19              		.global	u8g_com_std_sw_spi_fn
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  24              	u8g_com_std_sw_spi_fn:
+  25              	.LVL0:
+  26              	.LFB0:
+  27              		.file 1 "Drivers/u8glib/src/u8g_com_std_sw_spi.c"
+   1:Drivers/u8glib/src/u8g_com_std_sw_spi.c **** /*
+   2:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****   
+   3:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****   u8g_com_std_sw_spi.c
+   4:Drivers/u8glib/src/u8g_com_std_sw_spi.c **** 
+   5:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****   Universal 8bit Graphics Library
+   6:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****   
+   7:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****   Copyright (c) 2015, olikraus@gmail.com
+   8:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****   All rights reserved.
+   9:Drivers/u8glib/src/u8g_com_std_sw_spi.c **** 
+  10:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****   Redistribution and use in source and binary forms, with or without modification, 
+  11:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****   are permitted provided that the following conditions are met:
+  12:Drivers/u8glib/src/u8g_com_std_sw_spi.c **** 
+  13:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****   * Redistributions of source code must retain the above copyright notice, this list 
+  14:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****     of conditions and the following disclaimer.
+  15:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****     
+  16:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****   * Redistributions in binary form must reproduce the above copyright notice, this 
+  17:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****     list of conditions and the following disclaimer in the documentation and/or other 
+  18:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****     materials provided with the distribution.
+  19:Drivers/u8glib/src/u8g_com_std_sw_spi.c **** 
+  20:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND 
+  21:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****   CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, 
+  22:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****   INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF 
+  23:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****   MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE 
+  24:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****   DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR 
+  25:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****   CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, 
+  26:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****   SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT 
+  27:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****   NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; 
+  28:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****   LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER 
+  29:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****   CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, 
+  30:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****   STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+  31:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF 
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccpTfHn5.s 			page 2
+
+
+  32:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****   ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.  
+  33:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****   
+  34:Drivers/u8glib/src/u8g_com_std_sw_spi.c **** */
+  35:Drivers/u8glib/src/u8g_com_std_sw_spi.c **** 
+  36:Drivers/u8glib/src/u8g_com_std_sw_spi.c **** #include "../Drivers/u8glib/inc/u8g.h"
+  37:Drivers/u8glib/src/u8g_com_std_sw_spi.c **** 
+  38:Drivers/u8glib/src/u8g_com_std_sw_spi.c **** #if defined(U8G_WITH_PINLIST)
+  39:Drivers/u8glib/src/u8g_com_std_sw_spi.c **** 
+  40:Drivers/u8glib/src/u8g_com_std_sw_spi.c **** static void u8g_sw_spi_shift_out(uint8_t dataPin, uint8_t clockPin, uint8_t val)
+  41:Drivers/u8glib/src/u8g_com_std_sw_spi.c **** {
+  42:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****   uint8_t i = 8;
+  43:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****   do
+  44:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****   {
+  45:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****     if ( val & 128 )
+  46:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****       u8g_SetPinLevel(dataPin, 1);
+  47:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****     else
+  48:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****       u8g_SetPinLevel(dataPin, 0);
+  49:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****     val <<= 1;
+  50:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****     u8g_MicroDelay();		/* 23 Sep 2012 */
+  51:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****     //delay(1);
+  52:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****     u8g_SetPinLevel(clockPin, 1);
+  53:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****     u8g_MicroDelay();		/* 23 Sep 2012 */
+  54:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****     //delay(1);
+  55:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****     u8g_SetPinLevel(clockPin, 0);
+  56:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****     u8g_MicroDelay();		/* 23 Sep 2012 */
+  57:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****     //delay(1);
+  58:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****     i--;
+  59:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****   } while( i != 0 );
+  60:Drivers/u8glib/src/u8g_com_std_sw_spi.c **** }
+  61:Drivers/u8glib/src/u8g_com_std_sw_spi.c **** 
+  62:Drivers/u8glib/src/u8g_com_std_sw_spi.c **** uint8_t u8g_com_std_sw_spi_fn(u8g_t *u8g, uint8_t msg, uint8_t arg_val, void *arg_ptr)
+  63:Drivers/u8glib/src/u8g_com_std_sw_spi.c **** {
+  64:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****   switch(msg)
+  65:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****   {
+  66:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****     case U8G_COM_MSG_INIT:
+  67:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****       u8g_SetPIOutput(u8g, U8G_PI_SCK);
+  68:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****       u8g_SetPIOutput(u8g, U8G_PI_MOSI);
+  69:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****       u8g_SetPIOutput(u8g, U8G_PI_RESET);
+  70:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****       u8g_SetPIOutput(u8g, U8G_PI_CS);
+  71:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****       u8g_SetPIOutput(u8g, U8G_PI_A0);
+  72:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****       u8g_SetPILevel(u8g, U8G_PI_SCK, 0);
+  73:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****       u8g_SetPILevel(u8g, U8G_PI_MOSI, 0);
+  74:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****       break;
+  75:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****     
+  76:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****     case U8G_COM_MSG_STOP:
+  77:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****       break;
+  78:Drivers/u8glib/src/u8g_com_std_sw_spi.c **** 
+  79:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****     case U8G_COM_MSG_RESET:
+  80:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****       u8g_SetPILevel(u8g, U8G_PI_RESET, arg_val);
+  81:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****       break;
+  82:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****       
+  83:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****     case U8G_COM_MSG_CHIP_SELECT:
+  84:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****       if ( arg_val == 0 )
+  85:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****       {
+  86:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****         /* disable */
+  87:Drivers/u8glib/src/u8g_com_std_sw_spi.c **** 	u8g_SetPILevel(u8g, U8G_PI_CS, 1);
+  88:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****       }
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccpTfHn5.s 			page 3
+
+
+  89:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****       else
+  90:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****       {
+  91:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****         /* enable */
+  92:Drivers/u8glib/src/u8g_com_std_sw_spi.c **** 	u8g_SetPILevel(u8g, U8G_PI_SCK, 0);
+  93:Drivers/u8glib/src/u8g_com_std_sw_spi.c **** 	u8g_SetPILevel(u8g, U8G_PI_CS, 0);
+  94:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****       }
+  95:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****       break;
+  96:Drivers/u8glib/src/u8g_com_std_sw_spi.c **** 
+  97:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****     case U8G_COM_MSG_WRITE_BYTE:
+  98:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****       u8g_sw_spi_shift_out(u8g->pin_list[U8G_PI_MOSI], u8g->pin_list[U8G_PI_SCK], arg_val);
+  99:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****       break;
+ 100:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****     
+ 101:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****     case U8G_COM_MSG_WRITE_SEQ:
+ 102:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****       {
+ 103:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****         register uint8_t *ptr = arg_ptr;
+ 104:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****         while( arg_val > 0 )
+ 105:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****         {
+ 106:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****           u8g_sw_spi_shift_out(u8g->pin_list[U8G_PI_MOSI], u8g->pin_list[U8G_PI_SCK], *ptr++);
+ 107:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****           arg_val--;
+ 108:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****         }
+ 109:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****       }
+ 110:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****       break;
+ 111:Drivers/u8glib/src/u8g_com_std_sw_spi.c **** 
+ 112:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****       case U8G_COM_MSG_WRITE_SEQ_P:
+ 113:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****       {
+ 114:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****         register uint8_t *ptr = arg_ptr;
+ 115:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****         while( arg_val > 0 )
+ 116:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****         {
+ 117:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****           u8g_sw_spi_shift_out(u8g->pin_list[U8G_PI_MOSI], u8g->pin_list[U8G_PI_SCK], u8g_pgm_read(
+ 118:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****           ptr++;
+ 119:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****           arg_val--;
+ 120:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****         }
+ 121:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****       }
+ 122:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****       break;
+ 123:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****       
+ 124:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****     case U8G_COM_MSG_ADDRESS:                     /* define cmd (arg_val = 0) or data mode (arg_val
+ 125:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****       u8g_SetPILevel(u8g, U8G_PI_A0, arg_val);
+ 126:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****       break;
+ 127:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****   }
+ 128:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****   return 1;
+ 129:Drivers/u8glib/src/u8g_com_std_sw_spi.c **** }
+ 130:Drivers/u8glib/src/u8g_com_std_sw_spi.c **** 
+ 131:Drivers/u8glib/src/u8g_com_std_sw_spi.c **** #else
+ 132:Drivers/u8glib/src/u8g_com_std_sw_spi.c **** 
+ 133:Drivers/u8glib/src/u8g_com_std_sw_spi.c **** 
+ 134:Drivers/u8glib/src/u8g_com_std_sw_spi.c **** uint8_t u8g_com_std_sw_spi_fn(u8g_t *u8g, uint8_t msg, uint8_t arg_val, void *arg_ptr)
+ 135:Drivers/u8glib/src/u8g_com_std_sw_spi.c **** {
+  28              		.loc 1 135 1 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+ 136:Drivers/u8glib/src/u8g_com_std_sw_spi.c ****   return 1;
+  33              		.loc 1 136 3 view .LVU1
+ 137:Drivers/u8glib/src/u8g_com_std_sw_spi.c **** }
+  34              		.loc 1 137 1 is_stmt 0 view .LVU2
+  35 0000 0120     		movs	r0, #1
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccpTfHn5.s 			page 4
+
+
+  36              	.LVL1:
+  37              		.loc 1 137 1 view .LVU3
+  38 0002 7047     		bx	lr
+  39              		.cfi_endproc
+  40              	.LFE0:
+  42              		.text
+  43              	.Letext0:
+  44              		.file 2 "c:\\users\\zbigniew\\appdata\\roaming\\code\\user\\globalstorage\\bmd.stm32-for-vscode\\@
+  45              		.file 3 "c:\\users\\zbigniew\\appdata\\roaming\\code\\user\\globalstorage\\bmd.stm32-for-vscode\\@
+  46              		.file 4 "Inc/../Drivers/u8glib/inc/u8g.h"
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccpTfHn5.s 			page 5
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 u8g_com_std_sw_spi.c
+C:\Users\Zbigniew\AppData\Local\Temp\ccpTfHn5.s:18     .text.u8g_com_std_sw_spi_fn:0000000000000000 $t
+C:\Users\Zbigniew\AppData\Local\Temp\ccpTfHn5.s:24     .text.u8g_com_std_sw_spi_fn:0000000000000000 u8g_com_std_sw_spi_fn
+
+NO UNDEFINED SYMBOLS

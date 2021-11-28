@@ -1,0 +1,894 @@
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccacCoq9.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.arch armv7-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"u8g_virtual_screen.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.u8g_dev_vs_fn,"ax",%progbits
+  18              		.align	1
+  19              		.global	u8g_dev_vs_fn
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  24              	u8g_dev_vs_fn:
+  25              	.LVL0:
+  26              	.LFB0:
+  27              		.file 1 "Drivers/u8glib/src/u8g_virtual_screen.c"
+   1:Drivers/u8glib/src/u8g_virtual_screen.c **** /*
+   2:Drivers/u8glib/src/u8g_virtual_screen.c **** 
+   3:Drivers/u8glib/src/u8g_virtual_screen.c ****   u8g_virtual_screen.c
+   4:Drivers/u8glib/src/u8g_virtual_screen.c **** 
+   5:Drivers/u8glib/src/u8g_virtual_screen.c ****   Universal 8bit Graphics Library
+   6:Drivers/u8glib/src/u8g_virtual_screen.c ****   
+   7:Drivers/u8glib/src/u8g_virtual_screen.c ****   Copyright (c) 2012, olikraus@gmail.com
+   8:Drivers/u8glib/src/u8g_virtual_screen.c ****   All rights reserved.
+   9:Drivers/u8glib/src/u8g_virtual_screen.c **** 
+  10:Drivers/u8glib/src/u8g_virtual_screen.c ****   Redistribution and use in source and binary forms, with or without modification, 
+  11:Drivers/u8glib/src/u8g_virtual_screen.c ****   are permitted provided that the following conditions are met:
+  12:Drivers/u8glib/src/u8g_virtual_screen.c **** 
+  13:Drivers/u8glib/src/u8g_virtual_screen.c ****   * Redistributions of source code must retain the above copyright notice, this list 
+  14:Drivers/u8glib/src/u8g_virtual_screen.c ****     of conditions and the following disclaimer.
+  15:Drivers/u8glib/src/u8g_virtual_screen.c ****     
+  16:Drivers/u8glib/src/u8g_virtual_screen.c ****   * Redistributions in binary form must reproduce the above copyright notice, this 
+  17:Drivers/u8glib/src/u8g_virtual_screen.c ****     list of conditions and the following disclaimer in the documentation and/or other 
+  18:Drivers/u8glib/src/u8g_virtual_screen.c ****     materials provided with the distribution.
+  19:Drivers/u8glib/src/u8g_virtual_screen.c **** 
+  20:Drivers/u8glib/src/u8g_virtual_screen.c ****   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND 
+  21:Drivers/u8glib/src/u8g_virtual_screen.c ****   CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, 
+  22:Drivers/u8glib/src/u8g_virtual_screen.c ****   INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF 
+  23:Drivers/u8glib/src/u8g_virtual_screen.c ****   MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE 
+  24:Drivers/u8glib/src/u8g_virtual_screen.c ****   DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR 
+  25:Drivers/u8glib/src/u8g_virtual_screen.c ****   CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, 
+  26:Drivers/u8glib/src/u8g_virtual_screen.c ****   SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT 
+  27:Drivers/u8glib/src/u8g_virtual_screen.c ****   NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; 
+  28:Drivers/u8glib/src/u8g_virtual_screen.c ****   LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER 
+  29:Drivers/u8glib/src/u8g_virtual_screen.c ****   CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, 
+  30:Drivers/u8glib/src/u8g_virtual_screen.c ****   STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+  31:Drivers/u8glib/src/u8g_virtual_screen.c ****   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF 
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccacCoq9.s 			page 2
+
+
+  32:Drivers/u8glib/src/u8g_virtual_screen.c ****   ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.  
+  33:Drivers/u8glib/src/u8g_virtual_screen.c ****   
+  34:Drivers/u8glib/src/u8g_virtual_screen.c ****   
+  35:Drivers/u8glib/src/u8g_virtual_screen.c **** */
+  36:Drivers/u8glib/src/u8g_virtual_screen.c **** 
+  37:Drivers/u8glib/src/u8g_virtual_screen.c **** #include "../Drivers/u8glib/inc/u8g.h"
+  38:Drivers/u8glib/src/u8g_virtual_screen.c **** 
+  39:Drivers/u8glib/src/u8g_virtual_screen.c **** struct _u8g_vs_t
+  40:Drivers/u8glib/src/u8g_virtual_screen.c **** {
+  41:Drivers/u8glib/src/u8g_virtual_screen.c ****   u8g_uint_t x;
+  42:Drivers/u8glib/src/u8g_virtual_screen.c ****   u8g_uint_t y;
+  43:Drivers/u8glib/src/u8g_virtual_screen.c ****   u8g_t *u8g;
+  44:Drivers/u8glib/src/u8g_virtual_screen.c **** };
+  45:Drivers/u8glib/src/u8g_virtual_screen.c **** typedef struct _u8g_vs_t u8g_vs_t;
+  46:Drivers/u8glib/src/u8g_virtual_screen.c **** 
+  47:Drivers/u8glib/src/u8g_virtual_screen.c **** #define U8g_VS_MAX 4
+  48:Drivers/u8glib/src/u8g_virtual_screen.c **** uint8_t u8g_vs_cnt = 0;
+  49:Drivers/u8glib/src/u8g_virtual_screen.c **** u8g_vs_t u8g_vs_list[U8g_VS_MAX]; 
+  50:Drivers/u8glib/src/u8g_virtual_screen.c **** uint8_t u8g_vs_current;
+  51:Drivers/u8glib/src/u8g_virtual_screen.c **** u8g_uint_t u8g_vs_width;
+  52:Drivers/u8glib/src/u8g_virtual_screen.c **** u8g_uint_t u8g_vs_height;
+  53:Drivers/u8glib/src/u8g_virtual_screen.c **** 
+  54:Drivers/u8glib/src/u8g_virtual_screen.c **** uint8_t u8g_dev_vs_fn(u8g_t *u8g, u8g_dev_t *dev, uint8_t msg, void *arg)
+  55:Drivers/u8glib/src/u8g_virtual_screen.c **** {
+  28              		.loc 1 55 1 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		.loc 1 55 1 is_stmt 0 view .LVU1
+  33 0000 70B5     		push	{r4, r5, r6, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 16
+  36              		.cfi_offset 4, -16
+  37              		.cfi_offset 5, -12
+  38              		.cfi_offset 6, -8
+  39              		.cfi_offset 14, -4
+  40 0002 1646     		mov	r6, r2
+  41 0004 1D46     		mov	r5, r3
+  56:Drivers/u8glib/src/u8g_virtual_screen.c ****   switch(msg)
+  42              		.loc 1 56 3 is_stmt 1 view .LVU2
+  43 0006 A2F11403 		sub	r3, r2, #20
+  44              	.LVL1:
+  45              		.loc 1 56 3 is_stmt 0 view .LVU3
+  46 000a 332B     		cmp	r3, #51
+  47 000c 2CD8     		bhi	.L14
+  48 000e DFE803F0 		tbb	[pc, r3]
+  49              	.LVL2:
+  50              	.L4:
+  51 0012 2D       		.byte	(.L9-.L4)/2
+  52 0013 3C       		.byte	(.L8-.L4)/2
+  53 0014 2B       		.byte	(.L14-.L4)/2
+  54 0015 6C       		.byte	(.L7-.L4)/2
+  55 0016 2B       		.byte	(.L14-.L4)/2
+  56 0017 2B       		.byte	(.L14-.L4)/2
+  57 0018 2B       		.byte	(.L14-.L4)/2
+  58 0019 2B       		.byte	(.L14-.L4)/2
+  59 001a 2B       		.byte	(.L14-.L4)/2
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccacCoq9.s 			page 3
+
+
+  60 001b 2B       		.byte	(.L14-.L4)/2
+  61 001c 2B       		.byte	(.L14-.L4)/2
+  62 001d 2B       		.byte	(.L14-.L4)/2
+  63 001e 2B       		.byte	(.L14-.L4)/2
+  64 001f 2B       		.byte	(.L14-.L4)/2
+  65 0020 2B       		.byte	(.L14-.L4)/2
+  66 0021 2B       		.byte	(.L14-.L4)/2
+  67 0022 2B       		.byte	(.L14-.L4)/2
+  68 0023 2B       		.byte	(.L14-.L4)/2
+  69 0024 2B       		.byte	(.L14-.L4)/2
+  70 0025 2B       		.byte	(.L14-.L4)/2
+  71 0026 2B       		.byte	(.L14-.L4)/2
+  72 0027 2B       		.byte	(.L14-.L4)/2
+  73 0028 2B       		.byte	(.L14-.L4)/2
+  74 0029 2B       		.byte	(.L14-.L4)/2
+  75 002a 2B       		.byte	(.L14-.L4)/2
+  76 002b 2B       		.byte	(.L14-.L4)/2
+  77 002c 2B       		.byte	(.L14-.L4)/2
+  78 002d 2B       		.byte	(.L14-.L4)/2
+  79 002e 2B       		.byte	(.L14-.L4)/2
+  80 002f 2B       		.byte	(.L14-.L4)/2
+  81 0030 9B       		.byte	(.L6-.L4)/2
+  82 0031 2B       		.byte	(.L14-.L4)/2
+  83 0032 2B       		.byte	(.L14-.L4)/2
+  84 0033 2B       		.byte	(.L14-.L4)/2
+  85 0034 2B       		.byte	(.L14-.L4)/2
+  86 0035 2B       		.byte	(.L14-.L4)/2
+  87 0036 2B       		.byte	(.L14-.L4)/2
+  88 0037 2B       		.byte	(.L14-.L4)/2
+  89 0038 2B       		.byte	(.L14-.L4)/2
+  90 0039 9B       		.byte	(.L6-.L4)/2
+  91 003a 2B       		.byte	(.L14-.L4)/2
+  92 003b 2B       		.byte	(.L14-.L4)/2
+  93 003c 2B       		.byte	(.L14-.L4)/2
+  94 003d 2B       		.byte	(.L14-.L4)/2
+  95 003e 2B       		.byte	(.L14-.L4)/2
+  96 003f 2B       		.byte	(.L14-.L4)/2
+  97 0040 2B       		.byte	(.L14-.L4)/2
+  98 0041 2B       		.byte	(.L14-.L4)/2
+  99 0042 2B       		.byte	(.L14-.L4)/2
+ 100 0043 2B       		.byte	(.L14-.L4)/2
+ 101 0044 62       		.byte	(.L5-.L4)/2
+ 102 0045 67       		.byte	(.L3-.L4)/2
+ 103              		.p2align 1
+ 104              	.L10:
+ 105              	.LBB2:
+  57:Drivers/u8glib/src/u8g_virtual_screen.c ****   {
+  58:Drivers/u8glib/src/u8g_virtual_screen.c ****     default:
+  59:Drivers/u8glib/src/u8g_virtual_screen.c ****       {
+  60:Drivers/u8glib/src/u8g_virtual_screen.c **** 	uint8_t i;
+  61:Drivers/u8glib/src/u8g_virtual_screen.c **** 	for( i = 0; i < u8g_vs_cnt; i++ )
+  62:Drivers/u8glib/src/u8g_virtual_screen.c **** 	{
+  63:Drivers/u8glib/src/u8g_virtual_screen.c **** 	  u8g_call_dev_fn(u8g_vs_list[i].u8g, u8g_vs_list[i].u8g->dev, msg, arg);
+ 106              		.loc 1 63 4 is_stmt 1 discriminator 3 view .LVU4
+ 107 0046 4F4B     		ldr	r3, .L22
+ 108 0048 03EBC403 		add	r3, r3, r4, lsl #3
+ 109 004c 5868     		ldr	r0, [r3, #4]
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccacCoq9.s 			page 4
+
+
+ 110 004e 2B46     		mov	r3, r5
+ 111 0050 3246     		mov	r2, r6
+ 112 0052 4168     		ldr	r1, [r0, #4]
+ 113 0054 FFF7FEFF 		bl	u8g_call_dev_fn
+ 114              	.LVL3:
+  61:Drivers/u8glib/src/u8g_virtual_screen.c **** 	{
+ 115              		.loc 1 61 30 discriminator 3 view .LVU5
+  61:Drivers/u8glib/src/u8g_virtual_screen.c **** 	{
+ 116              		.loc 1 61 31 is_stmt 0 discriminator 3 view .LVU6
+ 117 0058 0134     		adds	r4, r4, #1
+ 118              	.LVL4:
+  61:Drivers/u8glib/src/u8g_virtual_screen.c **** 	{
+ 119              		.loc 1 61 31 discriminator 3 view .LVU7
+ 120 005a E4B2     		uxtb	r4, r4
+ 121              	.LVL5:
+ 122              	.L2:
+  61:Drivers/u8glib/src/u8g_virtual_screen.c **** 	{
+ 123              		.loc 1 61 14 is_stmt 1 discriminator 1 view .LVU8
+  61:Drivers/u8glib/src/u8g_virtual_screen.c **** 	{
+ 124              		.loc 1 61 16 is_stmt 0 discriminator 1 view .LVU9
+ 125 005c 4A4B     		ldr	r3, .L22+4
+ 126 005e 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+  61:Drivers/u8glib/src/u8g_virtual_screen.c **** 	{
+ 127              		.loc 1 61 2 discriminator 1 view .LVU10
+ 128 0060 A342     		cmp	r3, r4
+ 129 0062 F0D8     		bhi	.L10
+ 130              	.LBE2:
+  64:Drivers/u8glib/src/u8g_virtual_screen.c **** 	}
+  65:Drivers/u8glib/src/u8g_virtual_screen.c ****       }
+  66:Drivers/u8glib/src/u8g_virtual_screen.c ****       return 1;
+ 131              		.loc 1 66 14 view .LVU11
+ 132 0064 0120     		movs	r0, #1
+ 133              	.LVL6:
+ 134              	.L11:
+  67:Drivers/u8glib/src/u8g_virtual_screen.c ****     case U8G_DEV_MSG_PAGE_FIRST:
+  68:Drivers/u8glib/src/u8g_virtual_screen.c ****       u8g_vs_current = 0;
+  69:Drivers/u8glib/src/u8g_virtual_screen.c ****       if ( u8g_vs_cnt != 0 )
+  70:Drivers/u8glib/src/u8g_virtual_screen.c **** 	return u8g_call_dev_fn(u8g_vs_list[u8g_vs_current].u8g, u8g_vs_list[u8g_vs_current].u8g->dev, msg,
+  71:Drivers/u8glib/src/u8g_virtual_screen.c ****       return 0;
+  72:Drivers/u8glib/src/u8g_virtual_screen.c ****     case U8G_DEV_MSG_PAGE_NEXT:
+  73:Drivers/u8glib/src/u8g_virtual_screen.c ****       {	
+  74:Drivers/u8glib/src/u8g_virtual_screen.c **** 	uint8_t ret = 0;
+  75:Drivers/u8glib/src/u8g_virtual_screen.c **** 	if ( u8g_vs_cnt != 0 )
+  76:Drivers/u8glib/src/u8g_virtual_screen.c **** 	  ret = u8g_call_dev_fn(u8g_vs_list[u8g_vs_current].u8g, u8g_vs_list[u8g_vs_current].u8g->dev, msg
+  77:Drivers/u8glib/src/u8g_virtual_screen.c **** 	if ( ret != 0 )
+  78:Drivers/u8glib/src/u8g_virtual_screen.c **** 	  return ret;
+  79:Drivers/u8glib/src/u8g_virtual_screen.c **** 	u8g_vs_current++;	/* next device */
+  80:Drivers/u8glib/src/u8g_virtual_screen.c **** 	if ( u8g_vs_current >= u8g_vs_cnt )  /* reached end? */
+  81:Drivers/u8glib/src/u8g_virtual_screen.c **** 	  return 0;
+  82:Drivers/u8glib/src/u8g_virtual_screen.c **** 	return u8g_call_dev_fn(u8g_vs_list[u8g_vs_current].u8g, u8g_vs_list[u8g_vs_current].u8g->dev, U8G_
+  83:Drivers/u8glib/src/u8g_virtual_screen.c ****       }
+  84:Drivers/u8glib/src/u8g_virtual_screen.c ****     case U8G_DEV_MSG_GET_WIDTH:
+  85:Drivers/u8glib/src/u8g_virtual_screen.c ****       *((u8g_uint_t *)arg) = u8g_vs_width;
+  86:Drivers/u8glib/src/u8g_virtual_screen.c ****       break;
+  87:Drivers/u8glib/src/u8g_virtual_screen.c ****     case U8G_DEV_MSG_GET_HEIGHT:
+  88:Drivers/u8glib/src/u8g_virtual_screen.c ****       *((u8g_uint_t *)arg) = u8g_vs_height;
+  89:Drivers/u8glib/src/u8g_virtual_screen.c ****       break;
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccacCoq9.s 			page 5
+
+
+  90:Drivers/u8glib/src/u8g_virtual_screen.c ****     case U8G_DEV_MSG_GET_PAGE_BOX:
+  91:Drivers/u8glib/src/u8g_virtual_screen.c ****       if ( u8g_vs_current < u8g_vs_cnt )
+  92:Drivers/u8glib/src/u8g_virtual_screen.c ****       {
+  93:Drivers/u8glib/src/u8g_virtual_screen.c **** 	u8g_call_dev_fn(u8g_vs_list[u8g_vs_current].u8g, u8g_vs_list[u8g_vs_current].u8g->dev, msg, arg);
+  94:Drivers/u8glib/src/u8g_virtual_screen.c **** 	((u8g_box_t *)arg)->x0 += u8g_vs_list[u8g_vs_current].x;
+  95:Drivers/u8glib/src/u8g_virtual_screen.c **** 	((u8g_box_t *)arg)->x1 += u8g_vs_list[u8g_vs_current].x;
+  96:Drivers/u8glib/src/u8g_virtual_screen.c **** 	((u8g_box_t *)arg)->y0 += u8g_vs_list[u8g_vs_current].y;
+  97:Drivers/u8glib/src/u8g_virtual_screen.c **** 	((u8g_box_t *)arg)->y1 += u8g_vs_list[u8g_vs_current].y;
+  98:Drivers/u8glib/src/u8g_virtual_screen.c ****       }
+  99:Drivers/u8glib/src/u8g_virtual_screen.c ****       else
+ 100:Drivers/u8glib/src/u8g_virtual_screen.c ****       {
+ 101:Drivers/u8glib/src/u8g_virtual_screen.c **** 	((u8g_box_t *)arg)->x0 = 0;
+ 102:Drivers/u8glib/src/u8g_virtual_screen.c **** 	((u8g_box_t *)arg)->x1 = 0;
+ 103:Drivers/u8glib/src/u8g_virtual_screen.c **** 	((u8g_box_t *)arg)->y0 = 0;
+ 104:Drivers/u8glib/src/u8g_virtual_screen.c **** 	((u8g_box_t *)arg)->y1 = 0;
+ 105:Drivers/u8glib/src/u8g_virtual_screen.c ****       }
+ 106:Drivers/u8glib/src/u8g_virtual_screen.c ****       return 1;
+ 107:Drivers/u8glib/src/u8g_virtual_screen.c ****     case U8G_DEV_MSG_SET_PIXEL:
+ 108:Drivers/u8glib/src/u8g_virtual_screen.c ****     case U8G_DEV_MSG_SET_8PIXEL:
+ 109:Drivers/u8glib/src/u8g_virtual_screen.c ****       if ( u8g_vs_current < u8g_vs_cnt )
+ 110:Drivers/u8glib/src/u8g_virtual_screen.c ****       {
+ 111:Drivers/u8glib/src/u8g_virtual_screen.c ****         ((u8g_dev_arg_pixel_t *)arg)->x -= u8g_vs_list[u8g_vs_current].x;
+ 112:Drivers/u8glib/src/u8g_virtual_screen.c ****         ((u8g_dev_arg_pixel_t *)arg)->y -= u8g_vs_list[u8g_vs_current].y;
+ 113:Drivers/u8glib/src/u8g_virtual_screen.c **** 	return u8g_call_dev_fn(u8g_vs_list[u8g_vs_current].u8g, u8g_vs_list[u8g_vs_current].u8g->dev, msg,
+ 114:Drivers/u8glib/src/u8g_virtual_screen.c ****       }
+ 115:Drivers/u8glib/src/u8g_virtual_screen.c ****       break;
+ 116:Drivers/u8glib/src/u8g_virtual_screen.c ****   }
+ 117:Drivers/u8glib/src/u8g_virtual_screen.c ****   return 1;
+ 118:Drivers/u8glib/src/u8g_virtual_screen.c **** }
+ 135              		.loc 1 118 1 view .LVU12
+ 136 0066 70BD     		pop	{r4, r5, r6, pc}
+ 137              	.LVL7:
+ 138              	.L14:
+  56:Drivers/u8glib/src/u8g_virtual_screen.c ****   {
+ 139              		.loc 1 56 3 view .LVU13
+ 140 0068 0024     		movs	r4, #0
+ 141 006a F7E7     		b	.L2
+ 142              	.L9:
+  68:Drivers/u8glib/src/u8g_virtual_screen.c ****       if ( u8g_vs_cnt != 0 )
+ 143              		.loc 1 68 7 is_stmt 1 view .LVU14
+  68:Drivers/u8glib/src/u8g_virtual_screen.c ****       if ( u8g_vs_cnt != 0 )
+ 144              		.loc 1 68 22 is_stmt 0 view .LVU15
+ 145 006c 474B     		ldr	r3, .L22+8
+ 146 006e 0022     		movs	r2, #0
+ 147 0070 1A70     		strb	r2, [r3]
+  69:Drivers/u8glib/src/u8g_virtual_screen.c **** 	return u8g_call_dev_fn(u8g_vs_list[u8g_vs_current].u8g, u8g_vs_list[u8g_vs_current].u8g->dev, msg,
+ 148              		.loc 1 69 7 is_stmt 1 view .LVU16
+  69:Drivers/u8glib/src/u8g_virtual_screen.c **** 	return u8g_call_dev_fn(u8g_vs_list[u8g_vs_current].u8g, u8g_vs_list[u8g_vs_current].u8g->dev, msg,
+ 149              		.loc 1 69 23 is_stmt 0 view .LVU17
+ 150 0072 454B     		ldr	r3, .L22+4
+ 151 0074 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+ 152              	.LVL8:
+  69:Drivers/u8glib/src/u8g_virtual_screen.c **** 	return u8g_call_dev_fn(u8g_vs_list[u8g_vs_current].u8g, u8g_vs_list[u8g_vs_current].u8g->dev, msg,
+ 153              		.loc 1 69 10 view .LVU18
+ 154 0076 0028     		cmp	r0, #0
+ 155 0078 F5D0     		beq	.L11
+  70:Drivers/u8glib/src/u8g_virtual_screen.c ****       return 0;
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccacCoq9.s 			page 6
+
+
+ 156              		.loc 1 70 2 is_stmt 1 view .LVU19
+  70:Drivers/u8glib/src/u8g_virtual_screen.c ****       return 0;
+ 157              		.loc 1 70 9 is_stmt 0 view .LVU20
+ 158 007a 424B     		ldr	r3, .L22
+ 159 007c 5868     		ldr	r0, [r3, #4]
+ 160 007e 2B46     		mov	r3, r5
+ 161 0080 3246     		mov	r2, r6
+ 162 0082 4168     		ldr	r1, [r0, #4]
+ 163              	.LVL9:
+  70:Drivers/u8glib/src/u8g_virtual_screen.c ****       return 0;
+ 164              		.loc 1 70 9 view .LVU21
+ 165 0084 FFF7FEFF 		bl	u8g_call_dev_fn
+ 166              	.LVL10:
+ 167 0088 EDE7     		b	.L11
+ 168              	.LVL11:
+ 169              	.L8:
+ 170              	.LBB3:
+  74:Drivers/u8glib/src/u8g_virtual_screen.c **** 	if ( u8g_vs_cnt != 0 )
+ 171              		.loc 1 74 2 is_stmt 1 view .LVU22
+  75:Drivers/u8glib/src/u8g_virtual_screen.c **** 	  ret = u8g_call_dev_fn(u8g_vs_list[u8g_vs_current].u8g, u8g_vs_list[u8g_vs_current].u8g->dev, msg
+ 172              		.loc 1 75 2 view .LVU23
+  75:Drivers/u8glib/src/u8g_virtual_screen.c **** 	  ret = u8g_call_dev_fn(u8g_vs_list[u8g_vs_current].u8g, u8g_vs_list[u8g_vs_current].u8g->dev, msg
+ 173              		.loc 1 75 18 is_stmt 0 view .LVU24
+ 174 008a 3F4B     		ldr	r3, .L22+4
+ 175 008c 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+  75:Drivers/u8glib/src/u8g_virtual_screen.c **** 	  ret = u8g_call_dev_fn(u8g_vs_list[u8g_vs_current].u8g, u8g_vs_list[u8g_vs_current].u8g->dev, msg
+ 176              		.loc 1 75 5 view .LVU25
+ 177 008e 53B9     		cbnz	r3, .L18
+ 178              	.LVL12:
+ 179              	.L12:
+  79:Drivers/u8glib/src/u8g_virtual_screen.c **** 	if ( u8g_vs_current >= u8g_vs_cnt )  /* reached end? */
+ 180              		.loc 1 79 2 is_stmt 1 view .LVU26
+  79:Drivers/u8glib/src/u8g_virtual_screen.c **** 	if ( u8g_vs_current >= u8g_vs_cnt )  /* reached end? */
+ 181              		.loc 1 79 16 is_stmt 0 view .LVU27
+ 182 0090 3E4A     		ldr	r2, .L22+8
+ 183 0092 1378     		ldrb	r3, [r2]	@ zero_extendqisi2
+ 184 0094 0133     		adds	r3, r3, #1
+ 185 0096 DBB2     		uxtb	r3, r3
+ 186 0098 1370     		strb	r3, [r2]
+  80:Drivers/u8glib/src/u8g_virtual_screen.c **** 	  return 0;
+ 187              		.loc 1 80 2 is_stmt 1 view .LVU28
+  80:Drivers/u8glib/src/u8g_virtual_screen.c **** 	  return 0;
+ 188              		.loc 1 80 22 is_stmt 0 view .LVU29
+ 189 009a 3B4A     		ldr	r2, .L22+4
+ 190 009c 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+  80:Drivers/u8glib/src/u8g_virtual_screen.c **** 	  return 0;
+ 191              		.loc 1 80 5 view .LVU30
+ 192 009e 9342     		cmp	r3, r2
+ 193 00a0 0FD3     		bcc	.L19
+  81:Drivers/u8glib/src/u8g_virtual_screen.c **** 	return u8g_call_dev_fn(u8g_vs_list[u8g_vs_current].u8g, u8g_vs_list[u8g_vs_current].u8g->dev, U8G_
+ 194              		.loc 1 81 11 view .LVU31
+ 195 00a2 0020     		movs	r0, #0
+ 196 00a4 DFE7     		b	.L11
+ 197              	.LVL13:
+ 198              	.L18:
+  76:Drivers/u8glib/src/u8g_virtual_screen.c **** 	if ( ret != 0 )
+ 199              		.loc 1 76 4 is_stmt 1 view .LVU32
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccacCoq9.s 			page 7
+
+
+  76:Drivers/u8glib/src/u8g_virtual_screen.c **** 	if ( ret != 0 )
+ 200              		.loc 1 76 10 is_stmt 0 view .LVU33
+ 201 00a6 394B     		ldr	r3, .L22+8
+ 202 00a8 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+ 203 00aa 364B     		ldr	r3, .L22
+ 204 00ac 03EBC203 		add	r3, r3, r2, lsl #3
+ 205 00b0 5868     		ldr	r0, [r3, #4]
+ 206              	.LVL14:
+  76:Drivers/u8glib/src/u8g_virtual_screen.c **** 	if ( ret != 0 )
+ 207              		.loc 1 76 10 view .LVU34
+ 208 00b2 2B46     		mov	r3, r5
+ 209 00b4 3246     		mov	r2, r6
+ 210 00b6 4168     		ldr	r1, [r0, #4]
+ 211              	.LVL15:
+  76:Drivers/u8glib/src/u8g_virtual_screen.c **** 	if ( ret != 0 )
+ 212              		.loc 1 76 10 view .LVU35
+ 213 00b8 FFF7FEFF 		bl	u8g_call_dev_fn
+ 214              	.LVL16:
+  77:Drivers/u8glib/src/u8g_virtual_screen.c **** 	  return ret;
+ 215              		.loc 1 77 2 is_stmt 1 view .LVU36
+  77:Drivers/u8glib/src/u8g_virtual_screen.c **** 	  return ret;
+ 216              		.loc 1 77 5 is_stmt 0 view .LVU37
+ 217 00bc 0028     		cmp	r0, #0
+ 218 00be E7D0     		beq	.L12
+ 219 00c0 D1E7     		b	.L11
+ 220              	.LVL17:
+ 221              	.L19:
+  82:Drivers/u8glib/src/u8g_virtual_screen.c ****       }
+ 222              		.loc 1 82 2 is_stmt 1 view .LVU38
+  82:Drivers/u8glib/src/u8g_virtual_screen.c ****       }
+ 223              		.loc 1 82 9 is_stmt 0 view .LVU39
+ 224 00c2 304A     		ldr	r2, .L22
+ 225 00c4 02EBC303 		add	r3, r2, r3, lsl #3
+ 226 00c8 5868     		ldr	r0, [r3, #4]
+ 227 00ca 2B46     		mov	r3, r5
+ 228 00cc 1422     		movs	r2, #20
+ 229 00ce 4168     		ldr	r1, [r0, #4]
+ 230 00d0 FFF7FEFF 		bl	u8g_call_dev_fn
+ 231              	.LVL18:
+ 232 00d4 C7E7     		b	.L11
+ 233              	.LVL19:
+ 234              	.L5:
+  82:Drivers/u8glib/src/u8g_virtual_screen.c ****       }
+ 235              		.loc 1 82 9 view .LVU40
+ 236              	.LBE3:
+  85:Drivers/u8glib/src/u8g_virtual_screen.c ****       break;
+ 237              		.loc 1 85 7 is_stmt 1 view .LVU41
+  85:Drivers/u8glib/src/u8g_virtual_screen.c ****       break;
+ 238              		.loc 1 85 28 is_stmt 0 view .LVU42
+ 239 00d6 2E4B     		ldr	r3, .L22+12
+ 240 00d8 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 241 00da 2B70     		strb	r3, [r5]
+  86:Drivers/u8glib/src/u8g_virtual_screen.c ****     case U8G_DEV_MSG_GET_HEIGHT:
+ 242              		.loc 1 86 7 is_stmt 1 view .LVU43
+ 117:Drivers/u8glib/src/u8g_virtual_screen.c **** }
+ 243              		.loc 1 117 10 is_stmt 0 view .LVU44
+ 244 00dc 0120     		movs	r0, #1
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccacCoq9.s 			page 8
+
+
+ 245              	.LVL20:
+  86:Drivers/u8glib/src/u8g_virtual_screen.c ****     case U8G_DEV_MSG_GET_HEIGHT:
+ 246              		.loc 1 86 7 view .LVU45
+ 247 00de C2E7     		b	.L11
+ 248              	.LVL21:
+ 249              	.L3:
+  88:Drivers/u8glib/src/u8g_virtual_screen.c ****       break;
+ 250              		.loc 1 88 7 is_stmt 1 view .LVU46
+  88:Drivers/u8glib/src/u8g_virtual_screen.c ****       break;
+ 251              		.loc 1 88 28 is_stmt 0 view .LVU47
+ 252 00e0 2C4B     		ldr	r3, .L22+16
+ 253 00e2 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 254 00e4 2B70     		strb	r3, [r5]
+  89:Drivers/u8glib/src/u8g_virtual_screen.c ****     case U8G_DEV_MSG_GET_PAGE_BOX:
+ 255              		.loc 1 89 7 is_stmt 1 view .LVU48
+ 117:Drivers/u8glib/src/u8g_virtual_screen.c **** }
+ 256              		.loc 1 117 10 is_stmt 0 view .LVU49
+ 257 00e6 0120     		movs	r0, #1
+ 258              	.LVL22:
+  89:Drivers/u8glib/src/u8g_virtual_screen.c ****     case U8G_DEV_MSG_GET_PAGE_BOX:
+ 259              		.loc 1 89 7 view .LVU50
+ 260 00e8 BDE7     		b	.L11
+ 261              	.LVL23:
+ 262              	.L7:
+  91:Drivers/u8glib/src/u8g_virtual_screen.c ****       {
+ 263              		.loc 1 91 7 is_stmt 1 view .LVU51
+  91:Drivers/u8glib/src/u8g_virtual_screen.c ****       {
+ 264              		.loc 1 91 27 is_stmt 0 view .LVU52
+ 265 00ea 284B     		ldr	r3, .L22+8
+ 266 00ec 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 267 00ee 264A     		ldr	r2, .L22+4
+ 268 00f0 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+  91:Drivers/u8glib/src/u8g_virtual_screen.c ****       {
+ 269              		.loc 1 91 10 view .LVU53
+ 270 00f2 9342     		cmp	r3, r2
+ 271 00f4 06D3     		bcc	.L20
+ 101:Drivers/u8glib/src/u8g_virtual_screen.c **** 	((u8g_box_t *)arg)->x1 = 0;
+ 272              		.loc 1 101 2 is_stmt 1 view .LVU54
+ 101:Drivers/u8glib/src/u8g_virtual_screen.c **** 	((u8g_box_t *)arg)->x1 = 0;
+ 273              		.loc 1 101 25 is_stmt 0 view .LVU55
+ 274 00f6 0023     		movs	r3, #0
+ 275 00f8 2B70     		strb	r3, [r5]
+ 102:Drivers/u8glib/src/u8g_virtual_screen.c **** 	((u8g_box_t *)arg)->y0 = 0;
+ 276              		.loc 1 102 2 is_stmt 1 view .LVU56
+ 102:Drivers/u8glib/src/u8g_virtual_screen.c **** 	((u8g_box_t *)arg)->y0 = 0;
+ 277              		.loc 1 102 25 is_stmt 0 view .LVU57
+ 278 00fa AB70     		strb	r3, [r5, #2]
+ 103:Drivers/u8glib/src/u8g_virtual_screen.c **** 	((u8g_box_t *)arg)->y1 = 0;
+ 279              		.loc 1 103 2 is_stmt 1 view .LVU58
+ 103:Drivers/u8glib/src/u8g_virtual_screen.c **** 	((u8g_box_t *)arg)->y1 = 0;
+ 280              		.loc 1 103 25 is_stmt 0 view .LVU59
+ 281 00fc 6B70     		strb	r3, [r5, #1]
+ 104:Drivers/u8glib/src/u8g_virtual_screen.c ****       }
+ 282              		.loc 1 104 2 is_stmt 1 view .LVU60
+ 104:Drivers/u8glib/src/u8g_virtual_screen.c ****       }
+ 283              		.loc 1 104 25 is_stmt 0 view .LVU61
+ 284 00fe EB70     		strb	r3, [r5, #3]
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccacCoq9.s 			page 9
+
+
+ 106:Drivers/u8glib/src/u8g_virtual_screen.c ****     case U8G_DEV_MSG_SET_PIXEL:
+ 285              		.loc 1 106 14 view .LVU62
+ 286 0100 0120     		movs	r0, #1
+ 287              	.LVL24:
+ 106:Drivers/u8glib/src/u8g_virtual_screen.c ****     case U8G_DEV_MSG_SET_PIXEL:
+ 288              		.loc 1 106 14 view .LVU63
+ 289 0102 B0E7     		b	.L11
+ 290              	.LVL25:
+ 291              	.L20:
+  93:Drivers/u8glib/src/u8g_virtual_screen.c **** 	((u8g_box_t *)arg)->x0 += u8g_vs_list[u8g_vs_current].x;
+ 292              		.loc 1 93 2 is_stmt 1 view .LVU64
+ 293 0104 1F4C     		ldr	r4, .L22
+ 294 0106 04EBC303 		add	r3, r4, r3, lsl #3
+ 295 010a 5868     		ldr	r0, [r3, #4]
+ 296              	.LVL26:
+  93:Drivers/u8glib/src/u8g_virtual_screen.c **** 	((u8g_box_t *)arg)->x0 += u8g_vs_list[u8g_vs_current].x;
+ 297              		.loc 1 93 2 is_stmt 0 view .LVU65
+ 298 010c 2B46     		mov	r3, r5
+ 299 010e 3246     		mov	r2, r6
+ 300 0110 4168     		ldr	r1, [r0, #4]
+ 301              	.LVL27:
+  93:Drivers/u8glib/src/u8g_virtual_screen.c **** 	((u8g_box_t *)arg)->x0 += u8g_vs_list[u8g_vs_current].x;
+ 302              		.loc 1 93 2 view .LVU66
+ 303 0112 FFF7FEFF 		bl	u8g_call_dev_fn
+ 304              	.LVL28:
+  94:Drivers/u8glib/src/u8g_virtual_screen.c **** 	((u8g_box_t *)arg)->x1 += u8g_vs_list[u8g_vs_current].x;
+ 305              		.loc 1 94 2 is_stmt 1 view .LVU67
+  94:Drivers/u8glib/src/u8g_virtual_screen.c **** 	((u8g_box_t *)arg)->x1 += u8g_vs_list[u8g_vs_current].x;
+ 306              		.loc 1 94 55 is_stmt 0 view .LVU68
+ 307 0116 1D4A     		ldr	r2, .L22+8
+ 308 0118 1378     		ldrb	r3, [r2]	@ zero_extendqisi2
+ 309 011a 14F83330 		ldrb	r3, [r4, r3, lsl #3]	@ zero_extendqisi2
+  94:Drivers/u8glib/src/u8g_virtual_screen.c **** 	((u8g_box_t *)arg)->x1 += u8g_vs_list[u8g_vs_current].x;
+ 310              		.loc 1 94 25 view .LVU69
+ 311 011e 2978     		ldrb	r1, [r5]	@ zero_extendqisi2
+ 312 0120 0B44     		add	r3, r3, r1
+ 313 0122 2B70     		strb	r3, [r5]
+  95:Drivers/u8glib/src/u8g_virtual_screen.c **** 	((u8g_box_t *)arg)->y0 += u8g_vs_list[u8g_vs_current].y;
+ 314              		.loc 1 95 2 is_stmt 1 view .LVU70
+  95:Drivers/u8glib/src/u8g_virtual_screen.c **** 	((u8g_box_t *)arg)->y0 += u8g_vs_list[u8g_vs_current].y;
+ 315              		.loc 1 95 55 is_stmt 0 view .LVU71
+ 316 0124 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 317 0126 14F83230 		ldrb	r3, [r4, r2, lsl #3]	@ zero_extendqisi2
+  95:Drivers/u8glib/src/u8g_virtual_screen.c **** 	((u8g_box_t *)arg)->y0 += u8g_vs_list[u8g_vs_current].y;
+ 318              		.loc 1 95 25 view .LVU72
+ 319 012a A978     		ldrb	r1, [r5, #2]	@ zero_extendqisi2
+ 320 012c 0B44     		add	r3, r3, r1
+ 321 012e AB70     		strb	r3, [r5, #2]
+  96:Drivers/u8glib/src/u8g_virtual_screen.c **** 	((u8g_box_t *)arg)->y1 += u8g_vs_list[u8g_vs_current].y;
+ 322              		.loc 1 96 2 is_stmt 1 view .LVU73
+  96:Drivers/u8glib/src/u8g_virtual_screen.c **** 	((u8g_box_t *)arg)->y1 += u8g_vs_list[u8g_vs_current].y;
+ 323              		.loc 1 96 55 is_stmt 0 view .LVU74
+ 324 0130 04EBC204 		add	r4, r4, r2, lsl #3
+ 325 0134 6378     		ldrb	r3, [r4, #1]	@ zero_extendqisi2
+  96:Drivers/u8glib/src/u8g_virtual_screen.c **** 	((u8g_box_t *)arg)->y1 += u8g_vs_list[u8g_vs_current].y;
+ 326              		.loc 1 96 25 view .LVU75
+ 327 0136 6A78     		ldrb	r2, [r5, #1]	@ zero_extendqisi2
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccacCoq9.s 			page 10
+
+
+ 328 0138 1344     		add	r3, r3, r2
+ 329 013a 6B70     		strb	r3, [r5, #1]
+  97:Drivers/u8glib/src/u8g_virtual_screen.c ****       }
+ 330              		.loc 1 97 2 is_stmt 1 view .LVU76
+  97:Drivers/u8glib/src/u8g_virtual_screen.c ****       }
+ 331              		.loc 1 97 55 is_stmt 0 view .LVU77
+ 332 013c 6378     		ldrb	r3, [r4, #1]	@ zero_extendqisi2
+  97:Drivers/u8glib/src/u8g_virtual_screen.c ****       }
+ 333              		.loc 1 97 25 view .LVU78
+ 334 013e EA78     		ldrb	r2, [r5, #3]	@ zero_extendqisi2
+ 335 0140 1344     		add	r3, r3, r2
+ 336 0142 EB70     		strb	r3, [r5, #3]
+ 106:Drivers/u8glib/src/u8g_virtual_screen.c ****     case U8G_DEV_MSG_SET_PIXEL:
+ 337              		.loc 1 106 14 view .LVU79
+ 338 0144 0120     		movs	r0, #1
+ 339 0146 8EE7     		b	.L11
+ 340              	.LVL29:
+ 341              	.L6:
+ 109:Drivers/u8glib/src/u8g_virtual_screen.c ****       {
+ 342              		.loc 1 109 7 is_stmt 1 view .LVU80
+ 109:Drivers/u8glib/src/u8g_virtual_screen.c ****       {
+ 343              		.loc 1 109 27 is_stmt 0 view .LVU81
+ 344 0148 104B     		ldr	r3, .L22+8
+ 345 014a 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 346 014c 0E4A     		ldr	r2, .L22+4
+ 347 014e 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 109:Drivers/u8glib/src/u8g_virtual_screen.c ****       {
+ 348              		.loc 1 109 10 view .LVU82
+ 349 0150 9342     		cmp	r3, r2
+ 350 0152 01D3     		bcc	.L21
+ 117:Drivers/u8glib/src/u8g_virtual_screen.c **** }
+ 351              		.loc 1 117 10 view .LVU83
+ 352 0154 0120     		movs	r0, #1
+ 353              	.LVL30:
+ 117:Drivers/u8glib/src/u8g_virtual_screen.c **** }
+ 354              		.loc 1 117 10 view .LVU84
+ 355 0156 86E7     		b	.L11
+ 356              	.LVL31:
+ 357              	.L21:
+ 111:Drivers/u8glib/src/u8g_virtual_screen.c ****         ((u8g_dev_arg_pixel_t *)arg)->y -= u8g_vs_list[u8g_vs_current].y;
+ 358              		.loc 1 111 9 is_stmt 1 view .LVU85
+ 111:Drivers/u8glib/src/u8g_virtual_screen.c ****         ((u8g_dev_arg_pixel_t *)arg)->y -= u8g_vs_list[u8g_vs_current].y;
+ 359              		.loc 1 111 71 is_stmt 0 view .LVU86
+ 360 0158 0A4A     		ldr	r2, .L22
+ 361 015a 12F83310 		ldrb	r1, [r2, r3, lsl #3]	@ zero_extendqisi2
+ 362              	.LVL32:
+ 111:Drivers/u8glib/src/u8g_virtual_screen.c ****         ((u8g_dev_arg_pixel_t *)arg)->y -= u8g_vs_list[u8g_vs_current].y;
+ 363              		.loc 1 111 41 view .LVU87
+ 364 015e 2B78     		ldrb	r3, [r5]	@ zero_extendqisi2
+ 365 0160 5B1A     		subs	r3, r3, r1
+ 366 0162 2B70     		strb	r3, [r5]
+ 112:Drivers/u8glib/src/u8g_virtual_screen.c **** 	return u8g_call_dev_fn(u8g_vs_list[u8g_vs_current].u8g, u8g_vs_list[u8g_vs_current].u8g->dev, msg,
+ 367              		.loc 1 112 9 is_stmt 1 view .LVU88
+ 112:Drivers/u8glib/src/u8g_virtual_screen.c **** 	return u8g_call_dev_fn(u8g_vs_list[u8g_vs_current].u8g, u8g_vs_list[u8g_vs_current].u8g->dev, msg,
+ 368              		.loc 1 112 71 is_stmt 0 view .LVU89
+ 369 0164 094B     		ldr	r3, .L22+8
+ 370 0166 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccacCoq9.s 			page 11
+
+
+ 371 0168 02EBC303 		add	r3, r2, r3, lsl #3
+ 372 016c 5978     		ldrb	r1, [r3, #1]	@ zero_extendqisi2
+ 112:Drivers/u8glib/src/u8g_virtual_screen.c **** 	return u8g_call_dev_fn(u8g_vs_list[u8g_vs_current].u8g, u8g_vs_list[u8g_vs_current].u8g->dev, msg,
+ 373              		.loc 1 112 41 view .LVU90
+ 374 016e 6A78     		ldrb	r2, [r5, #1]	@ zero_extendqisi2
+ 375 0170 521A     		subs	r2, r2, r1
+ 376 0172 6A70     		strb	r2, [r5, #1]
+ 113:Drivers/u8glib/src/u8g_virtual_screen.c ****       }
+ 377              		.loc 1 113 2 is_stmt 1 view .LVU91
+ 113:Drivers/u8glib/src/u8g_virtual_screen.c ****       }
+ 378              		.loc 1 113 9 is_stmt 0 view .LVU92
+ 379 0174 5868     		ldr	r0, [r3, #4]
+ 380              	.LVL33:
+ 113:Drivers/u8glib/src/u8g_virtual_screen.c ****       }
+ 381              		.loc 1 113 9 view .LVU93
+ 382 0176 2B46     		mov	r3, r5
+ 383 0178 3246     		mov	r2, r6
+ 384 017a 4168     		ldr	r1, [r0, #4]
+ 385 017c FFF7FEFF 		bl	u8g_call_dev_fn
+ 386              	.LVL34:
+ 387 0180 71E7     		b	.L11
+ 388              	.L23:
+ 389 0182 00BF     		.align	2
+ 390              	.L22:
+ 391 0184 00000000 		.word	.LANCHOR0
+ 392 0188 00000000 		.word	.LANCHOR1
+ 393 018c 00000000 		.word	.LANCHOR2
+ 394 0190 00000000 		.word	.LANCHOR3
+ 395 0194 00000000 		.word	.LANCHOR4
+ 396              		.cfi_endproc
+ 397              	.LFE0:
+ 399              		.section	.text.u8g_SetVirtualScreenDimension,"ax",%progbits
+ 400              		.align	1
+ 401              		.global	u8g_SetVirtualScreenDimension
+ 402              		.syntax unified
+ 403              		.thumb
+ 404              		.thumb_func
+ 406              	u8g_SetVirtualScreenDimension:
+ 407              	.LVL35:
+ 408              	.LFB1:
+ 119:Drivers/u8glib/src/u8g_virtual_screen.c **** 
+ 120:Drivers/u8glib/src/u8g_virtual_screen.c **** 
+ 121:Drivers/u8glib/src/u8g_virtual_screen.c **** 
+ 122:Drivers/u8glib/src/u8g_virtual_screen.c **** u8g_dev_t u8g_dev_vs = { u8g_dev_vs_fn, NULL, NULL };
+ 123:Drivers/u8glib/src/u8g_virtual_screen.c **** 
+ 124:Drivers/u8glib/src/u8g_virtual_screen.c **** void u8g_SetVirtualScreenDimension(u8g_t *vs_u8g, u8g_uint_t width, u8g_uint_t height)
+ 125:Drivers/u8glib/src/u8g_virtual_screen.c **** {
+ 409              		.loc 1 125 1 is_stmt 1 view -0
+ 410              		.cfi_startproc
+ 411              		@ args = 0, pretend = 0, frame = 0
+ 412              		@ frame_needed = 0, uses_anonymous_args = 0
+ 413              		@ link register save eliminated.
+ 126:Drivers/u8glib/src/u8g_virtual_screen.c ****   if ( vs_u8g->dev != &u8g_dev_vs )
+ 414              		.loc 1 126 3 view .LVU95
+ 415              		.loc 1 126 14 is_stmt 0 view .LVU96
+ 416 0000 4068     		ldr	r0, [r0, #4]
+ 417              	.LVL36:
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccacCoq9.s 			page 12
+
+
+ 418              		.loc 1 126 6 view .LVU97
+ 419 0002 044B     		ldr	r3, .L27
+ 420 0004 9842     		cmp	r0, r3
+ 421 0006 00D0     		beq	.L26
+ 422              	.L24:
+ 127:Drivers/u8glib/src/u8g_virtual_screen.c ****     return; 	/* abort if there is no a virtual screen device */
+ 128:Drivers/u8glib/src/u8g_virtual_screen.c ****   u8g_vs_width = width;
+ 129:Drivers/u8glib/src/u8g_virtual_screen.c ****   u8g_vs_height = height;  
+ 130:Drivers/u8glib/src/u8g_virtual_screen.c **** }
+ 423              		.loc 1 130 1 view .LVU98
+ 424 0008 7047     		bx	lr
+ 425              	.L26:
+ 128:Drivers/u8glib/src/u8g_virtual_screen.c ****   u8g_vs_height = height;  
+ 426              		.loc 1 128 3 is_stmt 1 view .LVU99
+ 128:Drivers/u8glib/src/u8g_virtual_screen.c ****   u8g_vs_height = height;  
+ 427              		.loc 1 128 16 is_stmt 0 view .LVU100
+ 428 000a 034B     		ldr	r3, .L27+4
+ 429 000c 1970     		strb	r1, [r3]
+ 129:Drivers/u8glib/src/u8g_virtual_screen.c **** }
+ 430              		.loc 1 129 3 is_stmt 1 view .LVU101
+ 129:Drivers/u8glib/src/u8g_virtual_screen.c **** }
+ 431              		.loc 1 129 17 is_stmt 0 view .LVU102
+ 432 000e 034B     		ldr	r3, .L27+8
+ 433 0010 1A70     		strb	r2, [r3]
+ 434 0012 F9E7     		b	.L24
+ 435              	.L28:
+ 436              		.align	2
+ 437              	.L27:
+ 438 0014 00000000 		.word	.LANCHOR5
+ 439 0018 00000000 		.word	.LANCHOR3
+ 440 001c 00000000 		.word	.LANCHOR4
+ 441              		.cfi_endproc
+ 442              	.LFE1:
+ 444              		.section	.text.u8g_AddToVirtualScreen,"ax",%progbits
+ 445              		.align	1
+ 446              		.global	u8g_AddToVirtualScreen
+ 447              		.syntax unified
+ 448              		.thumb
+ 449              		.thumb_func
+ 451              	u8g_AddToVirtualScreen:
+ 452              	.LVL37:
+ 453              	.LFB2:
+ 131:Drivers/u8glib/src/u8g_virtual_screen.c **** 
+ 132:Drivers/u8glib/src/u8g_virtual_screen.c **** uint8_t u8g_AddToVirtualScreen(u8g_t *vs_u8g, u8g_uint_t x, u8g_uint_t y, u8g_t *child_u8g)
+ 133:Drivers/u8glib/src/u8g_virtual_screen.c **** {
+ 454              		.loc 1 133 1 is_stmt 1 view -0
+ 455              		.cfi_startproc
+ 456              		@ args = 0, pretend = 0, frame = 0
+ 457              		@ frame_needed = 0, uses_anonymous_args = 0
+ 458              		@ link register save eliminated.
+ 459              		.loc 1 133 1 is_stmt 0 view .LVU104
+ 460 0000 30B4     		push	{r4, r5}
+ 461              	.LCFI1:
+ 462              		.cfi_def_cfa_offset 8
+ 463              		.cfi_offset 4, -8
+ 464              		.cfi_offset 5, -4
+ 134:Drivers/u8glib/src/u8g_virtual_screen.c ****   if ( vs_u8g->dev != &u8g_dev_vs )
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccacCoq9.s 			page 13
+
+
+ 465              		.loc 1 134 3 is_stmt 1 view .LVU105
+ 466              		.loc 1 134 14 is_stmt 0 view .LVU106
+ 467 0002 4468     		ldr	r4, [r0, #4]
+ 468              		.loc 1 134 6 view .LVU107
+ 469 0004 0B48     		ldr	r0, .L35
+ 470              	.LVL38:
+ 471              		.loc 1 134 6 view .LVU108
+ 472 0006 8442     		cmp	r4, r0
+ 473 0008 02D0     		beq	.L34
+ 135:Drivers/u8glib/src/u8g_virtual_screen.c ****     return 0; 	/* abort if there is no a virtual screen device */
+ 474              		.loc 1 135 12 view .LVU109
+ 475 000a 0020     		movs	r0, #0
+ 476              	.LVL39:
+ 477              	.L30:
+ 136:Drivers/u8glib/src/u8g_virtual_screen.c ****   if ( u8g_vs_cnt >= U8g_VS_MAX )
+ 137:Drivers/u8glib/src/u8g_virtual_screen.c ****     return 0;  	/* maximum number of  child u8g's reached */
+ 138:Drivers/u8glib/src/u8g_virtual_screen.c ****   u8g_vs_list[u8g_vs_cnt].u8g = child_u8g;
+ 139:Drivers/u8glib/src/u8g_virtual_screen.c ****   u8g_vs_list[u8g_vs_cnt].x = x;
+ 140:Drivers/u8glib/src/u8g_virtual_screen.c ****   u8g_vs_list[u8g_vs_cnt].y = y;
+ 141:Drivers/u8glib/src/u8g_virtual_screen.c ****   u8g_vs_cnt++;
+ 142:Drivers/u8glib/src/u8g_virtual_screen.c ****   return 1;
+ 143:Drivers/u8glib/src/u8g_virtual_screen.c **** }
+ 478              		.loc 1 143 1 view .LVU110
+ 479 000c 30BC     		pop	{r4, r5}
+ 480              	.LCFI2:
+ 481              		.cfi_remember_state
+ 482              		.cfi_restore 5
+ 483              		.cfi_restore 4
+ 484              		.cfi_def_cfa_offset 0
+ 485 000e 7047     		bx	lr
+ 486              	.LVL40:
+ 487              	.L34:
+ 488              	.LCFI3:
+ 489              		.cfi_restore_state
+ 136:Drivers/u8glib/src/u8g_virtual_screen.c ****   if ( u8g_vs_cnt >= U8g_VS_MAX )
+ 490              		.loc 1 136 3 is_stmt 1 view .LVU111
+ 136:Drivers/u8glib/src/u8g_virtual_screen.c ****   if ( u8g_vs_cnt >= U8g_VS_MAX )
+ 491              		.loc 1 136 19 is_stmt 0 view .LVU112
+ 492 0010 0948     		ldr	r0, .L35+4
+ 493 0012 0078     		ldrb	r0, [r0]	@ zero_extendqisi2
+ 136:Drivers/u8glib/src/u8g_virtual_screen.c ****   if ( u8g_vs_cnt >= U8g_VS_MAX )
+ 494              		.loc 1 136 6 view .LVU113
+ 495 0014 0328     		cmp	r0, #3
+ 496 0016 0BD8     		bhi	.L32
+ 138:Drivers/u8glib/src/u8g_virtual_screen.c ****   u8g_vs_list[u8g_vs_cnt].x = x;
+ 497              		.loc 1 138 3 is_stmt 1 view .LVU114
+ 138:Drivers/u8glib/src/u8g_virtual_screen.c ****   u8g_vs_list[u8g_vs_cnt].x = x;
+ 498              		.loc 1 138 31 is_stmt 0 view .LVU115
+ 499 0018 084D     		ldr	r5, .L35+8
+ 500 001a 05EBC004 		add	r4, r5, r0, lsl #3
+ 501 001e 6360     		str	r3, [r4, #4]
+ 139:Drivers/u8glib/src/u8g_virtual_screen.c ****   u8g_vs_list[u8g_vs_cnt].y = y;
+ 502              		.loc 1 139 3 is_stmt 1 view .LVU116
+ 139:Drivers/u8glib/src/u8g_virtual_screen.c ****   u8g_vs_list[u8g_vs_cnt].y = y;
+ 503              		.loc 1 139 29 is_stmt 0 view .LVU117
+ 504 0020 05F83010 		strb	r1, [r5, r0, lsl #3]
+ 140:Drivers/u8glib/src/u8g_virtual_screen.c ****   u8g_vs_cnt++;
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccacCoq9.s 			page 14
+
+
+ 505              		.loc 1 140 3 is_stmt 1 view .LVU118
+ 140:Drivers/u8glib/src/u8g_virtual_screen.c ****   u8g_vs_cnt++;
+ 506              		.loc 1 140 29 is_stmt 0 view .LVU119
+ 507 0024 6270     		strb	r2, [r4, #1]
+ 141:Drivers/u8glib/src/u8g_virtual_screen.c ****   return 1;
+ 508              		.loc 1 141 3 is_stmt 1 view .LVU120
+ 141:Drivers/u8glib/src/u8g_virtual_screen.c ****   return 1;
+ 509              		.loc 1 141 13 is_stmt 0 view .LVU121
+ 510 0026 0130     		adds	r0, r0, #1
+ 511 0028 034B     		ldr	r3, .L35+4
+ 512              	.LVL41:
+ 141:Drivers/u8glib/src/u8g_virtual_screen.c ****   return 1;
+ 513              		.loc 1 141 13 view .LVU122
+ 514 002a 1870     		strb	r0, [r3]
+ 142:Drivers/u8glib/src/u8g_virtual_screen.c **** }
+ 515              		.loc 1 142 3 is_stmt 1 view .LVU123
+ 142:Drivers/u8glib/src/u8g_virtual_screen.c **** }
+ 516              		.loc 1 142 10 is_stmt 0 view .LVU124
+ 517 002c 0120     		movs	r0, #1
+ 518 002e EDE7     		b	.L30
+ 519              	.LVL42:
+ 520              	.L32:
+ 137:Drivers/u8glib/src/u8g_virtual_screen.c ****   u8g_vs_list[u8g_vs_cnt].u8g = child_u8g;
+ 521              		.loc 1 137 12 view .LVU125
+ 522 0030 0020     		movs	r0, #0
+ 523 0032 EBE7     		b	.L30
+ 524              	.L36:
+ 525              		.align	2
+ 526              	.L35:
+ 527 0034 00000000 		.word	.LANCHOR5
+ 528 0038 00000000 		.word	.LANCHOR1
+ 529 003c 00000000 		.word	.LANCHOR0
+ 530              		.cfi_endproc
+ 531              	.LFE2:
+ 533              		.global	u8g_dev_vs
+ 534              		.global	u8g_vs_height
+ 535              		.global	u8g_vs_width
+ 536              		.global	u8g_vs_current
+ 537              		.global	u8g_vs_list
+ 538              		.global	u8g_vs_cnt
+ 539              		.section	.bss.u8g_vs_cnt,"aw",%nobits
+ 540              		.set	.LANCHOR1,. + 0
+ 543              	u8g_vs_cnt:
+ 544 0000 00       		.space	1
+ 545              		.section	.bss.u8g_vs_current,"aw",%nobits
+ 546              		.set	.LANCHOR2,. + 0
+ 549              	u8g_vs_current:
+ 550 0000 00       		.space	1
+ 551              		.section	.bss.u8g_vs_height,"aw",%nobits
+ 552              		.set	.LANCHOR4,. + 0
+ 555              	u8g_vs_height:
+ 556 0000 00       		.space	1
+ 557              		.section	.bss.u8g_vs_list,"aw",%nobits
+ 558              		.align	2
+ 559              		.set	.LANCHOR0,. + 0
+ 562              	u8g_vs_list:
+ 563 0000 00000000 		.space	32
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccacCoq9.s 			page 15
+
+
+ 563      00000000 
+ 563      00000000 
+ 563      00000000 
+ 563      00000000 
+ 564              		.section	.bss.u8g_vs_width,"aw",%nobits
+ 565              		.set	.LANCHOR3,. + 0
+ 568              	u8g_vs_width:
+ 569 0000 00       		.space	1
+ 570              		.section	.data.u8g_dev_vs,"aw"
+ 571              		.align	2
+ 572              		.set	.LANCHOR5,. + 0
+ 575              	u8g_dev_vs:
+ 576 0000 00000000 		.word	u8g_dev_vs_fn
+ 577 0004 00000000 		.word	0
+ 578 0008 00000000 		.word	0
+ 579              		.text
+ 580              	.Letext0:
+ 581              		.file 2 "c:\\users\\zbigniew\\appdata\\roaming\\code\\user\\globalstorage\\bmd.stm32-for-vscode\\@
+ 582              		.file 3 "c:\\users\\zbigniew\\appdata\\roaming\\code\\user\\globalstorage\\bmd.stm32-for-vscode\\@
+ 583              		.file 4 "Inc/../Drivers/u8glib/inc/u8g.h"
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccacCoq9.s 			page 16
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 u8g_virtual_screen.c
+C:\Users\Zbigniew\AppData\Local\Temp\ccacCoq9.s:18     .text.u8g_dev_vs_fn:0000000000000000 $t
+C:\Users\Zbigniew\AppData\Local\Temp\ccacCoq9.s:24     .text.u8g_dev_vs_fn:0000000000000000 u8g_dev_vs_fn
+C:\Users\Zbigniew\AppData\Local\Temp\ccacCoq9.s:51     .text.u8g_dev_vs_fn:0000000000000012 $d
+C:\Users\Zbigniew\AppData\Local\Temp\ccacCoq9.s:103    .text.u8g_dev_vs_fn:0000000000000046 $t
+C:\Users\Zbigniew\AppData\Local\Temp\ccacCoq9.s:391    .text.u8g_dev_vs_fn:0000000000000184 $d
+C:\Users\Zbigniew\AppData\Local\Temp\ccacCoq9.s:400    .text.u8g_SetVirtualScreenDimension:0000000000000000 $t
+C:\Users\Zbigniew\AppData\Local\Temp\ccacCoq9.s:406    .text.u8g_SetVirtualScreenDimension:0000000000000000 u8g_SetVirtualScreenDimension
+C:\Users\Zbigniew\AppData\Local\Temp\ccacCoq9.s:438    .text.u8g_SetVirtualScreenDimension:0000000000000014 $d
+C:\Users\Zbigniew\AppData\Local\Temp\ccacCoq9.s:445    .text.u8g_AddToVirtualScreen:0000000000000000 $t
+C:\Users\Zbigniew\AppData\Local\Temp\ccacCoq9.s:451    .text.u8g_AddToVirtualScreen:0000000000000000 u8g_AddToVirtualScreen
+C:\Users\Zbigniew\AppData\Local\Temp\ccacCoq9.s:527    .text.u8g_AddToVirtualScreen:0000000000000034 $d
+C:\Users\Zbigniew\AppData\Local\Temp\ccacCoq9.s:575    .data.u8g_dev_vs:0000000000000000 u8g_dev_vs
+C:\Users\Zbigniew\AppData\Local\Temp\ccacCoq9.s:555    .bss.u8g_vs_height:0000000000000000 u8g_vs_height
+C:\Users\Zbigniew\AppData\Local\Temp\ccacCoq9.s:568    .bss.u8g_vs_width:0000000000000000 u8g_vs_width
+C:\Users\Zbigniew\AppData\Local\Temp\ccacCoq9.s:549    .bss.u8g_vs_current:0000000000000000 u8g_vs_current
+C:\Users\Zbigniew\AppData\Local\Temp\ccacCoq9.s:562    .bss.u8g_vs_list:0000000000000000 u8g_vs_list
+C:\Users\Zbigniew\AppData\Local\Temp\ccacCoq9.s:543    .bss.u8g_vs_cnt:0000000000000000 u8g_vs_cnt
+C:\Users\Zbigniew\AppData\Local\Temp\ccacCoq9.s:544    .bss.u8g_vs_cnt:0000000000000000 $d
+C:\Users\Zbigniew\AppData\Local\Temp\ccacCoq9.s:550    .bss.u8g_vs_current:0000000000000000 $d
+C:\Users\Zbigniew\AppData\Local\Temp\ccacCoq9.s:556    .bss.u8g_vs_height:0000000000000000 $d
+C:\Users\Zbigniew\AppData\Local\Temp\ccacCoq9.s:558    .bss.u8g_vs_list:0000000000000000 $d
+C:\Users\Zbigniew\AppData\Local\Temp\ccacCoq9.s:569    .bss.u8g_vs_width:0000000000000000 $d
+C:\Users\Zbigniew\AppData\Local\Temp\ccacCoq9.s:571    .data.u8g_dev_vs:0000000000000000 $d
+
+UNDEFINED SYMBOLS
+u8g_call_dev_fn

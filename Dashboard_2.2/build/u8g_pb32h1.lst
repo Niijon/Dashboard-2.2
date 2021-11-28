@@ -1,0 +1,1074 @@
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccipa6cc.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.arch armv7-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"u8g_pb32h1.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.u8g_pb32h1_Clear,"ax",%progbits
+  18              		.align	1
+  19              		.global	u8g_pb32h1_Clear
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  24              	u8g_pb32h1_Clear:
+  25              	.LVL0:
+  26              	.LFB0:
+  27              		.file 1 "Drivers/u8glib/src/u8g_pb32h1.c"
+   1:Drivers/u8glib/src/u8g_pb32h1.c **** /*
+   2:Drivers/u8glib/src/u8g_pb32h1.c **** 
+   3:Drivers/u8glib/src/u8g_pb32h1.c ****   u8g_pb32h1.c
+   4:Drivers/u8glib/src/u8g_pb32h1.c ****   
+   5:Drivers/u8glib/src/u8g_pb32h1.c ****   2x 8bit height monochrom (1 bit) page buffer
+   6:Drivers/u8glib/src/u8g_pb32h1.c ****   byte has horizontal orientation
+   7:Drivers/u8glib/src/u8g_pb32h1.c **** 
+   8:Drivers/u8glib/src/u8g_pb32h1.c ****   Universal 8bit Graphics Library
+   9:Drivers/u8glib/src/u8g_pb32h1.c ****   
+  10:Drivers/u8glib/src/u8g_pb32h1.c ****   Copyright (c) 2012, olikraus@gmail.com
+  11:Drivers/u8glib/src/u8g_pb32h1.c ****   All rights reserved.
+  12:Drivers/u8glib/src/u8g_pb32h1.c **** 
+  13:Drivers/u8glib/src/u8g_pb32h1.c ****   Redistribution and use in source and binary forms, with or without modification, 
+  14:Drivers/u8glib/src/u8g_pb32h1.c ****   are permitted provided that the following conditions are met:
+  15:Drivers/u8glib/src/u8g_pb32h1.c **** 
+  16:Drivers/u8glib/src/u8g_pb32h1.c ****   * Redistributions of source code must retain the above copyright notice, this list 
+  17:Drivers/u8glib/src/u8g_pb32h1.c ****     of conditions and the following disclaimer.
+  18:Drivers/u8glib/src/u8g_pb32h1.c ****     
+  19:Drivers/u8glib/src/u8g_pb32h1.c ****   * Redistributions in binary form must reproduce the above copyright notice, this 
+  20:Drivers/u8glib/src/u8g_pb32h1.c ****     list of conditions and the following disclaimer in the documentation and/or other 
+  21:Drivers/u8glib/src/u8g_pb32h1.c ****     materials provided with the distribution.
+  22:Drivers/u8glib/src/u8g_pb32h1.c **** 
+  23:Drivers/u8glib/src/u8g_pb32h1.c ****   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND 
+  24:Drivers/u8glib/src/u8g_pb32h1.c ****   CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, 
+  25:Drivers/u8glib/src/u8g_pb32h1.c ****   INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF 
+  26:Drivers/u8glib/src/u8g_pb32h1.c ****   MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE 
+  27:Drivers/u8glib/src/u8g_pb32h1.c ****   DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR 
+  28:Drivers/u8glib/src/u8g_pb32h1.c ****   CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, 
+  29:Drivers/u8glib/src/u8g_pb32h1.c ****   SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT 
+  30:Drivers/u8glib/src/u8g_pb32h1.c ****   NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; 
+  31:Drivers/u8glib/src/u8g_pb32h1.c ****   LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER 
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccipa6cc.s 			page 2
+
+
+  32:Drivers/u8glib/src/u8g_pb32h1.c ****   CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, 
+  33:Drivers/u8glib/src/u8g_pb32h1.c ****   STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+  34:Drivers/u8glib/src/u8g_pb32h1.c ****   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF 
+  35:Drivers/u8glib/src/u8g_pb32h1.c ****   ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.  
+  36:Drivers/u8glib/src/u8g_pb32h1.c **** 
+  37:Drivers/u8glib/src/u8g_pb32h1.c **** 
+  38:Drivers/u8glib/src/u8g_pb32h1.c ****   total buffer size is limited to 2*256 bytes because of the calculation inside the set pixel proce
+  39:Drivers/u8glib/src/u8g_pb32h1.c **** 
+  40:Drivers/u8glib/src/u8g_pb32h1.c **** 
+  41:Drivers/u8glib/src/u8g_pb32h1.c **** */
+  42:Drivers/u8glib/src/u8g_pb32h1.c **** 
+  43:Drivers/u8glib/src/u8g_pb32h1.c **** #include "../Drivers/u8glib/inc/u8g.h"
+  44:Drivers/u8glib/src/u8g_pb32h1.c **** #include <string.h>
+  45:Drivers/u8glib/src/u8g_pb32h1.c **** 
+  46:Drivers/u8glib/src/u8g_pb32h1.c **** 
+  47:Drivers/u8glib/src/u8g_pb32h1.c **** void u8g_pb32h1_Init(u8g_pb_t *b, void *buf, u8g_uint_t width) U8G_NOINLINE;
+  48:Drivers/u8glib/src/u8g_pb32h1.c **** void u8g_pb32h1_set_pixel(u8g_pb_t *b, u8g_uint_t x, u8g_uint_t y, uint8_t color_index) U8G_NOINLIN
+  49:Drivers/u8glib/src/u8g_pb32h1.c **** void u8g_pb32h1_SetPixel(u8g_pb_t *b, const u8g_dev_arg_pixel_t * const arg_pixel) U8G_NOINLINE ;
+  50:Drivers/u8glib/src/u8g_pb32h1.c **** void u8g_pb32h1_Set8PixelStd(u8g_pb_t *b, u8g_dev_arg_pixel_t *arg_pixel) U8G_NOINLINE;
+  51:Drivers/u8glib/src/u8g_pb32h1.c **** uint8_t u8g_dev_pb8h1_base_fn(u8g_t *u8g, u8g_dev_t *dev, uint8_t msg, void *arg);
+  52:Drivers/u8glib/src/u8g_pb32h1.c **** 
+  53:Drivers/u8glib/src/u8g_pb32h1.c **** void u8g_pb32h1_Clear(u8g_pb_t *b)
+  54:Drivers/u8glib/src/u8g_pb32h1.c **** {
+  28              		.loc 1 54 1 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+  55:Drivers/u8glib/src/u8g_pb32h1.c ****   uint8_t *ptr = (uint8_t *)b->buf;
+  33              		.loc 1 55 3 view .LVU1
+  34              		.loc 1 55 12 is_stmt 0 view .LVU2
+  35 0000 8368     		ldr	r3, [r0, #8]
+  36              	.LVL1:
+  56:Drivers/u8glib/src/u8g_pb32h1.c ****   uint8_t *end_ptr = ptr;
+  37              		.loc 1 56 3 is_stmt 1 view .LVU3
+  57:Drivers/u8glib/src/u8g_pb32h1.c ****   end_ptr += b->width*4;
+  38              		.loc 1 57 3 view .LVU4
+  39              		.loc 1 57 15 is_stmt 0 view .LVU5
+  40 0002 4079     		ldrb	r0, [r0, #5]	@ zero_extendqisi2
+  41              	.LVL2:
+  42              		.loc 1 57 11 view .LVU6
+  43 0004 03EB8000 		add	r0, r3, r0, lsl #2
+  44              	.LVL3:
+  45              	.L2:
+  58:Drivers/u8glib/src/u8g_pb32h1.c ****   do
+  46              		.loc 1 58 3 is_stmt 1 discriminator 1 view .LVU7
+  59:Drivers/u8glib/src/u8g_pb32h1.c ****   {
+  60:Drivers/u8glib/src/u8g_pb32h1.c ****     *ptr++ = 0;
+  47              		.loc 1 60 5 discriminator 1 view .LVU8
+  48 0008 1A46     		mov	r2, r3
+  49              		.loc 1 60 9 is_stmt 0 discriminator 1 view .LVU9
+  50 000a 0133     		adds	r3, r3, #1
+  51              	.LVL4:
+  52              		.loc 1 60 12 discriminator 1 view .LVU10
+  53 000c 0021     		movs	r1, #0
+  54 000e 1170     		strb	r1, [r2]
+  61:Drivers/u8glib/src/u8g_pb32h1.c ****   } while( ptr != end_ptr );
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccipa6cc.s 			page 3
+
+
+  55              		.loc 1 61 10 is_stmt 1 discriminator 1 view .LVU11
+  56              		.loc 1 61 3 is_stmt 0 discriminator 1 view .LVU12
+  57 0010 9842     		cmp	r0, r3
+  58 0012 F9D1     		bne	.L2
+  62:Drivers/u8glib/src/u8g_pb32h1.c **** }
+  59              		.loc 1 62 1 view .LVU13
+  60 0014 7047     		bx	lr
+  61              		.cfi_endproc
+  62              	.LFE0:
+  64              		.section	.text.u8g_pb32h1_Init,"ax",%progbits
+  65              		.align	1
+  66              		.global	u8g_pb32h1_Init
+  67              		.syntax unified
+  68              		.thumb
+  69              		.thumb_func
+  71              	u8g_pb32h1_Init:
+  72              	.LVL5:
+  73              	.LFB1:
+  63:Drivers/u8glib/src/u8g_pb32h1.c **** 
+  64:Drivers/u8glib/src/u8g_pb32h1.c **** 
+  65:Drivers/u8glib/src/u8g_pb32h1.c **** 
+  66:Drivers/u8glib/src/u8g_pb32h1.c **** void u8g_pb32h1_Init(u8g_pb_t *b, void *buf, u8g_uint_t width)
+  67:Drivers/u8glib/src/u8g_pb32h1.c **** {
+  74              		.loc 1 67 1 is_stmt 1 view -0
+  75              		.cfi_startproc
+  76              		@ args = 0, pretend = 0, frame = 0
+  77              		@ frame_needed = 0, uses_anonymous_args = 0
+  78              		.loc 1 67 1 is_stmt 0 view .LVU15
+  79 0000 08B5     		push	{r3, lr}
+  80              	.LCFI0:
+  81              		.cfi_def_cfa_offset 8
+  82              		.cfi_offset 3, -8
+  83              		.cfi_offset 14, -4
+  68:Drivers/u8glib/src/u8g_pb32h1.c ****   b->buf = buf;
+  84              		.loc 1 68 3 is_stmt 1 view .LVU16
+  85              		.loc 1 68 10 is_stmt 0 view .LVU17
+  86 0002 8160     		str	r1, [r0, #8]
+  69:Drivers/u8glib/src/u8g_pb32h1.c ****   b->width = width;
+  87              		.loc 1 69 3 is_stmt 1 view .LVU18
+  88              		.loc 1 69 12 is_stmt 0 view .LVU19
+  89 0004 4271     		strb	r2, [r0, #5]
+  70:Drivers/u8glib/src/u8g_pb32h1.c ****   u8g_pb32h1_Clear(b);
+  90              		.loc 1 70 3 is_stmt 1 view .LVU20
+  91 0006 FFF7FEFF 		bl	u8g_pb32h1_Clear
+  92              	.LVL6:
+  71:Drivers/u8glib/src/u8g_pb32h1.c **** }
+  93              		.loc 1 71 1 is_stmt 0 view .LVU21
+  94 000a 08BD     		pop	{r3, pc}
+  95              		.cfi_endproc
+  96              	.LFE1:
+  98              		.section	.text.u8g_pb32h1_set_pixel,"ax",%progbits
+  99              		.align	1
+ 100              		.global	u8g_pb32h1_set_pixel
+ 101              		.syntax unified
+ 102              		.thumb
+ 103              		.thumb_func
+ 105              	u8g_pb32h1_set_pixel:
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccipa6cc.s 			page 4
+
+
+ 106              	.LVL7:
+ 107              	.LFB2:
+  72:Drivers/u8glib/src/u8g_pb32h1.c **** 
+  73:Drivers/u8glib/src/u8g_pb32h1.c **** 
+  74:Drivers/u8glib/src/u8g_pb32h1.c **** /* limitation: total buffer must not exceed 2*256 bytes */
+  75:Drivers/u8glib/src/u8g_pb32h1.c **** void u8g_pb32h1_set_pixel(u8g_pb_t *b, u8g_uint_t x, u8g_uint_t y, uint8_t color_index)
+  76:Drivers/u8glib/src/u8g_pb32h1.c **** {
+ 108              		.loc 1 76 1 is_stmt 1 view -0
+ 109              		.cfi_startproc
+ 110              		@ args = 0, pretend = 0, frame = 0
+ 111              		@ frame_needed = 0, uses_anonymous_args = 0
+ 112              		.loc 1 76 1 is_stmt 0 view .LVU23
+ 113 0000 10B5     		push	{r4, lr}
+ 114              	.LCFI1:
+ 115              		.cfi_def_cfa_offset 8
+ 116              		.cfi_offset 4, -8
+ 117              		.cfi_offset 14, -4
+  77:Drivers/u8glib/src/u8g_pb32h1.c ****   register uint8_t mask;
+ 118              		.loc 1 77 3 is_stmt 1 view .LVU24
+  78:Drivers/u8glib/src/u8g_pb32h1.c ****   uint16_t tmp;
+ 119              		.loc 1 78 3 view .LVU25
+  79:Drivers/u8glib/src/u8g_pb32h1.c ****   uint8_t *ptr = b->buf;
+ 120              		.loc 1 79 3 view .LVU26
+ 121              		.loc 1 79 12 is_stmt 0 view .LVU27
+ 122 0002 8468     		ldr	r4, [r0, #8]
+ 123              	.LVL8:
+  80:Drivers/u8glib/src/u8g_pb32h1.c ****   
+  81:Drivers/u8glib/src/u8g_pb32h1.c ****   y -= b->p.page_y0;
+ 124              		.loc 1 81 3 is_stmt 1 view .LVU28
+ 125              		.loc 1 81 12 is_stmt 0 view .LVU29
+ 126 0004 90F802C0 		ldrb	ip, [r0, #2]	@ zero_extendqisi2
+ 127              		.loc 1 81 5 view .LVU30
+ 128 0008 A2EB0C02 		sub	r2, r2, ip
+ 129              	.LVL9:
+ 130              		.loc 1 81 5 view .LVU31
+ 131 000c D2B2     		uxtb	r2, r2
+ 132              	.LVL10:
+  82:Drivers/u8glib/src/u8g_pb32h1.c ****   tmp = b->width;
+ 133              		.loc 1 82 3 is_stmt 1 view .LVU32
+ 134              		.loc 1 82 7 is_stmt 0 view .LVU33
+ 135 000e 90F805C0 		ldrb	ip, [r0, #5]	@ zero_extendqisi2
+ 136              	.LVL11:
+  83:Drivers/u8glib/src/u8g_pb32h1.c ****   tmp >>= 3;
+ 137              		.loc 1 83 3 is_stmt 1 view .LVU34
+ 138              		.loc 1 83 7 is_stmt 0 view .LVU35
+ 139 0012 4FEADC0C 		lsr	ip, ip, #3
+ 140              	.LVL12:
+  84:Drivers/u8glib/src/u8g_pb32h1.c ****   tmp *= y;
+ 141              		.loc 1 84 3 is_stmt 1 view .LVU36
+  85:Drivers/u8glib/src/u8g_pb32h1.c ****   ptr += tmp;
+ 142              		.loc 1 85 3 view .LVU37
+  86:Drivers/u8glib/src/u8g_pb32h1.c ****   
+  87:Drivers/u8glib/src/u8g_pb32h1.c ****   mask = 0x080;
+ 143              		.loc 1 87 3 view .LVU38
+  88:Drivers/u8glib/src/u8g_pb32h1.c ****   mask >>= x & 7;
+ 144              		.loc 1 88 3 view .LVU39
+ 145              		.loc 1 88 14 is_stmt 0 view .LVU40
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccipa6cc.s 			page 5
+
+
+ 146 0016 01F0070E 		and	lr, r1, #7
+ 147              		.loc 1 88 8 view .LVU41
+ 148 001a 8020     		movs	r0, #128
+ 149              	.LVL13:
+ 150              		.loc 1 88 8 view .LVU42
+ 151 001c 40FA0EF0 		asr	r0, r0, lr
+ 152 0020 C0B2     		uxtb	r0, r0
+ 153              	.LVL14:
+  89:Drivers/u8glib/src/u8g_pb32h1.c ****   x >>= 3;
+ 154              		.loc 1 89 3 is_stmt 1 view .LVU43
+ 155              		.loc 1 89 5 is_stmt 0 view .LVU44
+ 156 0022 C908     		lsrs	r1, r1, #3
+ 157              	.LVL15:
+  90:Drivers/u8glib/src/u8g_pb32h1.c ****   ptr += x;
+ 158              		.loc 1 90 3 is_stmt 1 view .LVU45
+ 159              		.loc 1 90 7 is_stmt 0 view .LVU46
+ 160 0024 02FB0C11 		mla	r1, r2, ip, r1
+ 161              	.LVL16:
+  91:Drivers/u8glib/src/u8g_pb32h1.c ****   if ( color_index )
+ 162              		.loc 1 91 3 is_stmt 1 view .LVU47
+ 163              		.loc 1 91 6 is_stmt 0 view .LVU48
+ 164 0028 1BB1     		cbz	r3, .L6
+  92:Drivers/u8glib/src/u8g_pb32h1.c ****   {
+  93:Drivers/u8glib/src/u8g_pb32h1.c ****     *ptr |= mask;
+ 165              		.loc 1 93 5 is_stmt 1 view .LVU49
+ 166              		.loc 1 93 10 is_stmt 0 view .LVU50
+ 167 002a 635C     		ldrb	r3, [r4, r1]	@ zero_extendqisi2
+ 168              	.LVL17:
+ 169              		.loc 1 93 10 view .LVU51
+ 170 002c 1843     		orrs	r0, r0, r3
+ 171              	.LVL18:
+ 172              		.loc 1 93 10 view .LVU52
+ 173 002e 6054     		strb	r0, [r4, r1]
+ 174              	.LVL19:
+ 175              	.L5:
+  94:Drivers/u8glib/src/u8g_pb32h1.c ****   }
+  95:Drivers/u8glib/src/u8g_pb32h1.c ****   else
+  96:Drivers/u8glib/src/u8g_pb32h1.c ****   {
+  97:Drivers/u8glib/src/u8g_pb32h1.c ****     mask ^=0xff;
+  98:Drivers/u8glib/src/u8g_pb32h1.c ****     *ptr &= mask;
+  99:Drivers/u8glib/src/u8g_pb32h1.c ****   }
+ 100:Drivers/u8glib/src/u8g_pb32h1.c ****   
+ 101:Drivers/u8glib/src/u8g_pb32h1.c **** }
+ 176              		.loc 1 101 1 view .LVU53
+ 177 0030 10BD     		pop	{r4, pc}
+ 178              	.LVL20:
+ 179              	.L6:
+  97:Drivers/u8glib/src/u8g_pb32h1.c ****     *ptr &= mask;
+ 180              		.loc 1 97 5 is_stmt 1 view .LVU54
+  98:Drivers/u8glib/src/u8g_pb32h1.c ****   }
+ 181              		.loc 1 98 5 view .LVU55
+  98:Drivers/u8glib/src/u8g_pb32h1.c ****   }
+ 182              		.loc 1 98 10 is_stmt 0 view .LVU56
+ 183 0032 635C     		ldrb	r3, [r4, r1]	@ zero_extendqisi2
+ 184              	.LVL21:
+  98:Drivers/u8glib/src/u8g_pb32h1.c ****   }
+ 185              		.loc 1 98 10 view .LVU57
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccipa6cc.s 			page 6
+
+
+ 186 0034 23EA0000 		bic	r0, r3, r0
+ 187              	.LVL22:
+  98:Drivers/u8glib/src/u8g_pb32h1.c ****   }
+ 188              		.loc 1 98 10 view .LVU58
+ 189 0038 6054     		strb	r0, [r4, r1]
+ 190              		.loc 1 101 1 view .LVU59
+ 191 003a F9E7     		b	.L5
+ 192              		.cfi_endproc
+ 193              	.LFE2:
+ 195              		.section	.text.u8g_pb32h1_SetPixel,"ax",%progbits
+ 196              		.align	1
+ 197              		.global	u8g_pb32h1_SetPixel
+ 198              		.syntax unified
+ 199              		.thumb
+ 200              		.thumb_func
+ 202              	u8g_pb32h1_SetPixel:
+ 203              	.LVL23:
+ 204              	.LFB3:
+ 102:Drivers/u8glib/src/u8g_pb32h1.c **** 
+ 103:Drivers/u8glib/src/u8g_pb32h1.c **** 
+ 104:Drivers/u8glib/src/u8g_pb32h1.c **** void u8g_pb32h1_SetPixel(u8g_pb_t *b, const u8g_dev_arg_pixel_t * const arg_pixel)
+ 105:Drivers/u8glib/src/u8g_pb32h1.c **** {
+ 205              		.loc 1 105 1 is_stmt 1 view -0
+ 206              		.cfi_startproc
+ 207              		@ args = 0, pretend = 0, frame = 0
+ 208              		@ frame_needed = 0, uses_anonymous_args = 0
+ 209              		.loc 1 105 1 is_stmt 0 view .LVU61
+ 210 0000 08B5     		push	{r3, lr}
+ 211              	.LCFI2:
+ 212              		.cfi_def_cfa_offset 8
+ 213              		.cfi_offset 3, -8
+ 214              		.cfi_offset 14, -4
+ 106:Drivers/u8glib/src/u8g_pb32h1.c ****   if ( arg_pixel->y < b->p.page_y0 )
+ 215              		.loc 1 106 3 is_stmt 1 view .LVU62
+ 216              		.loc 1 106 17 is_stmt 0 view .LVU63
+ 217 0002 4A78     		ldrb	r2, [r1, #1]	@ zero_extendqisi2
+ 218              		.loc 1 106 27 view .LVU64
+ 219 0004 8378     		ldrb	r3, [r0, #2]	@ zero_extendqisi2
+ 220              		.loc 1 106 6 view .LVU65
+ 221 0006 9A42     		cmp	r2, r3
+ 222 0008 07D3     		bcc	.L9
+ 107:Drivers/u8glib/src/u8g_pb32h1.c ****     return;
+ 108:Drivers/u8glib/src/u8g_pb32h1.c ****   if ( arg_pixel->y > b->p.page_y1 )
+ 223              		.loc 1 108 3 is_stmt 1 view .LVU66
+ 224              		.loc 1 108 27 is_stmt 0 view .LVU67
+ 225 000a C378     		ldrb	r3, [r0, #3]	@ zero_extendqisi2
+ 226              		.loc 1 108 6 view .LVU68
+ 227 000c 9A42     		cmp	r2, r3
+ 228 000e 04D8     		bhi	.L9
+ 109:Drivers/u8glib/src/u8g_pb32h1.c ****     return;
+ 110:Drivers/u8glib/src/u8g_pb32h1.c ****   if ( arg_pixel->x >= b->width )
+ 229              		.loc 1 110 3 is_stmt 1 view .LVU69
+ 230              		.loc 1 110 17 is_stmt 0 view .LVU70
+ 231 0010 91F800C0 		ldrb	ip, [r1]	@ zero_extendqisi2
+ 232              		.loc 1 110 25 view .LVU71
+ 233 0014 4379     		ldrb	r3, [r0, #5]	@ zero_extendqisi2
+ 234              		.loc 1 110 6 view .LVU72
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccipa6cc.s 			page 7
+
+
+ 235 0016 9C45     		cmp	ip, r3
+ 236 0018 00D3     		bcc	.L12
+ 237              	.LVL24:
+ 238              	.L9:
+ 111:Drivers/u8glib/src/u8g_pb32h1.c ****     return;
+ 112:Drivers/u8glib/src/u8g_pb32h1.c ****   u8g_pb32h1_set_pixel(b, arg_pixel->x, arg_pixel->y, arg_pixel->color);
+ 113:Drivers/u8glib/src/u8g_pb32h1.c **** }
+ 239              		.loc 1 113 1 view .LVU73
+ 240 001a 08BD     		pop	{r3, pc}
+ 241              	.LVL25:
+ 242              	.L12:
+ 112:Drivers/u8glib/src/u8g_pb32h1.c **** }
+ 243              		.loc 1 112 3 is_stmt 1 view .LVU74
+ 244 001c 0B79     		ldrb	r3, [r1, #4]	@ zero_extendqisi2
+ 245 001e 6146     		mov	r1, ip
+ 246              	.LVL26:
+ 112:Drivers/u8glib/src/u8g_pb32h1.c **** }
+ 247              		.loc 1 112 3 is_stmt 0 view .LVU75
+ 248 0020 FFF7FEFF 		bl	u8g_pb32h1_set_pixel
+ 249              	.LVL27:
+ 112:Drivers/u8glib/src/u8g_pb32h1.c **** }
+ 250              		.loc 1 112 3 view .LVU76
+ 251 0024 F9E7     		b	.L9
+ 252              		.cfi_endproc
+ 253              	.LFE3:
+ 255              		.section	.text.u8g_pb32h1_Set8PixelStd,"ax",%progbits
+ 256              		.align	1
+ 257              		.global	u8g_pb32h1_Set8PixelStd
+ 258              		.syntax unified
+ 259              		.thumb
+ 260              		.thumb_func
+ 262              	u8g_pb32h1_Set8PixelStd:
+ 263              	.LVL28:
+ 264              	.LFB4:
+ 114:Drivers/u8glib/src/u8g_pb32h1.c **** 
+ 115:Drivers/u8glib/src/u8g_pb32h1.c **** void u8g_pb32h1_Set8PixelStd(u8g_pb_t *b, u8g_dev_arg_pixel_t *arg_pixel)
+ 116:Drivers/u8glib/src/u8g_pb32h1.c **** {
+ 265              		.loc 1 116 1 is_stmt 1 view -0
+ 266              		.cfi_startproc
+ 267              		@ args = 0, pretend = 0, frame = 0
+ 268              		@ frame_needed = 0, uses_anonymous_args = 0
+ 269              		.loc 1 116 1 is_stmt 0 view .LVU78
+ 270 0000 70B5     		push	{r4, r5, r6, lr}
+ 271              	.LCFI3:
+ 272              		.cfi_def_cfa_offset 16
+ 273              		.cfi_offset 4, -16
+ 274              		.cfi_offset 5, -12
+ 275              		.cfi_offset 6, -8
+ 276              		.cfi_offset 14, -4
+ 277 0002 0646     		mov	r6, r0
+ 278 0004 0D46     		mov	r5, r1
+ 117:Drivers/u8glib/src/u8g_pb32h1.c ****   register uint8_t pixel = arg_pixel->pixel;
+ 279              		.loc 1 117 3 is_stmt 1 view .LVU79
+ 280              		.loc 1 117 20 is_stmt 0 view .LVU80
+ 281 0006 8C78     		ldrb	r4, [r1, #2]	@ zero_extendqisi2
+ 282              	.LVL29:
+ 283              		.loc 1 117 20 view .LVU81
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccipa6cc.s 			page 8
+
+
+ 284 0008 0BE0     		b	.L21
+ 285              	.LVL30:
+ 286              	.L24:
+ 118:Drivers/u8glib/src/u8g_pb32h1.c ****   do
+ 119:Drivers/u8glib/src/u8g_pb32h1.c ****   {
+ 120:Drivers/u8glib/src/u8g_pb32h1.c ****     if ( pixel & 128 )
+ 121:Drivers/u8glib/src/u8g_pb32h1.c ****     {
+ 122:Drivers/u8glib/src/u8g_pb32h1.c ****       u8g_pb32h1_SetPixel(b, arg_pixel);
+ 287              		.loc 1 122 7 is_stmt 1 view .LVU82
+ 288 000a 2946     		mov	r1, r5
+ 289 000c 3046     		mov	r0, r6
+ 290 000e FFF7FEFF 		bl	u8g_pb32h1_SetPixel
+ 291              	.LVL31:
+ 292 0012 09E0     		b	.L14
+ 293              	.L20:
+ 123:Drivers/u8glib/src/u8g_pb32h1.c ****     }
+ 124:Drivers/u8glib/src/u8g_pb32h1.c ****     switch( arg_pixel->dir )
+ 125:Drivers/u8glib/src/u8g_pb32h1.c ****     {
+ 126:Drivers/u8glib/src/u8g_pb32h1.c ****       case 0: arg_pixel->x++; break;
+ 294              		.loc 1 126 15 view .LVU83
+ 295              		.loc 1 126 24 is_stmt 0 view .LVU84
+ 296 0014 2B78     		ldrb	r3, [r5]	@ zero_extendqisi2
+ 297              		.loc 1 126 27 view .LVU85
+ 298 0016 0133     		adds	r3, r3, #1
+ 299 0018 2B70     		strb	r3, [r5]
+ 300              		.loc 1 126 31 is_stmt 1 view .LVU86
+ 301              	.L15:
+ 127:Drivers/u8glib/src/u8g_pb32h1.c ****       case 1: arg_pixel->y++; break;
+ 128:Drivers/u8glib/src/u8g_pb32h1.c ****       case 2: arg_pixel->x--; break;
+ 129:Drivers/u8glib/src/u8g_pb32h1.c ****       case 3: arg_pixel->y--; break;
+ 130:Drivers/u8glib/src/u8g_pb32h1.c ****     }
+ 131:Drivers/u8glib/src/u8g_pb32h1.c ****     pixel <<= 1;
+ 302              		.loc 1 131 5 view .LVU87
+ 303              		.loc 1 131 11 is_stmt 0 view .LVU88
+ 304 001a 6400     		lsls	r4, r4, #1
+ 305              	.LVL32:
+ 132:Drivers/u8glib/src/u8g_pb32h1.c ****   } while( pixel != 0  );
+ 306              		.loc 1 132 10 is_stmt 1 view .LVU89
+ 307              		.loc 1 132 3 is_stmt 0 view .LVU90
+ 308 001c 14F0FF04 		ands	r4, r4, #255
+ 309              	.LVL33:
+ 310              		.loc 1 132 3 view .LVU91
+ 311 0020 1CD0     		beq	.L23
+ 312              	.L21:
+ 313              	.LVL34:
+ 118:Drivers/u8glib/src/u8g_pb32h1.c ****   {
+ 314              		.loc 1 118 3 is_stmt 1 view .LVU92
+ 120:Drivers/u8glib/src/u8g_pb32h1.c ****     {
+ 315              		.loc 1 120 5 view .LVU93
+ 120:Drivers/u8glib/src/u8g_pb32h1.c ****     {
+ 316              		.loc 1 120 8 is_stmt 0 view .LVU94
+ 317 0022 14F0800F 		tst	r4, #128
+ 318 0026 F0D1     		bne	.L24
+ 319              	.L14:
+ 124:Drivers/u8glib/src/u8g_pb32h1.c ****     {
+ 320              		.loc 1 124 5 is_stmt 1 view .LVU95
+ 124:Drivers/u8glib/src/u8g_pb32h1.c ****     {
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccipa6cc.s 			page 9
+
+
+ 321              		.loc 1 124 22 is_stmt 0 view .LVU96
+ 322 0028 EB78     		ldrb	r3, [r5, #3]	@ zero_extendqisi2
+ 124:Drivers/u8glib/src/u8g_pb32h1.c ****     {
+ 323              		.loc 1 124 5 view .LVU97
+ 324 002a 032B     		cmp	r3, #3
+ 325 002c F5D8     		bhi	.L15
+ 326 002e 01A2     		adr	r2, .L17
+ 327 0030 52F823F0 		ldr	pc, [r2, r3, lsl #2]
+ 328              		.p2align 2
+ 329              	.L17:
+ 330 0034 15000000 		.word	.L20+1
+ 331 0038 45000000 		.word	.L19+1
+ 332 003c 4D000000 		.word	.L18+1
+ 333 0040 55000000 		.word	.L16+1
+ 334              		.p2align 1
+ 335              	.L19:
+ 127:Drivers/u8glib/src/u8g_pb32h1.c ****       case 2: arg_pixel->x--; break;
+ 336              		.loc 1 127 15 is_stmt 1 view .LVU98
+ 127:Drivers/u8glib/src/u8g_pb32h1.c ****       case 2: arg_pixel->x--; break;
+ 337              		.loc 1 127 24 is_stmt 0 view .LVU99
+ 338 0044 6B78     		ldrb	r3, [r5, #1]	@ zero_extendqisi2
+ 127:Drivers/u8glib/src/u8g_pb32h1.c ****       case 2: arg_pixel->x--; break;
+ 339              		.loc 1 127 27 view .LVU100
+ 340 0046 0133     		adds	r3, r3, #1
+ 341 0048 6B70     		strb	r3, [r5, #1]
+ 127:Drivers/u8glib/src/u8g_pb32h1.c ****       case 2: arg_pixel->x--; break;
+ 342              		.loc 1 127 31 is_stmt 1 view .LVU101
+ 127:Drivers/u8glib/src/u8g_pb32h1.c ****       case 2: arg_pixel->x--; break;
+ 343              		.loc 1 127 7 is_stmt 0 view .LVU102
+ 344 004a E6E7     		b	.L15
+ 345              	.L18:
+ 128:Drivers/u8glib/src/u8g_pb32h1.c ****       case 3: arg_pixel->y--; break;
+ 346              		.loc 1 128 15 is_stmt 1 view .LVU103
+ 128:Drivers/u8glib/src/u8g_pb32h1.c ****       case 3: arg_pixel->y--; break;
+ 347              		.loc 1 128 24 is_stmt 0 view .LVU104
+ 348 004c 2B78     		ldrb	r3, [r5]	@ zero_extendqisi2
+ 128:Drivers/u8glib/src/u8g_pb32h1.c ****       case 3: arg_pixel->y--; break;
+ 349              		.loc 1 128 27 view .LVU105
+ 350 004e 013B     		subs	r3, r3, #1
+ 351 0050 2B70     		strb	r3, [r5]
+ 128:Drivers/u8glib/src/u8g_pb32h1.c ****       case 3: arg_pixel->y--; break;
+ 352              		.loc 1 128 31 is_stmt 1 view .LVU106
+ 128:Drivers/u8glib/src/u8g_pb32h1.c ****       case 3: arg_pixel->y--; break;
+ 353              		.loc 1 128 7 is_stmt 0 view .LVU107
+ 354 0052 E2E7     		b	.L15
+ 355              	.L16:
+ 129:Drivers/u8glib/src/u8g_pb32h1.c ****     }
+ 356              		.loc 1 129 15 is_stmt 1 view .LVU108
+ 129:Drivers/u8glib/src/u8g_pb32h1.c ****     }
+ 357              		.loc 1 129 24 is_stmt 0 view .LVU109
+ 358 0054 6B78     		ldrb	r3, [r5, #1]	@ zero_extendqisi2
+ 129:Drivers/u8glib/src/u8g_pb32h1.c ****     }
+ 359              		.loc 1 129 27 view .LVU110
+ 360 0056 013B     		subs	r3, r3, #1
+ 361 0058 6B70     		strb	r3, [r5, #1]
+ 129:Drivers/u8glib/src/u8g_pb32h1.c ****     }
+ 362              		.loc 1 129 31 is_stmt 1 view .LVU111
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccipa6cc.s 			page 10
+
+
+ 129:Drivers/u8glib/src/u8g_pb32h1.c ****     }
+ 363              		.loc 1 129 7 is_stmt 0 view .LVU112
+ 364 005a DEE7     		b	.L15
+ 365              	.LVL35:
+ 366              	.L23:
+ 133:Drivers/u8glib/src/u8g_pb32h1.c **** }
+ 367              		.loc 1 133 1 view .LVU113
+ 368 005c 70BD     		pop	{r4, r5, r6, pc}
+ 369              		.loc 1 133 1 view .LVU114
+ 370              		.cfi_endproc
+ 371              	.LFE4:
+ 373 005e 00BF     		.section	.text.u8g_pb32h1_Set8PixelOpt2,"ax",%progbits
+ 374              		.align	1
+ 375              		.global	u8g_pb32h1_Set8PixelOpt2
+ 376              		.syntax unified
+ 377              		.thumb
+ 378              		.thumb_func
+ 380              	u8g_pb32h1_Set8PixelOpt2:
+ 381              	.LVL36:
+ 382              	.LFB5:
+ 134:Drivers/u8glib/src/u8g_pb32h1.c **** 
+ 135:Drivers/u8glib/src/u8g_pb32h1.c **** void u8g_pb32h1_Set8PixelOpt2(u8g_pb_t *b, u8g_dev_arg_pixel_t *arg_pixel)
+ 136:Drivers/u8glib/src/u8g_pb32h1.c **** {
+ 383              		.loc 1 136 1 is_stmt 1 view -0
+ 384              		.cfi_startproc
+ 385              		@ args = 0, pretend = 0, frame = 0
+ 386              		@ frame_needed = 0, uses_anonymous_args = 0
+ 387              		.loc 1 136 1 is_stmt 0 view .LVU116
+ 388 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 389              	.LCFI4:
+ 390              		.cfi_def_cfa_offset 24
+ 391              		.cfi_offset 4, -24
+ 392              		.cfi_offset 5, -20
+ 393              		.cfi_offset 6, -16
+ 394              		.cfi_offset 7, -12
+ 395              		.cfi_offset 8, -8
+ 396              		.cfi_offset 14, -4
+ 397 0004 8046     		mov	r8, r0
+ 398 0006 0D46     		mov	r5, r1
+ 137:Drivers/u8glib/src/u8g_pb32h1.c ****   register uint8_t pixel = arg_pixel->pixel;
+ 399              		.loc 1 137 3 is_stmt 1 view .LVU117
+ 400              		.loc 1 137 20 is_stmt 0 view .LVU118
+ 401 0008 8C78     		ldrb	r4, [r1, #2]	@ zero_extendqisi2
+ 402              	.LVL37:
+ 138:Drivers/u8glib/src/u8g_pb32h1.c ****   u8g_uint_t dx = 0;
+ 403              		.loc 1 138 3 is_stmt 1 view .LVU119
+ 139:Drivers/u8glib/src/u8g_pb32h1.c ****   u8g_uint_t dy = 0;
+ 404              		.loc 1 139 3 view .LVU120
+ 140:Drivers/u8glib/src/u8g_pb32h1.c ****   
+ 141:Drivers/u8glib/src/u8g_pb32h1.c ****   switch( arg_pixel->dir )
+ 405              		.loc 1 141 3 view .LVU121
+ 406              		.loc 1 141 20 is_stmt 0 view .LVU122
+ 407 000a CE78     		ldrb	r6, [r1, #3]	@ zero_extendqisi2
+ 408              		.loc 1 141 3 view .LVU123
+ 409 000c 032E     		cmp	r6, #3
+ 410 000e 03D8     		bhi	.L26
+ 411 0010 DFE806F0 		tbb	[pc, r6]
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccipa6cc.s 			page 11
+
+
+ 412              	.L28:
+ 413 0014 0D       		.byte	(.L34-.L28)/2
+ 414 0015 05       		.byte	(.L30-.L28)/2
+ 415 0016 07       		.byte	(.L29-.L28)/2
+ 416 0017 0A       		.byte	(.L27-.L28)/2
+ 417              		.p2align 1
+ 418              	.L26:
+ 419 0018 0026     		movs	r6, #0
+ 420 001a 3746     		mov	r7, r6
+ 421 001c 13E0     		b	.L33
+ 422              	.L30:
+ 142:Drivers/u8glib/src/u8g_pb32h1.c ****   {
+ 143:Drivers/u8glib/src/u8g_pb32h1.c ****     case 0: dx++; break;
+ 144:Drivers/u8glib/src/u8g_pb32h1.c ****     case 1: dy++; break;
+ 423              		.loc 1 144 13 is_stmt 1 view .LVU124
+ 424              	.LVL38:
+ 425              		.loc 1 144 19 view .LVU125
+ 138:Drivers/u8glib/src/u8g_pb32h1.c ****   u8g_uint_t dy = 0;
+ 426              		.loc 1 138 14 is_stmt 0 view .LVU126
+ 427 001e 0027     		movs	r7, #0
+ 428              		.loc 1 144 5 view .LVU127
+ 429 0020 11E0     		b	.L33
+ 430              	.LVL39:
+ 431              	.L29:
+ 145:Drivers/u8glib/src/u8g_pb32h1.c ****     case 2: dx--; break;
+ 432              		.loc 1 145 13 is_stmt 1 view .LVU128
+ 433              		.loc 1 145 19 view .LVU129
+ 139:Drivers/u8glib/src/u8g_pb32h1.c ****   
+ 434              		.loc 1 139 14 is_stmt 0 view .LVU130
+ 435 0022 0026     		movs	r6, #0
+ 436              		.loc 1 145 15 view .LVU131
+ 437 0024 FF27     		movs	r7, #255
+ 438              		.loc 1 145 5 view .LVU132
+ 439 0026 0EE0     		b	.L33
+ 440              	.LVL40:
+ 441              	.L27:
+ 146:Drivers/u8glib/src/u8g_pb32h1.c ****     case 3: dy--; break;
+ 442              		.loc 1 146 13 is_stmt 1 view .LVU133
+ 443              		.loc 1 146 19 view .LVU134
+ 444              		.loc 1 146 15 is_stmt 0 view .LVU135
+ 445 0028 FF26     		movs	r6, #255
+ 138:Drivers/u8glib/src/u8g_pb32h1.c ****   u8g_uint_t dy = 0;
+ 446              		.loc 1 138 14 view .LVU136
+ 447 002a 0027     		movs	r7, #0
+ 448              		.loc 1 146 5 view .LVU137
+ 449 002c 0BE0     		b	.L33
+ 450              	.LVL41:
+ 451              	.L34:
+ 143:Drivers/u8glib/src/u8g_pb32h1.c ****     case 1: dy++; break;
+ 452              		.loc 1 143 15 view .LVU138
+ 453 002e 0127     		movs	r7, #1
+ 454              	.LVL42:
+ 143:Drivers/u8glib/src/u8g_pb32h1.c ****     case 1: dy++; break;
+ 455              		.loc 1 143 15 view .LVU139
+ 456 0030 09E0     		b	.L33
+ 457              	.LVL43:
+ 458              	.L32:
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccipa6cc.s 			page 12
+
+
+ 147:Drivers/u8glib/src/u8g_pb32h1.c ****   }
+ 148:Drivers/u8glib/src/u8g_pb32h1.c ****   
+ 149:Drivers/u8glib/src/u8g_pb32h1.c ****   do
+ 150:Drivers/u8glib/src/u8g_pb32h1.c ****   {
+ 151:Drivers/u8glib/src/u8g_pb32h1.c ****     if ( pixel & 128 )
+ 152:Drivers/u8glib/src/u8g_pb32h1.c ****       u8g_pb32h1_SetPixel(b, arg_pixel);
+ 153:Drivers/u8glib/src/u8g_pb32h1.c ****     arg_pixel->x += dx;
+ 459              		.loc 1 153 5 is_stmt 1 view .LVU140
+ 460              		.loc 1 153 18 is_stmt 0 view .LVU141
+ 461 0032 2B78     		ldrb	r3, [r5]	@ zero_extendqisi2
+ 462 0034 3B44     		add	r3, r3, r7
+ 463 0036 2B70     		strb	r3, [r5]
+ 154:Drivers/u8glib/src/u8g_pb32h1.c ****     arg_pixel->y += dy;
+ 464              		.loc 1 154 5 is_stmt 1 view .LVU142
+ 465              		.loc 1 154 18 is_stmt 0 view .LVU143
+ 466 0038 6B78     		ldrb	r3, [r5, #1]	@ zero_extendqisi2
+ 467 003a 3344     		add	r3, r3, r6
+ 468 003c 6B70     		strb	r3, [r5, #1]
+ 155:Drivers/u8glib/src/u8g_pb32h1.c ****     pixel <<= 1;
+ 469              		.loc 1 155 5 is_stmt 1 view .LVU144
+ 470              		.loc 1 155 11 is_stmt 0 view .LVU145
+ 471 003e 6400     		lsls	r4, r4, #1
+ 472              	.LVL44:
+ 156:Drivers/u8glib/src/u8g_pb32h1.c ****   } while( pixel != 0  );  
+ 473              		.loc 1 156 10 is_stmt 1 view .LVU146
+ 474              		.loc 1 156 3 is_stmt 0 view .LVU147
+ 475 0040 14F0FF04 		ands	r4, r4, #255
+ 476              	.LVL45:
+ 477              		.loc 1 156 3 view .LVU148
+ 478 0044 07D0     		beq	.L36
+ 479              	.LVL46:
+ 480              	.L33:
+ 149:Drivers/u8glib/src/u8g_pb32h1.c ****   {
+ 481              		.loc 1 149 3 is_stmt 1 view .LVU149
+ 151:Drivers/u8glib/src/u8g_pb32h1.c ****       u8g_pb32h1_SetPixel(b, arg_pixel);
+ 482              		.loc 1 151 5 view .LVU150
+ 151:Drivers/u8glib/src/u8g_pb32h1.c ****       u8g_pb32h1_SetPixel(b, arg_pixel);
+ 483              		.loc 1 151 8 is_stmt 0 view .LVU151
+ 484 0046 14F0800F 		tst	r4, #128
+ 485 004a F2D0     		beq	.L32
+ 152:Drivers/u8glib/src/u8g_pb32h1.c ****     arg_pixel->x += dx;
+ 486              		.loc 1 152 7 is_stmt 1 view .LVU152
+ 487 004c 2946     		mov	r1, r5
+ 488 004e 4046     		mov	r0, r8
+ 489 0050 FFF7FEFF 		bl	u8g_pb32h1_SetPixel
+ 490              	.LVL47:
+ 491 0054 EDE7     		b	.L32
+ 492              	.LVL48:
+ 493              	.L36:
+ 157:Drivers/u8glib/src/u8g_pb32h1.c **** }
+ 494              		.loc 1 157 1 is_stmt 0 view .LVU153
+ 495 0056 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 496              		.loc 1 157 1 view .LVU154
+ 497              		.cfi_endproc
+ 498              	.LFE5:
+ 500              		.section	.text.u8g_dev_pb32h1_base_fn,"ax",%progbits
+ 501              		.align	1
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccipa6cc.s 			page 13
+
+
+ 502              		.global	u8g_dev_pb32h1_base_fn
+ 503              		.syntax unified
+ 504              		.thumb
+ 505              		.thumb_func
+ 507              	u8g_dev_pb32h1_base_fn:
+ 508              	.LVL49:
+ 509              	.LFB6:
+ 158:Drivers/u8glib/src/u8g_pb32h1.c **** 
+ 159:Drivers/u8glib/src/u8g_pb32h1.c **** 
+ 160:Drivers/u8glib/src/u8g_pb32h1.c **** uint8_t u8g_dev_pb32h1_base_fn(u8g_t *u8g, u8g_dev_t *dev, uint8_t msg, void *arg)
+ 161:Drivers/u8glib/src/u8g_pb32h1.c **** {
+ 510              		.loc 1 161 1 is_stmt 1 view -0
+ 511              		.cfi_startproc
+ 512              		@ args = 0, pretend = 0, frame = 0
+ 513              		@ frame_needed = 0, uses_anonymous_args = 0
+ 514              		.loc 1 161 1 is_stmt 0 view .LVU156
+ 515 0000 38B5     		push	{r3, r4, r5, lr}
+ 516              	.LCFI5:
+ 517              		.cfi_def_cfa_offset 16
+ 518              		.cfi_offset 3, -16
+ 519              		.cfi_offset 4, -12
+ 520              		.cfi_offset 5, -8
+ 521              		.cfi_offset 14, -4
+ 522 0002 1C46     		mov	r4, r3
+ 162:Drivers/u8glib/src/u8g_pb32h1.c ****   u8g_pb_t *pb = (u8g_pb_t *)(dev->dev_mem);
+ 523              		.loc 1 162 3 is_stmt 1 view .LVU157
+ 524              		.loc 1 162 13 is_stmt 0 view .LVU158
+ 525 0004 4D68     		ldr	r5, [r1, #4]
+ 526              	.LVL50:
+ 163:Drivers/u8glib/src/u8g_pb32h1.c ****   switch(msg)
+ 527              		.loc 1 163 3 is_stmt 1 view .LVU159
+ 528 0006 143A     		subs	r2, r2, #20
+ 529              	.LVL51:
+ 530              		.loc 1 163 3 is_stmt 0 view .LVU160
+ 531 0008 332A     		cmp	r2, #51
+ 532 000a 4DD8     		bhi	.L47
+ 533 000c DFE802F0 		tbb	[pc, r2]
+ 534              	.LVL52:
+ 535              	.L40:
+ 536 0010 2D       		.byte	(.L46-.L40)/2
+ 537 0011 35       		.byte	(.L45-.L40)/2
+ 538 0012 4C       		.byte	(.L47-.L40)/2
+ 539 0013 3E       		.byte	(.L44-.L40)/2
+ 540 0014 4C       		.byte	(.L47-.L40)/2
+ 541 0015 4C       		.byte	(.L47-.L40)/2
+ 542 0016 4C       		.byte	(.L47-.L40)/2
+ 543 0017 4C       		.byte	(.L47-.L40)/2
+ 544 0018 4C       		.byte	(.L47-.L40)/2
+ 545 0019 4C       		.byte	(.L47-.L40)/2
+ 546 001a 4C       		.byte	(.L47-.L40)/2
+ 547 001b 4C       		.byte	(.L47-.L40)/2
+ 548 001c 4C       		.byte	(.L47-.L40)/2
+ 549 001d 4C       		.byte	(.L47-.L40)/2
+ 550 001e 4C       		.byte	(.L47-.L40)/2
+ 551 001f 4C       		.byte	(.L47-.L40)/2
+ 552 0020 4C       		.byte	(.L47-.L40)/2
+ 553 0021 4C       		.byte	(.L47-.L40)/2
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccipa6cc.s 			page 14
+
+
+ 554 0022 4C       		.byte	(.L47-.L40)/2
+ 555 0023 4C       		.byte	(.L47-.L40)/2
+ 556 0024 4C       		.byte	(.L47-.L40)/2
+ 557 0025 4C       		.byte	(.L47-.L40)/2
+ 558 0026 4C       		.byte	(.L47-.L40)/2
+ 559 0027 4C       		.byte	(.L47-.L40)/2
+ 560 0028 4C       		.byte	(.L47-.L40)/2
+ 561 0029 4C       		.byte	(.L47-.L40)/2
+ 562 002a 4C       		.byte	(.L47-.L40)/2
+ 563 002b 4C       		.byte	(.L47-.L40)/2
+ 564 002c 4C       		.byte	(.L47-.L40)/2
+ 565 002d 4C       		.byte	(.L47-.L40)/2
+ 566 002e 27       		.byte	(.L43-.L40)/2
+ 567 002f 4C       		.byte	(.L47-.L40)/2
+ 568 0030 4C       		.byte	(.L47-.L40)/2
+ 569 0031 4C       		.byte	(.L47-.L40)/2
+ 570 0032 4C       		.byte	(.L47-.L40)/2
+ 571 0033 4C       		.byte	(.L47-.L40)/2
+ 572 0034 4C       		.byte	(.L47-.L40)/2
+ 573 0035 4C       		.byte	(.L47-.L40)/2
+ 574 0036 4C       		.byte	(.L47-.L40)/2
+ 575 0037 1A       		.byte	(.L42-.L40)/2
+ 576 0038 4C       		.byte	(.L47-.L40)/2
+ 577 0039 4C       		.byte	(.L47-.L40)/2
+ 578 003a 4C       		.byte	(.L47-.L40)/2
+ 579 003b 4C       		.byte	(.L47-.L40)/2
+ 580 003c 4C       		.byte	(.L47-.L40)/2
+ 581 003d 4C       		.byte	(.L47-.L40)/2
+ 582 003e 4C       		.byte	(.L47-.L40)/2
+ 583 003f 4C       		.byte	(.L47-.L40)/2
+ 584 0040 4C       		.byte	(.L47-.L40)/2
+ 585 0041 4C       		.byte	(.L47-.L40)/2
+ 586 0042 44       		.byte	(.L41-.L40)/2
+ 587 0043 48       		.byte	(.L39-.L40)/2
+ 588              		.p2align 1
+ 589              	.L42:
+ 164:Drivers/u8glib/src/u8g_pb32h1.c ****   {
+ 165:Drivers/u8glib/src/u8g_pb32h1.c ****     case U8G_DEV_MSG_SET_8PIXEL:
+ 166:Drivers/u8glib/src/u8g_pb32h1.c ****       if ( u8g_pb_Is8PixelVisible(pb, (u8g_dev_arg_pixel_t *)arg) )
+ 590              		.loc 1 166 7 is_stmt 1 view .LVU161
+ 591              		.loc 1 166 12 is_stmt 0 view .LVU162
+ 592 0044 2146     		mov	r1, r4
+ 593              	.LVL53:
+ 594              		.loc 1 166 12 view .LVU163
+ 595 0046 2846     		mov	r0, r5
+ 596              	.LVL54:
+ 597              		.loc 1 166 12 view .LVU164
+ 598 0048 FFF7FEFF 		bl	u8g_pb_Is8PixelVisible
+ 599              	.LVL55:
+ 600              		.loc 1 166 10 view .LVU165
+ 601 004c 08B9     		cbnz	r0, .L50
+ 167:Drivers/u8glib/src/u8g_pb32h1.c ****         u8g_pb32h1_Set8PixelOpt2(pb, (u8g_dev_arg_pixel_t *)arg);
+ 168:Drivers/u8glib/src/u8g_pb32h1.c ****       break;
+ 169:Drivers/u8glib/src/u8g_pb32h1.c ****     case U8G_DEV_MSG_SET_PIXEL:
+ 170:Drivers/u8glib/src/u8g_pb32h1.c ****       u8g_pb32h1_SetPixel(pb, (u8g_dev_arg_pixel_t *)arg);
+ 171:Drivers/u8glib/src/u8g_pb32h1.c ****       break;
+ 172:Drivers/u8glib/src/u8g_pb32h1.c ****     case U8G_DEV_MSG_INIT:
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccipa6cc.s 			page 15
+
+
+ 173:Drivers/u8glib/src/u8g_pb32h1.c ****       break;
+ 174:Drivers/u8glib/src/u8g_pb32h1.c ****     case U8G_DEV_MSG_STOP:
+ 175:Drivers/u8glib/src/u8g_pb32h1.c ****       break;
+ 176:Drivers/u8glib/src/u8g_pb32h1.c ****     case U8G_DEV_MSG_PAGE_FIRST:
+ 177:Drivers/u8glib/src/u8g_pb32h1.c ****       u8g_pb32h1_Clear(pb);
+ 178:Drivers/u8glib/src/u8g_pb32h1.c ****       u8g_page_First(&(pb->p));
+ 179:Drivers/u8glib/src/u8g_pb32h1.c ****       break;
+ 180:Drivers/u8glib/src/u8g_pb32h1.c ****     case U8G_DEV_MSG_PAGE_NEXT:
+ 181:Drivers/u8glib/src/u8g_pb32h1.c ****       if ( u8g_page_Next(&(pb->p)) == 0 )
+ 182:Drivers/u8glib/src/u8g_pb32h1.c ****         return 0;
+ 183:Drivers/u8glib/src/u8g_pb32h1.c ****       u8g_pb32h1_Clear(pb);
+ 184:Drivers/u8glib/src/u8g_pb32h1.c ****       break;
+ 185:Drivers/u8glib/src/u8g_pb32h1.c **** #ifdef U8G_DEV_MSG_IS_BBX_INTERSECTION
+ 186:Drivers/u8glib/src/u8g_pb32h1.c ****     case U8G_DEV_MSG_IS_BBX_INTERSECTION:
+ 187:Drivers/u8glib/src/u8g_pb32h1.c ****       return u8g_pb_IsIntersection(pb, (u8g_dev_arg_bbx_t *)arg);
+ 188:Drivers/u8glib/src/u8g_pb32h1.c **** #endif
+ 189:Drivers/u8glib/src/u8g_pb32h1.c ****     case U8G_DEV_MSG_GET_PAGE_BOX:
+ 190:Drivers/u8glib/src/u8g_pb32h1.c ****       u8g_pb_GetPageBox(pb, (u8g_box_t *)arg);
+ 191:Drivers/u8glib/src/u8g_pb32h1.c ****       break;
+ 192:Drivers/u8glib/src/u8g_pb32h1.c ****     case U8G_DEV_MSG_GET_WIDTH:
+ 193:Drivers/u8glib/src/u8g_pb32h1.c ****       *((u8g_uint_t *)arg) = pb->width;
+ 194:Drivers/u8glib/src/u8g_pb32h1.c ****       break;
+ 195:Drivers/u8glib/src/u8g_pb32h1.c ****     case U8G_DEV_MSG_GET_HEIGHT:
+ 196:Drivers/u8glib/src/u8g_pb32h1.c ****       *((u8g_uint_t *)arg) = pb->p.total_height;
+ 197:Drivers/u8glib/src/u8g_pb32h1.c ****       break;
+ 198:Drivers/u8glib/src/u8g_pb32h1.c ****     case U8G_DEV_MSG_SET_COLOR_ENTRY:
+ 199:Drivers/u8glib/src/u8g_pb32h1.c ****       break;
+ 200:Drivers/u8glib/src/u8g_pb32h1.c ****     case U8G_DEV_MSG_SET_XY_CB:
+ 201:Drivers/u8glib/src/u8g_pb32h1.c ****       break;
+ 202:Drivers/u8glib/src/u8g_pb32h1.c ****     case U8G_DEV_MSG_GET_MODE:
+ 203:Drivers/u8glib/src/u8g_pb32h1.c ****       return U8G_MODE_BW;
+ 204:Drivers/u8glib/src/u8g_pb32h1.c ****   }
+ 205:Drivers/u8glib/src/u8g_pb32h1.c ****   return 1;
+ 602              		.loc 1 205 10 view .LVU166
+ 603 004e 0120     		movs	r0, #1
+ 604 0050 2BE0     		b	.L38
+ 605              	.L50:
+ 167:Drivers/u8glib/src/u8g_pb32h1.c ****         u8g_pb32h1_Set8PixelOpt2(pb, (u8g_dev_arg_pixel_t *)arg);
+ 606              		.loc 1 167 9 is_stmt 1 view .LVU167
+ 607 0052 2146     		mov	r1, r4
+ 608 0054 2846     		mov	r0, r5
+ 609 0056 FFF7FEFF 		bl	u8g_pb32h1_Set8PixelOpt2
+ 610              	.LVL56:
+ 611              		.loc 1 205 10 is_stmt 0 view .LVU168
+ 612 005a 0120     		movs	r0, #1
+ 613 005c 25E0     		b	.L38
+ 614              	.LVL57:
+ 615              	.L43:
+ 170:Drivers/u8glib/src/u8g_pb32h1.c ****       break;
+ 616              		.loc 1 170 7 is_stmt 1 view .LVU169
+ 617 005e 2146     		mov	r1, r4
+ 618              	.LVL58:
+ 170:Drivers/u8glib/src/u8g_pb32h1.c ****       break;
+ 619              		.loc 1 170 7 is_stmt 0 view .LVU170
+ 620 0060 2846     		mov	r0, r5
+ 621              	.LVL59:
+ 170:Drivers/u8glib/src/u8g_pb32h1.c ****       break;
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccipa6cc.s 			page 16
+
+
+ 622              		.loc 1 170 7 view .LVU171
+ 623 0062 FFF7FEFF 		bl	u8g_pb32h1_SetPixel
+ 624              	.LVL60:
+ 171:Drivers/u8glib/src/u8g_pb32h1.c ****     case U8G_DEV_MSG_INIT:
+ 625              		.loc 1 171 7 is_stmt 1 view .LVU172
+ 626              		.loc 1 205 10 is_stmt 0 view .LVU173
+ 627 0066 0120     		movs	r0, #1
+ 171:Drivers/u8glib/src/u8g_pb32h1.c ****     case U8G_DEV_MSG_INIT:
+ 628              		.loc 1 171 7 view .LVU174
+ 629 0068 1FE0     		b	.L38
+ 630              	.LVL61:
+ 631              	.L46:
+ 177:Drivers/u8glib/src/u8g_pb32h1.c ****       u8g_page_First(&(pb->p));
+ 632              		.loc 1 177 7 is_stmt 1 view .LVU175
+ 633 006a 2846     		mov	r0, r5
+ 634              	.LVL62:
+ 177:Drivers/u8glib/src/u8g_pb32h1.c ****       u8g_page_First(&(pb->p));
+ 635              		.loc 1 177 7 is_stmt 0 view .LVU176
+ 636 006c FFF7FEFF 		bl	u8g_pb32h1_Clear
+ 637              	.LVL63:
+ 178:Drivers/u8glib/src/u8g_pb32h1.c ****       break;
+ 638              		.loc 1 178 7 is_stmt 1 view .LVU177
+ 639 0070 2846     		mov	r0, r5
+ 640 0072 FFF7FEFF 		bl	u8g_page_First
+ 641              	.LVL64:
+ 179:Drivers/u8glib/src/u8g_pb32h1.c ****     case U8G_DEV_MSG_PAGE_NEXT:
+ 642              		.loc 1 179 7 view .LVU178
+ 643              		.loc 1 205 10 is_stmt 0 view .LVU179
+ 644 0076 0120     		movs	r0, #1
+ 179:Drivers/u8glib/src/u8g_pb32h1.c ****     case U8G_DEV_MSG_PAGE_NEXT:
+ 645              		.loc 1 179 7 view .LVU180
+ 646 0078 17E0     		b	.L38
+ 647              	.LVL65:
+ 648              	.L45:
+ 181:Drivers/u8glib/src/u8g_pb32h1.c ****         return 0;
+ 649              		.loc 1 181 7 is_stmt 1 view .LVU181
+ 181:Drivers/u8glib/src/u8g_pb32h1.c ****         return 0;
+ 650              		.loc 1 181 12 is_stmt 0 view .LVU182
+ 651 007a 2846     		mov	r0, r5
+ 652              	.LVL66:
+ 181:Drivers/u8glib/src/u8g_pb32h1.c ****         return 0;
+ 653              		.loc 1 181 12 view .LVU183
+ 654 007c FFF7FEFF 		bl	u8g_page_Next
+ 655              	.LVL67:
+ 181:Drivers/u8glib/src/u8g_pb32h1.c ****         return 0;
+ 656              		.loc 1 181 10 view .LVU184
+ 657 0080 98B1     		cbz	r0, .L38
+ 183:Drivers/u8glib/src/u8g_pb32h1.c ****       break;
+ 658              		.loc 1 183 7 is_stmt 1 view .LVU185
+ 659 0082 2846     		mov	r0, r5
+ 660 0084 FFF7FEFF 		bl	u8g_pb32h1_Clear
+ 661              	.LVL68:
+ 184:Drivers/u8glib/src/u8g_pb32h1.c **** #ifdef U8G_DEV_MSG_IS_BBX_INTERSECTION
+ 662              		.loc 1 184 7 view .LVU186
+ 663              		.loc 1 205 10 is_stmt 0 view .LVU187
+ 664 0088 0120     		movs	r0, #1
+ 184:Drivers/u8glib/src/u8g_pb32h1.c **** #ifdef U8G_DEV_MSG_IS_BBX_INTERSECTION
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccipa6cc.s 			page 17
+
+
+ 665              		.loc 1 184 7 view .LVU188
+ 666 008a 0EE0     		b	.L38
+ 667              	.LVL69:
+ 668              	.L44:
+ 190:Drivers/u8glib/src/u8g_pb32h1.c ****       break;
+ 669              		.loc 1 190 7 is_stmt 1 view .LVU189
+ 670 008c 2146     		mov	r1, r4
+ 671              	.LVL70:
+ 190:Drivers/u8glib/src/u8g_pb32h1.c ****       break;
+ 672              		.loc 1 190 7 is_stmt 0 view .LVU190
+ 673 008e 2846     		mov	r0, r5
+ 674              	.LVL71:
+ 190:Drivers/u8glib/src/u8g_pb32h1.c ****       break;
+ 675              		.loc 1 190 7 view .LVU191
+ 676 0090 FFF7FEFF 		bl	u8g_pb_GetPageBox
+ 677              	.LVL72:
+ 191:Drivers/u8glib/src/u8g_pb32h1.c ****     case U8G_DEV_MSG_GET_WIDTH:
+ 678              		.loc 1 191 7 is_stmt 1 view .LVU192
+ 679              		.loc 1 205 10 is_stmt 0 view .LVU193
+ 680 0094 0120     		movs	r0, #1
+ 191:Drivers/u8glib/src/u8g_pb32h1.c ****     case U8G_DEV_MSG_GET_WIDTH:
+ 681              		.loc 1 191 7 view .LVU194
+ 682 0096 08E0     		b	.L38
+ 683              	.LVL73:
+ 684              	.L41:
+ 193:Drivers/u8glib/src/u8g_pb32h1.c ****       break;
+ 685              		.loc 1 193 7 is_stmt 1 view .LVU195
+ 193:Drivers/u8glib/src/u8g_pb32h1.c ****       break;
+ 686              		.loc 1 193 32 is_stmt 0 view .LVU196
+ 687 0098 6B79     		ldrb	r3, [r5, #5]	@ zero_extendqisi2
+ 193:Drivers/u8glib/src/u8g_pb32h1.c ****       break;
+ 688              		.loc 1 193 28 view .LVU197
+ 689 009a 2370     		strb	r3, [r4]
+ 194:Drivers/u8glib/src/u8g_pb32h1.c ****     case U8G_DEV_MSG_GET_HEIGHT:
+ 690              		.loc 1 194 7 is_stmt 1 view .LVU198
+ 691              		.loc 1 205 10 is_stmt 0 view .LVU199
+ 692 009c 0120     		movs	r0, #1
+ 693              	.LVL74:
+ 194:Drivers/u8glib/src/u8g_pb32h1.c ****     case U8G_DEV_MSG_GET_HEIGHT:
+ 694              		.loc 1 194 7 view .LVU200
+ 695 009e 04E0     		b	.L38
+ 696              	.LVL75:
+ 697              	.L39:
+ 196:Drivers/u8glib/src/u8g_pb32h1.c ****       break;
+ 698              		.loc 1 196 7 is_stmt 1 view .LVU201
+ 196:Drivers/u8glib/src/u8g_pb32h1.c ****       break;
+ 699              		.loc 1 196 35 is_stmt 0 view .LVU202
+ 700 00a0 6B78     		ldrb	r3, [r5, #1]	@ zero_extendqisi2
+ 196:Drivers/u8glib/src/u8g_pb32h1.c ****       break;
+ 701              		.loc 1 196 28 view .LVU203
+ 702 00a2 2370     		strb	r3, [r4]
+ 197:Drivers/u8glib/src/u8g_pb32h1.c ****     case U8G_DEV_MSG_SET_COLOR_ENTRY:
+ 703              		.loc 1 197 7 is_stmt 1 view .LVU204
+ 704              		.loc 1 205 10 is_stmt 0 view .LVU205
+ 705 00a4 0120     		movs	r0, #1
+ 706              	.LVL76:
+ 197:Drivers/u8glib/src/u8g_pb32h1.c ****     case U8G_DEV_MSG_SET_COLOR_ENTRY:
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccipa6cc.s 			page 18
+
+
+ 707              		.loc 1 197 7 view .LVU206
+ 708 00a6 00E0     		b	.L38
+ 709              	.LVL77:
+ 710              	.L47:
+ 163:Drivers/u8glib/src/u8g_pb32h1.c ****   {
+ 711              		.loc 1 163 3 view .LVU207
+ 712 00a8 0120     		movs	r0, #1
+ 713              	.LVL78:
+ 714              	.L38:
+ 206:Drivers/u8glib/src/u8g_pb32h1.c **** }
+ 715              		.loc 1 206 1 view .LVU208
+ 716 00aa 38BD     		pop	{r3, r4, r5, pc}
+ 717              		.loc 1 206 1 view .LVU209
+ 718              		.cfi_endproc
+ 719              	.LFE6:
+ 721              		.text
+ 722              	.Letext0:
+ 723              		.file 2 "c:\\users\\zbigniew\\appdata\\roaming\\code\\user\\globalstorage\\bmd.stm32-for-vscode\\@
+ 724              		.file 3 "c:\\users\\zbigniew\\appdata\\roaming\\code\\user\\globalstorage\\bmd.stm32-for-vscode\\@
+ 725              		.file 4 "Inc/../Drivers/u8glib/inc/u8g.h"
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\ccipa6cc.s 			page 19
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 u8g_pb32h1.c
+C:\Users\Zbigniew\AppData\Local\Temp\ccipa6cc.s:18     .text.u8g_pb32h1_Clear:0000000000000000 $t
+C:\Users\Zbigniew\AppData\Local\Temp\ccipa6cc.s:24     .text.u8g_pb32h1_Clear:0000000000000000 u8g_pb32h1_Clear
+C:\Users\Zbigniew\AppData\Local\Temp\ccipa6cc.s:65     .text.u8g_pb32h1_Init:0000000000000000 $t
+C:\Users\Zbigniew\AppData\Local\Temp\ccipa6cc.s:71     .text.u8g_pb32h1_Init:0000000000000000 u8g_pb32h1_Init
+C:\Users\Zbigniew\AppData\Local\Temp\ccipa6cc.s:99     .text.u8g_pb32h1_set_pixel:0000000000000000 $t
+C:\Users\Zbigniew\AppData\Local\Temp\ccipa6cc.s:105    .text.u8g_pb32h1_set_pixel:0000000000000000 u8g_pb32h1_set_pixel
+C:\Users\Zbigniew\AppData\Local\Temp\ccipa6cc.s:196    .text.u8g_pb32h1_SetPixel:0000000000000000 $t
+C:\Users\Zbigniew\AppData\Local\Temp\ccipa6cc.s:202    .text.u8g_pb32h1_SetPixel:0000000000000000 u8g_pb32h1_SetPixel
+C:\Users\Zbigniew\AppData\Local\Temp\ccipa6cc.s:256    .text.u8g_pb32h1_Set8PixelStd:0000000000000000 $t
+C:\Users\Zbigniew\AppData\Local\Temp\ccipa6cc.s:262    .text.u8g_pb32h1_Set8PixelStd:0000000000000000 u8g_pb32h1_Set8PixelStd
+C:\Users\Zbigniew\AppData\Local\Temp\ccipa6cc.s:330    .text.u8g_pb32h1_Set8PixelStd:0000000000000034 $d
+C:\Users\Zbigniew\AppData\Local\Temp\ccipa6cc.s:334    .text.u8g_pb32h1_Set8PixelStd:0000000000000044 $t
+C:\Users\Zbigniew\AppData\Local\Temp\ccipa6cc.s:374    .text.u8g_pb32h1_Set8PixelOpt2:0000000000000000 $t
+C:\Users\Zbigniew\AppData\Local\Temp\ccipa6cc.s:380    .text.u8g_pb32h1_Set8PixelOpt2:0000000000000000 u8g_pb32h1_Set8PixelOpt2
+C:\Users\Zbigniew\AppData\Local\Temp\ccipa6cc.s:413    .text.u8g_pb32h1_Set8PixelOpt2:0000000000000014 $d
+C:\Users\Zbigniew\AppData\Local\Temp\ccipa6cc.s:417    .text.u8g_pb32h1_Set8PixelOpt2:0000000000000018 $t
+C:\Users\Zbigniew\AppData\Local\Temp\ccipa6cc.s:501    .text.u8g_dev_pb32h1_base_fn:0000000000000000 $t
+C:\Users\Zbigniew\AppData\Local\Temp\ccipa6cc.s:507    .text.u8g_dev_pb32h1_base_fn:0000000000000000 u8g_dev_pb32h1_base_fn
+C:\Users\Zbigniew\AppData\Local\Temp\ccipa6cc.s:536    .text.u8g_dev_pb32h1_base_fn:0000000000000010 $d
+C:\Users\Zbigniew\AppData\Local\Temp\ccipa6cc.s:588    .text.u8g_dev_pb32h1_base_fn:0000000000000044 $t
+
+UNDEFINED SYMBOLS
+u8g_pb_Is8PixelVisible
+u8g_page_First
+u8g_page_Next
+u8g_pb_GetPageBox

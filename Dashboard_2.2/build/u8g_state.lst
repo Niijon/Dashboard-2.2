@@ -1,0 +1,273 @@
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\cce8kOIK.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.arch armv7-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"u8g_state.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.u8g_state_dummy_cb,"ax",%progbits
+  18              		.align	1
+  19              		.global	u8g_state_dummy_cb
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  24              	u8g_state_dummy_cb:
+  25              	.LVL0:
+  26              	.LFB0:
+  27              		.file 1 "Drivers/u8glib/src/u8g_state.c"
+   1:Drivers/u8glib/src/u8g_state.c **** /*
+   2:Drivers/u8glib/src/u8g_state.c **** 
+   3:Drivers/u8glib/src/u8g_state.c ****   u8g_state.c
+   4:Drivers/u8glib/src/u8g_state.c ****   
+   5:Drivers/u8glib/src/u8g_state.c ****   backup and restore hardware state
+   6:Drivers/u8glib/src/u8g_state.c **** 
+   7:Drivers/u8glib/src/u8g_state.c ****   Universal 8bit Graphics Library
+   8:Drivers/u8glib/src/u8g_state.c ****   
+   9:Drivers/u8glib/src/u8g_state.c ****   Copyright (c) 2011, olikraus@gmail.com
+  10:Drivers/u8glib/src/u8g_state.c ****   All rights reserved.
+  11:Drivers/u8glib/src/u8g_state.c **** 
+  12:Drivers/u8glib/src/u8g_state.c ****   Redistribution and use in source and binary forms, with or without modification, 
+  13:Drivers/u8glib/src/u8g_state.c ****   are permitted provided that the following conditions are met:
+  14:Drivers/u8glib/src/u8g_state.c **** 
+  15:Drivers/u8glib/src/u8g_state.c ****   * Redistributions of source code must retain the above copyright notice, this list 
+  16:Drivers/u8glib/src/u8g_state.c ****     of conditions and the following disclaimer.
+  17:Drivers/u8glib/src/u8g_state.c ****     
+  18:Drivers/u8glib/src/u8g_state.c ****   * Redistributions in binary form must reproduce the above copyright notice, this 
+  19:Drivers/u8glib/src/u8g_state.c ****     list of conditions and the following disclaimer in the documentation and/or other 
+  20:Drivers/u8glib/src/u8g_state.c ****     materials provided with the distribution.
+  21:Drivers/u8glib/src/u8g_state.c **** 
+  22:Drivers/u8glib/src/u8g_state.c ****   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND 
+  23:Drivers/u8glib/src/u8g_state.c ****   CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, 
+  24:Drivers/u8glib/src/u8g_state.c ****   INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF 
+  25:Drivers/u8glib/src/u8g_state.c ****   MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE 
+  26:Drivers/u8glib/src/u8g_state.c ****   DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR 
+  27:Drivers/u8glib/src/u8g_state.c ****   CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, 
+  28:Drivers/u8glib/src/u8g_state.c ****   SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT 
+  29:Drivers/u8glib/src/u8g_state.c ****   NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; 
+  30:Drivers/u8glib/src/u8g_state.c ****   LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER 
+  31:Drivers/u8glib/src/u8g_state.c ****   CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, 
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\cce8kOIK.s 			page 2
+
+
+  32:Drivers/u8glib/src/u8g_state.c ****   STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+  33:Drivers/u8glib/src/u8g_state.c ****   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF 
+  34:Drivers/u8glib/src/u8g_state.c ****   ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.  
+  35:Drivers/u8glib/src/u8g_state.c ****   
+  36:Drivers/u8glib/src/u8g_state.c **** 
+  37:Drivers/u8glib/src/u8g_state.c ****   state callback: backup env U8G_STATE_MSG_BACKUP_ENV
+  38:Drivers/u8glib/src/u8g_state.c ****   device callback: DEV_MSG_INIT
+  39:Drivers/u8glib/src/u8g_state.c ****   state callback: backup u8g U8G_STATE_MSG_BACKUP_U8G
+  40:Drivers/u8glib/src/u8g_state.c ****   state callback: restore env U8G_STATE_MSG_RESTORE_ENV
+  41:Drivers/u8glib/src/u8g_state.c **** 
+  42:Drivers/u8glib/src/u8g_state.c ****   state callback: backup env U8G_STATE_MSG_BACKUP_ENV
+  43:Drivers/u8glib/src/u8g_state.c ****   state callback: retore u8g U8G_STATE_MSG_RESTORE_U8G
+  44:Drivers/u8glib/src/u8g_state.c ****   DEV_MSG_PAGE_FIRST or DEV_MSG_PAGE_NEXT
+  45:Drivers/u8glib/src/u8g_state.c ****   state callback: restore env U8G_STATE_MSG_RESTORE_ENV
+  46:Drivers/u8glib/src/u8g_state.c **** 
+  47:Drivers/u8glib/src/u8g_state.c **** */
+  48:Drivers/u8glib/src/u8g_state.c **** 
+  49:Drivers/u8glib/src/u8g_state.c **** #include <stddef.h>
+  50:Drivers/u8glib/src/u8g_state.c **** #include "../Drivers/u8glib/inc/u8g.h"
+  51:Drivers/u8glib/src/u8g_state.c **** 
+  52:Drivers/u8glib/src/u8g_state.c **** void u8g_state_dummy_cb(uint8_t msg)
+  53:Drivers/u8glib/src/u8g_state.c **** {
+  28              		.loc 1 53 1 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+  54:Drivers/u8glib/src/u8g_state.c ****   /* the dummy procedure does nothing */
+  55:Drivers/u8glib/src/u8g_state.c **** }
+  33              		.loc 1 55 1 view .LVU1
+  34 0000 7047     		bx	lr
+  35              		.cfi_endproc
+  36              	.LFE0:
+  38              		.section	.text.u8g_SetHardwareBackup,"ax",%progbits
+  39              		.align	1
+  40              		.global	u8g_SetHardwareBackup
+  41              		.syntax unified
+  42              		.thumb
+  43              		.thumb_func
+  45              	u8g_SetHardwareBackup:
+  46              	.LVL1:
+  47              	.LFB1:
+  56:Drivers/u8glib/src/u8g_state.c **** 
+  57:Drivers/u8glib/src/u8g_state.c **** void u8g_SetHardwareBackup(u8g_t *u8g, u8g_state_cb backup_cb)
+  58:Drivers/u8glib/src/u8g_state.c **** {
+  48              		.loc 1 58 1 view -0
+  49              		.cfi_startproc
+  50              		@ args = 0, pretend = 0, frame = 0
+  51              		@ frame_needed = 0, uses_anonymous_args = 0
+  52              		.loc 1 58 1 is_stmt 0 view .LVU3
+  53 0000 08B5     		push	{r3, lr}
+  54              	.LCFI0:
+  55              		.cfi_def_cfa_offset 8
+  56              		.cfi_offset 3, -8
+  57              		.cfi_offset 14, -4
+  59:Drivers/u8glib/src/u8g_state.c ****   u8g->state_cb = backup_cb;
+  58              		.loc 1 59 3 is_stmt 1 view .LVU4
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\cce8kOIK.s 			page 3
+
+
+  59              		.loc 1 59 17 is_stmt 0 view .LVU5
+  60 0002 4163     		str	r1, [r0, #52]
+  60:Drivers/u8glib/src/u8g_state.c ****   /* in most cases the init message was already sent, so this will backup the */
+  61:Drivers/u8glib/src/u8g_state.c ****   /* current u8g state */
+  62:Drivers/u8glib/src/u8g_state.c ****   backup_cb(U8G_STATE_MSG_BACKUP_U8G);
+  61              		.loc 1 62 3 is_stmt 1 view .LVU6
+  62 0004 0320     		movs	r0, #3
+  63              	.LVL2:
+  64              		.loc 1 62 3 is_stmt 0 view .LVU7
+  65 0006 8847     		blx	r1
+  66              	.LVL3:
+  63:Drivers/u8glib/src/u8g_state.c **** }
+  67              		.loc 1 63 1 view .LVU8
+  68 0008 08BD     		pop	{r3, pc}
+  69              		.cfi_endproc
+  70              	.LFE1:
+  72              		.section	.text.u8g_backup_spi,"ax",%progbits
+  73              		.align	1
+  74              		.global	u8g_backup_spi
+  75              		.syntax unified
+  76              		.thumb
+  77              		.thumb_func
+  79              	u8g_backup_spi:
+  80              	.LVL4:
+  81              	.LFB2:
+  64:Drivers/u8glib/src/u8g_state.c **** 
+  65:Drivers/u8glib/src/u8g_state.c **** 
+  66:Drivers/u8glib/src/u8g_state.c **** /*===============================================================*/
+  67:Drivers/u8glib/src/u8g_state.c **** /* register variable for restoring interrupt state */
+  68:Drivers/u8glib/src/u8g_state.c **** 
+  69:Drivers/u8glib/src/u8g_state.c **** #if defined(__AVR__)
+  70:Drivers/u8glib/src/u8g_state.c **** uint8_t global_SREG_backup;
+  71:Drivers/u8glib/src/u8g_state.c **** #endif
+  72:Drivers/u8glib/src/u8g_state.c **** 
+  73:Drivers/u8glib/src/u8g_state.c **** 
+  74:Drivers/u8glib/src/u8g_state.c **** 
+  75:Drivers/u8glib/src/u8g_state.c **** /*===============================================================*/
+  76:Drivers/u8glib/src/u8g_state.c **** /* AVR */
+  77:Drivers/u8glib/src/u8g_state.c **** 
+  78:Drivers/u8glib/src/u8g_state.c **** #if defined(__AVR__)
+  79:Drivers/u8glib/src/u8g_state.c **** #define U8G_ATMEGA_HW_SPI
+  80:Drivers/u8glib/src/u8g_state.c **** 
+  81:Drivers/u8glib/src/u8g_state.c **** /* remove the definition for attiny */
+  82:Drivers/u8glib/src/u8g_state.c **** #if __AVR_ARCH__ == 2
+  83:Drivers/u8glib/src/u8g_state.c **** #undef U8G_ATMEGA_HW_SPI
+  84:Drivers/u8glib/src/u8g_state.c **** #endif
+  85:Drivers/u8glib/src/u8g_state.c **** #if __AVR_ARCH__ == 25
+  86:Drivers/u8glib/src/u8g_state.c **** #undef U8G_ATMEGA_HW_SPI
+  87:Drivers/u8glib/src/u8g_state.c **** #endif
+  88:Drivers/u8glib/src/u8g_state.c **** #endif
+  89:Drivers/u8glib/src/u8g_state.c **** 
+  90:Drivers/u8glib/src/u8g_state.c **** #if defined(U8G_ATMEGA_HW_SPI)
+  91:Drivers/u8glib/src/u8g_state.c **** #include <avr/interrupt.h>
+  92:Drivers/u8glib/src/u8g_state.c **** static uint8_t u8g_state_avr_spi_memory[2];
+  93:Drivers/u8glib/src/u8g_state.c **** 
+  94:Drivers/u8glib/src/u8g_state.c **** void u8g_backup_spi(uint8_t msg)
+  95:Drivers/u8glib/src/u8g_state.c **** {
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\cce8kOIK.s 			page 4
+
+
+  96:Drivers/u8glib/src/u8g_state.c ****   if ( U8G_STATE_MSG_IS_BACKUP(msg) )
+  97:Drivers/u8glib/src/u8g_state.c ****   {
+  98:Drivers/u8glib/src/u8g_state.c ****     u8g_state_avr_spi_memory[U8G_STATE_MSG_GET_IDX(msg)] = SPCR;
+  99:Drivers/u8glib/src/u8g_state.c ****   }
+ 100:Drivers/u8glib/src/u8g_state.c ****   else
+ 101:Drivers/u8glib/src/u8g_state.c ****   {
+ 102:Drivers/u8glib/src/u8g_state.c ****     uint8_t tmp = SREG;
+ 103:Drivers/u8glib/src/u8g_state.c ****     cli();
+ 104:Drivers/u8glib/src/u8g_state.c ****     SPCR = 0;
+ 105:Drivers/u8glib/src/u8g_state.c ****     SPCR = u8g_state_avr_spi_memory[U8G_STATE_MSG_GET_IDX(msg)];
+ 106:Drivers/u8glib/src/u8g_state.c ****     SREG = tmp;
+ 107:Drivers/u8glib/src/u8g_state.c ****   }
+ 108:Drivers/u8glib/src/u8g_state.c **** }
+ 109:Drivers/u8glib/src/u8g_state.c **** 
+ 110:Drivers/u8glib/src/u8g_state.c **** #elif defined (U8G_RASPBERRY_PI)
+ 111:Drivers/u8glib/src/u8g_state.c **** 
+ 112:Drivers/u8glib/src/u8g_state.c **** #include <stdio.h>
+ 113:Drivers/u8glib/src/u8g_state.c **** 
+ 114:Drivers/u8glib/src/u8g_state.c **** void u8g_backup_spi(uint8_t msg) {
+ 115:Drivers/u8glib/src/u8g_state.c ****   printf("u8g_backup_spi %d\r\n",msg);
+ 116:Drivers/u8glib/src/u8g_state.c **** }
+ 117:Drivers/u8glib/src/u8g_state.c **** 
+ 118:Drivers/u8glib/src/u8g_state.c **** #elif defined(ARDUINO) && defined(__SAM3X8E__)		// Arduino Due, maybe we should better check for __
+ 119:Drivers/u8glib/src/u8g_state.c **** 
+ 120:Drivers/u8glib/src/u8g_state.c **** #include "sam.h"
+ 121:Drivers/u8glib/src/u8g_state.c **** 
+ 122:Drivers/u8glib/src/u8g_state.c **** struct sam_backup_struct
+ 123:Drivers/u8glib/src/u8g_state.c **** {
+ 124:Drivers/u8glib/src/u8g_state.c ****   uint32_t mr;
+ 125:Drivers/u8glib/src/u8g_state.c ****   uint32_t sr;
+ 126:Drivers/u8glib/src/u8g_state.c ****   uint32_t csr[4];  
+ 127:Drivers/u8glib/src/u8g_state.c **** } sam_backup[2];
+ 128:Drivers/u8glib/src/u8g_state.c **** 
+ 129:Drivers/u8glib/src/u8g_state.c **** void u8g_backup_spi(uint8_t msg)
+ 130:Drivers/u8glib/src/u8g_state.c **** {
+ 131:Drivers/u8glib/src/u8g_state.c ****   uint8_t idx = U8G_STATE_MSG_GET_IDX(msg);
+ 132:Drivers/u8glib/src/u8g_state.c ****   if ( U8G_STATE_MSG_IS_BACKUP(msg) )
+ 133:Drivers/u8glib/src/u8g_state.c ****   {
+ 134:Drivers/u8glib/src/u8g_state.c ****     sam_backup[idx].mr = SPI0->SPI_MR;
+ 135:Drivers/u8glib/src/u8g_state.c ****     sam_backup[idx].sr = SPI0->SPI_SR;
+ 136:Drivers/u8glib/src/u8g_state.c ****     sam_backup[idx].csr[0] = SPI0->SPI_CSR[0];
+ 137:Drivers/u8glib/src/u8g_state.c ****     sam_backup[idx].csr[1] = SPI0->SPI_CSR[1];
+ 138:Drivers/u8glib/src/u8g_state.c ****     sam_backup[idx].csr[2] = SPI0->SPI_CSR[2];
+ 139:Drivers/u8glib/src/u8g_state.c ****     sam_backup[idx].csr[3] = SPI0->SPI_CSR[3];
+ 140:Drivers/u8glib/src/u8g_state.c ****   }
+ 141:Drivers/u8glib/src/u8g_state.c ****   else
+ 142:Drivers/u8glib/src/u8g_state.c ****   {
+ 143:Drivers/u8glib/src/u8g_state.c ****     SPI0->SPI_MR = sam_backup[idx].mr;
+ 144:Drivers/u8glib/src/u8g_state.c ****     SPI0->SPI_CSR[0] = sam_backup[idx].csr[0];
+ 145:Drivers/u8glib/src/u8g_state.c ****     SPI0->SPI_CSR[1] = sam_backup[idx].csr[1];
+ 146:Drivers/u8glib/src/u8g_state.c ****     SPI0->SPI_CSR[2] = sam_backup[idx].csr[2];
+ 147:Drivers/u8glib/src/u8g_state.c ****     SPI0->SPI_CSR[3] = sam_backup[idx].csr[3];
+ 148:Drivers/u8glib/src/u8g_state.c ****   }
+ 149:Drivers/u8glib/src/u8g_state.c **** }
+ 150:Drivers/u8glib/src/u8g_state.c **** 
+ 151:Drivers/u8glib/src/u8g_state.c **** #else
+ 152:Drivers/u8glib/src/u8g_state.c **** 
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\cce8kOIK.s 			page 5
+
+
+ 153:Drivers/u8glib/src/u8g_state.c **** void u8g_backup_spi(uint8_t msg)
+ 154:Drivers/u8glib/src/u8g_state.c **** {
+  82              		.loc 1 154 1 is_stmt 1 view -0
+  83              		.cfi_startproc
+  84              		@ args = 0, pretend = 0, frame = 0
+  85              		@ frame_needed = 0, uses_anonymous_args = 0
+  86              		@ link register save eliminated.
+ 155:Drivers/u8glib/src/u8g_state.c **** }
+  87              		.loc 1 155 1 view .LVU10
+  88 0000 7047     		bx	lr
+  89              		.cfi_endproc
+  90              	.LFE2:
+  92              		.text
+  93              	.Letext0:
+  94              		.file 2 "c:\\users\\zbigniew\\appdata\\roaming\\code\\user\\globalstorage\\bmd.stm32-for-vscode\\@
+  95              		.file 3 "c:\\users\\zbigniew\\appdata\\roaming\\code\\user\\globalstorage\\bmd.stm32-for-vscode\\@
+  96              		.file 4 "Inc/../Drivers/u8glib/inc/u8g.h"
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\cce8kOIK.s 			page 6
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 u8g_state.c
+C:\Users\Zbigniew\AppData\Local\Temp\cce8kOIK.s:18     .text.u8g_state_dummy_cb:0000000000000000 $t
+C:\Users\Zbigniew\AppData\Local\Temp\cce8kOIK.s:24     .text.u8g_state_dummy_cb:0000000000000000 u8g_state_dummy_cb
+C:\Users\Zbigniew\AppData\Local\Temp\cce8kOIK.s:39     .text.u8g_SetHardwareBackup:0000000000000000 $t
+C:\Users\Zbigniew\AppData\Local\Temp\cce8kOIK.s:45     .text.u8g_SetHardwareBackup:0000000000000000 u8g_SetHardwareBackup
+C:\Users\Zbigniew\AppData\Local\Temp\cce8kOIK.s:73     .text.u8g_backup_spi:0000000000000000 $t
+C:\Users\Zbigniew\AppData\Local\Temp\cce8kOIK.s:79     .text.u8g_backup_spi:0000000000000000 u8g_backup_spi
+
+NO UNDEFINED SYMBOLS

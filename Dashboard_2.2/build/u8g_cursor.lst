@@ -1,0 +1,421 @@
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\cc5M6vGe.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.arch armv7-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"u8g_cursor.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.u8g_DrawCursor,"ax",%progbits
+  18              		.align	1
+  19              		.global	u8g_DrawCursor
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  24              	u8g_DrawCursor:
+  25              	.LVL0:
+  26              	.LFB6:
+  27              		.file 1 "Drivers/u8glib/src/u8g_cursor.c"
+   1:Drivers/u8glib/src/u8g_cursor.c **** /*
+   2:Drivers/u8glib/src/u8g_cursor.c **** 
+   3:Drivers/u8glib/src/u8g_cursor.c ****   u8g_cursor.c
+   4:Drivers/u8glib/src/u8g_cursor.c **** 
+   5:Drivers/u8glib/src/u8g_cursor.c ****   Universal 8bit Graphics Library
+   6:Drivers/u8glib/src/u8g_cursor.c ****   
+   7:Drivers/u8glib/src/u8g_cursor.c ****   Copyright (c) 2011, olikraus@gmail.com
+   8:Drivers/u8glib/src/u8g_cursor.c ****   All rights reserved.
+   9:Drivers/u8glib/src/u8g_cursor.c **** 
+  10:Drivers/u8glib/src/u8g_cursor.c ****   Redistribution and use in source and binary forms, with or without modification, 
+  11:Drivers/u8glib/src/u8g_cursor.c ****   are permitted provided that the following conditions are met:
+  12:Drivers/u8glib/src/u8g_cursor.c **** 
+  13:Drivers/u8glib/src/u8g_cursor.c ****   * Redistributions of source code must retain the above copyright notice, this list 
+  14:Drivers/u8glib/src/u8g_cursor.c ****     of conditions and the following disclaimer.
+  15:Drivers/u8glib/src/u8g_cursor.c ****     
+  16:Drivers/u8glib/src/u8g_cursor.c ****   * Redistributions in binary form must reproduce the above copyright notice, this 
+  17:Drivers/u8glib/src/u8g_cursor.c ****     list of conditions and the following disclaimer in the documentation and/or other 
+  18:Drivers/u8glib/src/u8g_cursor.c ****     materials provided with the distribution.
+  19:Drivers/u8glib/src/u8g_cursor.c **** 
+  20:Drivers/u8glib/src/u8g_cursor.c ****   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND 
+  21:Drivers/u8glib/src/u8g_cursor.c ****   CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, 
+  22:Drivers/u8glib/src/u8g_cursor.c ****   INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF 
+  23:Drivers/u8glib/src/u8g_cursor.c ****   MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE 
+  24:Drivers/u8glib/src/u8g_cursor.c ****   DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR 
+  25:Drivers/u8glib/src/u8g_cursor.c ****   CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, 
+  26:Drivers/u8glib/src/u8g_cursor.c ****   SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT 
+  27:Drivers/u8glib/src/u8g_cursor.c ****   NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; 
+  28:Drivers/u8glib/src/u8g_cursor.c ****   LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER 
+  29:Drivers/u8glib/src/u8g_cursor.c ****   CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, 
+  30:Drivers/u8glib/src/u8g_cursor.c ****   STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+  31:Drivers/u8glib/src/u8g_cursor.c ****   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF 
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\cc5M6vGe.s 			page 2
+
+
+  32:Drivers/u8glib/src/u8g_cursor.c ****   ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.  
+  33:Drivers/u8glib/src/u8g_cursor.c ****   
+  34:Drivers/u8glib/src/u8g_cursor.c ****   
+  35:Drivers/u8glib/src/u8g_cursor.c **** */
+  36:Drivers/u8glib/src/u8g_cursor.c **** 
+  37:Drivers/u8glib/src/u8g_cursor.c **** #include "../Drivers/u8glib/inc/u8g.h"
+  38:Drivers/u8glib/src/u8g_cursor.c **** 
+  39:Drivers/u8glib/src/u8g_cursor.c **** void u8g_SetCursorFont(u8g_t *u8g, const u8g_pgm_uint8_t *cursor_font)
+  40:Drivers/u8glib/src/u8g_cursor.c **** {
+  41:Drivers/u8glib/src/u8g_cursor.c ****   u8g->cursor_font = cursor_font;
+  42:Drivers/u8glib/src/u8g_cursor.c **** }
+  43:Drivers/u8glib/src/u8g_cursor.c **** 
+  44:Drivers/u8glib/src/u8g_cursor.c **** void u8g_SetCursorStyle(u8g_t *u8g, uint8_t encoding)
+  45:Drivers/u8glib/src/u8g_cursor.c **** {
+  46:Drivers/u8glib/src/u8g_cursor.c ****   u8g->cursor_encoding = encoding;
+  47:Drivers/u8glib/src/u8g_cursor.c **** }
+  48:Drivers/u8glib/src/u8g_cursor.c **** 
+  49:Drivers/u8glib/src/u8g_cursor.c **** void u8g_SetCursorColor(u8g_t *u8g, uint8_t fg, uint8_t bg)
+  50:Drivers/u8glib/src/u8g_cursor.c **** {
+  51:Drivers/u8glib/src/u8g_cursor.c ****   u8g->cursor_bg_color = bg;
+  52:Drivers/u8glib/src/u8g_cursor.c ****   u8g->cursor_fg_color = fg;
+  53:Drivers/u8glib/src/u8g_cursor.c **** }
+  54:Drivers/u8glib/src/u8g_cursor.c **** 
+  55:Drivers/u8glib/src/u8g_cursor.c **** void u8g_SetCursorPos(u8g_t *u8g, u8g_uint_t cursor_x, u8g_uint_t cursor_y)
+  56:Drivers/u8glib/src/u8g_cursor.c **** {
+  57:Drivers/u8glib/src/u8g_cursor.c ****   u8g->cursor_x = cursor_x;
+  58:Drivers/u8glib/src/u8g_cursor.c ****   u8g->cursor_y = cursor_y;
+  59:Drivers/u8glib/src/u8g_cursor.c **** }
+  60:Drivers/u8glib/src/u8g_cursor.c **** 
+  61:Drivers/u8glib/src/u8g_cursor.c **** void u8g_EnableCursor(u8g_t *u8g)
+  62:Drivers/u8glib/src/u8g_cursor.c **** {
+  63:Drivers/u8glib/src/u8g_cursor.c ****     u8g->cursor_fn = u8g_DrawCursor;
+  64:Drivers/u8glib/src/u8g_cursor.c **** }
+  65:Drivers/u8glib/src/u8g_cursor.c **** 
+  66:Drivers/u8glib/src/u8g_cursor.c **** void u8g_DisableCursor(u8g_t *u8g)
+  67:Drivers/u8glib/src/u8g_cursor.c **** {
+  68:Drivers/u8glib/src/u8g_cursor.c ****     u8g->cursor_fn = (u8g_draw_cursor_fn)0;
+  69:Drivers/u8glib/src/u8g_cursor.c **** }
+  70:Drivers/u8glib/src/u8g_cursor.c **** 
+  71:Drivers/u8glib/src/u8g_cursor.c **** void u8g_DrawCursor(u8g_t *u8g)
+  72:Drivers/u8glib/src/u8g_cursor.c **** {
+  28              		.loc 1 72 1 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		.loc 1 72 1 is_stmt 0 view .LVU1
+  33 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 24
+  36              		.cfi_offset 4, -24
+  37              		.cfi_offset 5, -20
+  38              		.cfi_offset 6, -16
+  39              		.cfi_offset 7, -12
+  40              		.cfi_offset 8, -8
+  41              		.cfi_offset 14, -4
+  42 0004 0446     		mov	r4, r0
+  73:Drivers/u8glib/src/u8g_cursor.c ****   const u8g_pgm_uint8_t *font;
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\cc5M6vGe.s 			page 3
+
+
+  43              		.loc 1 73 3 is_stmt 1 view .LVU2
+  74:Drivers/u8glib/src/u8g_cursor.c ****   uint8_t color;
+  44              		.loc 1 74 3 view .LVU3
+  75:Drivers/u8glib/src/u8g_cursor.c ****   uint8_t encoding = u8g->cursor_encoding;
+  45              		.loc 1 75 3 view .LVU4
+  46              		.loc 1 75 11 is_stmt 0 view .LVU5
+  47 0006 877C     		ldrb	r7, [r0, #18]	@ zero_extendqisi2
+  48              	.LVL1:
+  76:Drivers/u8glib/src/u8g_cursor.c ****   
+  77:Drivers/u8glib/src/u8g_cursor.c ****   /* get current values */
+  78:Drivers/u8glib/src/u8g_cursor.c ****   color = u8g_GetColorIndex(u8g);
+  49              		.loc 1 78 3 is_stmt 1 view .LVU6
+  50              		.loc 1 78 11 is_stmt 0 view .LVU7
+  51 0008 FFF7FEFF 		bl	u8g_GetColorIndex
+  52              	.LVL2:
+  53              		.loc 1 78 11 view .LVU8
+  54 000c 0546     		mov	r5, r0
+  55              	.LVL3:
+  79:Drivers/u8glib/src/u8g_cursor.c ****   font = u8g->font;
+  56              		.loc 1 79 3 is_stmt 1 view .LVU9
+  57              		.loc 1 79 8 is_stmt 0 view .LVU10
+  58 000e D4F80880 		ldr	r8, [r4, #8]
+  59              	.LVL4:
+  80:Drivers/u8glib/src/u8g_cursor.c ****   
+  81:Drivers/u8glib/src/u8g_cursor.c ****   /* draw cursor */
+  82:Drivers/u8glib/src/u8g_cursor.c ****   u8g->font = u8g->cursor_font;  
+  60              		.loc 1 82 3 is_stmt 1 view .LVU11
+  61              		.loc 1 82 18 is_stmt 0 view .LVU12
+  62 0012 E368     		ldr	r3, [r4, #12]
+  63              		.loc 1 82 13 view .LVU13
+  64 0014 A360     		str	r3, [r4, #8]
+  83:Drivers/u8glib/src/u8g_cursor.c ****   encoding++;
+  65              		.loc 1 83 3 is_stmt 1 view .LVU14
+  66              		.loc 1 83 11 is_stmt 0 view .LVU15
+  67 0016 7E1C     		adds	r6, r7, #1
+  68 0018 F6B2     		uxtb	r6, r6
+  69              	.LVL5:
+  84:Drivers/u8glib/src/u8g_cursor.c ****   u8g_SetColorIndex(u8g, u8g->cursor_bg_color); 
+  70              		.loc 1 84 3 is_stmt 1 view .LVU16
+  71 001a 617C     		ldrb	r1, [r4, #17]	@ zero_extendqisi2
+  72 001c 2046     		mov	r0, r4
+  73 001e FFF7FEFF 		bl	u8g_SetColorIndex
+  74              	.LVL6:
+  85:Drivers/u8glib/src/u8g_cursor.c ****   /* 27. Jan 2013: replaced call to u8g_DrawGlyph with call to u8g_draw_glyph */
+  86:Drivers/u8glib/src/u8g_cursor.c ****   /* required, because y adjustment should not happen to the cursor fonts */
+  87:Drivers/u8glib/src/u8g_cursor.c ****   u8g_draw_glyph(u8g, u8g->cursor_x, u8g->cursor_y, encoding);
+  75              		.loc 1 87 3 view .LVU17
+  76 0022 3346     		mov	r3, r6
+  77 0024 627D     		ldrb	r2, [r4, #21]	@ zero_extendqisi2
+  78 0026 217D     		ldrb	r1, [r4, #20]	@ zero_extendqisi2
+  79 0028 2046     		mov	r0, r4
+  80 002a FFF7FEFF 		bl	u8g_draw_glyph
+  81              	.LVL7:
+  88:Drivers/u8glib/src/u8g_cursor.c ****   encoding--;
+  82              		.loc 1 88 3 view .LVU18
+  89:Drivers/u8glib/src/u8g_cursor.c ****   u8g_SetColorIndex(u8g, u8g->cursor_fg_color); 
+  83              		.loc 1 89 3 view .LVU19
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\cc5M6vGe.s 			page 4
+
+
+  84 002e 217C     		ldrb	r1, [r4, #16]	@ zero_extendqisi2
+  85 0030 2046     		mov	r0, r4
+  86 0032 FFF7FEFF 		bl	u8g_SetColorIndex
+  87              	.LVL8:
+  90:Drivers/u8glib/src/u8g_cursor.c ****   /* 27. Jan 2013: replaced call to u8g_DrawGlyph with call to u8g_draw_glyph */
+  91:Drivers/u8glib/src/u8g_cursor.c ****   /* required, because y adjustment should not happen to the cursor fonts */
+  92:Drivers/u8glib/src/u8g_cursor.c ****   /* u8g_DrawGlyph(u8g, u8g->cursor_x, u8g->cursor_y, encoding); */
+  93:Drivers/u8glib/src/u8g_cursor.c ****   u8g_draw_glyph(u8g, u8g->cursor_x, u8g->cursor_y, encoding);
+  88              		.loc 1 93 3 view .LVU20
+  89 0036 3B46     		mov	r3, r7
+  90 0038 627D     		ldrb	r2, [r4, #21]	@ zero_extendqisi2
+  91 003a 217D     		ldrb	r1, [r4, #20]	@ zero_extendqisi2
+  92 003c 2046     		mov	r0, r4
+  93 003e FFF7FEFF 		bl	u8g_draw_glyph
+  94              	.LVL9:
+  94:Drivers/u8glib/src/u8g_cursor.c ****   
+  95:Drivers/u8glib/src/u8g_cursor.c ****   /* restore previous values */
+  96:Drivers/u8glib/src/u8g_cursor.c ****   u8g->font = font;
+  95              		.loc 1 96 3 view .LVU21
+  96              		.loc 1 96 13 is_stmt 0 view .LVU22
+  97 0042 C4F80880 		str	r8, [r4, #8]
+  97:Drivers/u8glib/src/u8g_cursor.c ****   u8g_SetColorIndex(u8g, color); 
+  98              		.loc 1 97 3 is_stmt 1 view .LVU23
+  99 0046 2946     		mov	r1, r5
+ 100 0048 2046     		mov	r0, r4
+ 101 004a FFF7FEFF 		bl	u8g_SetColorIndex
+ 102              	.LVL10:
+  98:Drivers/u8glib/src/u8g_cursor.c **** }
+ 103              		.loc 1 98 1 is_stmt 0 view .LVU24
+ 104 004e BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 105              		.loc 1 98 1 view .LVU25
+ 106              		.cfi_endproc
+ 107              	.LFE6:
+ 109              		.section	.text.u8g_SetCursorFont,"ax",%progbits
+ 110              		.align	1
+ 111              		.global	u8g_SetCursorFont
+ 112              		.syntax unified
+ 113              		.thumb
+ 114              		.thumb_func
+ 116              	u8g_SetCursorFont:
+ 117              	.LVL11:
+ 118              	.LFB0:
+  40:Drivers/u8glib/src/u8g_cursor.c ****   u8g->cursor_font = cursor_font;
+ 119              		.loc 1 40 1 is_stmt 1 view -0
+ 120              		.cfi_startproc
+ 121              		@ args = 0, pretend = 0, frame = 0
+ 122              		@ frame_needed = 0, uses_anonymous_args = 0
+ 123              		@ link register save eliminated.
+  41:Drivers/u8glib/src/u8g_cursor.c **** }
+ 124              		.loc 1 41 3 view .LVU27
+  41:Drivers/u8glib/src/u8g_cursor.c **** }
+ 125              		.loc 1 41 20 is_stmt 0 view .LVU28
+ 126 0000 C160     		str	r1, [r0, #12]
+  42:Drivers/u8glib/src/u8g_cursor.c **** 
+ 127              		.loc 1 42 1 view .LVU29
+ 128 0002 7047     		bx	lr
+ 129              		.cfi_endproc
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\cc5M6vGe.s 			page 5
+
+
+ 130              	.LFE0:
+ 132              		.section	.text.u8g_SetCursorStyle,"ax",%progbits
+ 133              		.align	1
+ 134              		.global	u8g_SetCursorStyle
+ 135              		.syntax unified
+ 136              		.thumb
+ 137              		.thumb_func
+ 139              	u8g_SetCursorStyle:
+ 140              	.LVL12:
+ 141              	.LFB1:
+  45:Drivers/u8glib/src/u8g_cursor.c ****   u8g->cursor_encoding = encoding;
+ 142              		.loc 1 45 1 is_stmt 1 view -0
+ 143              		.cfi_startproc
+ 144              		@ args = 0, pretend = 0, frame = 0
+ 145              		@ frame_needed = 0, uses_anonymous_args = 0
+ 146              		@ link register save eliminated.
+  46:Drivers/u8glib/src/u8g_cursor.c **** }
+ 147              		.loc 1 46 3 view .LVU31
+  46:Drivers/u8glib/src/u8g_cursor.c **** }
+ 148              		.loc 1 46 24 is_stmt 0 view .LVU32
+ 149 0000 8174     		strb	r1, [r0, #18]
+  47:Drivers/u8glib/src/u8g_cursor.c **** 
+ 150              		.loc 1 47 1 view .LVU33
+ 151 0002 7047     		bx	lr
+ 152              		.cfi_endproc
+ 153              	.LFE1:
+ 155              		.section	.text.u8g_SetCursorColor,"ax",%progbits
+ 156              		.align	1
+ 157              		.global	u8g_SetCursorColor
+ 158              		.syntax unified
+ 159              		.thumb
+ 160              		.thumb_func
+ 162              	u8g_SetCursorColor:
+ 163              	.LVL13:
+ 164              	.LFB2:
+  50:Drivers/u8glib/src/u8g_cursor.c ****   u8g->cursor_bg_color = bg;
+ 165              		.loc 1 50 1 is_stmt 1 view -0
+ 166              		.cfi_startproc
+ 167              		@ args = 0, pretend = 0, frame = 0
+ 168              		@ frame_needed = 0, uses_anonymous_args = 0
+ 169              		@ link register save eliminated.
+  51:Drivers/u8glib/src/u8g_cursor.c ****   u8g->cursor_fg_color = fg;
+ 170              		.loc 1 51 3 view .LVU35
+  51:Drivers/u8glib/src/u8g_cursor.c ****   u8g->cursor_fg_color = fg;
+ 171              		.loc 1 51 24 is_stmt 0 view .LVU36
+ 172 0000 4274     		strb	r2, [r0, #17]
+  52:Drivers/u8glib/src/u8g_cursor.c **** }
+ 173              		.loc 1 52 3 is_stmt 1 view .LVU37
+  52:Drivers/u8glib/src/u8g_cursor.c **** }
+ 174              		.loc 1 52 24 is_stmt 0 view .LVU38
+ 175 0002 0174     		strb	r1, [r0, #16]
+  53:Drivers/u8glib/src/u8g_cursor.c **** 
+ 176              		.loc 1 53 1 view .LVU39
+ 177 0004 7047     		bx	lr
+ 178              		.cfi_endproc
+ 179              	.LFE2:
+ 181              		.section	.text.u8g_SetCursorPos,"ax",%progbits
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\cc5M6vGe.s 			page 6
+
+
+ 182              		.align	1
+ 183              		.global	u8g_SetCursorPos
+ 184              		.syntax unified
+ 185              		.thumb
+ 186              		.thumb_func
+ 188              	u8g_SetCursorPos:
+ 189              	.LVL14:
+ 190              	.LFB3:
+  56:Drivers/u8glib/src/u8g_cursor.c ****   u8g->cursor_x = cursor_x;
+ 191              		.loc 1 56 1 is_stmt 1 view -0
+ 192              		.cfi_startproc
+ 193              		@ args = 0, pretend = 0, frame = 0
+ 194              		@ frame_needed = 0, uses_anonymous_args = 0
+ 195              		@ link register save eliminated.
+  57:Drivers/u8glib/src/u8g_cursor.c ****   u8g->cursor_y = cursor_y;
+ 196              		.loc 1 57 3 view .LVU41
+  57:Drivers/u8glib/src/u8g_cursor.c ****   u8g->cursor_y = cursor_y;
+ 197              		.loc 1 57 17 is_stmt 0 view .LVU42
+ 198 0000 0175     		strb	r1, [r0, #20]
+  58:Drivers/u8glib/src/u8g_cursor.c **** }
+ 199              		.loc 1 58 3 is_stmt 1 view .LVU43
+  58:Drivers/u8glib/src/u8g_cursor.c **** }
+ 200              		.loc 1 58 17 is_stmt 0 view .LVU44
+ 201 0002 4275     		strb	r2, [r0, #21]
+  59:Drivers/u8glib/src/u8g_cursor.c **** 
+ 202              		.loc 1 59 1 view .LVU45
+ 203 0004 7047     		bx	lr
+ 204              		.cfi_endproc
+ 205              	.LFE3:
+ 207              		.section	.text.u8g_EnableCursor,"ax",%progbits
+ 208              		.align	1
+ 209              		.global	u8g_EnableCursor
+ 210              		.syntax unified
+ 211              		.thumb
+ 212              		.thumb_func
+ 214              	u8g_EnableCursor:
+ 215              	.LVL15:
+ 216              	.LFB4:
+  62:Drivers/u8glib/src/u8g_cursor.c ****     u8g->cursor_fn = u8g_DrawCursor;
+ 217              		.loc 1 62 1 is_stmt 1 view -0
+ 218              		.cfi_startproc
+ 219              		@ args = 0, pretend = 0, frame = 0
+ 220              		@ frame_needed = 0, uses_anonymous_args = 0
+ 221              		@ link register save eliminated.
+  63:Drivers/u8glib/src/u8g_cursor.c **** }
+ 222              		.loc 1 63 5 view .LVU47
+  63:Drivers/u8glib/src/u8g_cursor.c **** }
+ 223              		.loc 1 63 20 is_stmt 0 view .LVU48
+ 224 0000 014B     		ldr	r3, .L8
+ 225 0002 8361     		str	r3, [r0, #24]
+  64:Drivers/u8glib/src/u8g_cursor.c **** 
+ 226              		.loc 1 64 1 view .LVU49
+ 227 0004 7047     		bx	lr
+ 228              	.L9:
+ 229 0006 00BF     		.align	2
+ 230              	.L8:
+ 231 0008 00000000 		.word	u8g_DrawCursor
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\cc5M6vGe.s 			page 7
+
+
+ 232              		.cfi_endproc
+ 233              	.LFE4:
+ 235              		.section	.text.u8g_DisableCursor,"ax",%progbits
+ 236              		.align	1
+ 237              		.global	u8g_DisableCursor
+ 238              		.syntax unified
+ 239              		.thumb
+ 240              		.thumb_func
+ 242              	u8g_DisableCursor:
+ 243              	.LVL16:
+ 244              	.LFB5:
+  67:Drivers/u8glib/src/u8g_cursor.c ****     u8g->cursor_fn = (u8g_draw_cursor_fn)0;
+ 245              		.loc 1 67 1 is_stmt 1 view -0
+ 246              		.cfi_startproc
+ 247              		@ args = 0, pretend = 0, frame = 0
+ 248              		@ frame_needed = 0, uses_anonymous_args = 0
+ 249              		@ link register save eliminated.
+  68:Drivers/u8glib/src/u8g_cursor.c **** }
+ 250              		.loc 1 68 5 view .LVU51
+  68:Drivers/u8glib/src/u8g_cursor.c **** }
+ 251              		.loc 1 68 20 is_stmt 0 view .LVU52
+ 252 0000 0023     		movs	r3, #0
+ 253 0002 8361     		str	r3, [r0, #24]
+  69:Drivers/u8glib/src/u8g_cursor.c **** 
+ 254              		.loc 1 69 1 view .LVU53
+ 255 0004 7047     		bx	lr
+ 256              		.cfi_endproc
+ 257              	.LFE5:
+ 259              		.text
+ 260              	.Letext0:
+ 261              		.file 2 "c:\\users\\zbigniew\\appdata\\roaming\\code\\user\\globalstorage\\bmd.stm32-for-vscode\\@
+ 262              		.file 3 "c:\\users\\zbigniew\\appdata\\roaming\\code\\user\\globalstorage\\bmd.stm32-for-vscode\\@
+ 263              		.file 4 "Inc/../Drivers/u8glib/inc/u8g.h"
+ARM GAS  C:\Users\Zbigniew\AppData\Local\Temp\cc5M6vGe.s 			page 8
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 u8g_cursor.c
+C:\Users\Zbigniew\AppData\Local\Temp\cc5M6vGe.s:18     .text.u8g_DrawCursor:0000000000000000 $t
+C:\Users\Zbigniew\AppData\Local\Temp\cc5M6vGe.s:24     .text.u8g_DrawCursor:0000000000000000 u8g_DrawCursor
+C:\Users\Zbigniew\AppData\Local\Temp\cc5M6vGe.s:110    .text.u8g_SetCursorFont:0000000000000000 $t
+C:\Users\Zbigniew\AppData\Local\Temp\cc5M6vGe.s:116    .text.u8g_SetCursorFont:0000000000000000 u8g_SetCursorFont
+C:\Users\Zbigniew\AppData\Local\Temp\cc5M6vGe.s:133    .text.u8g_SetCursorStyle:0000000000000000 $t
+C:\Users\Zbigniew\AppData\Local\Temp\cc5M6vGe.s:139    .text.u8g_SetCursorStyle:0000000000000000 u8g_SetCursorStyle
+C:\Users\Zbigniew\AppData\Local\Temp\cc5M6vGe.s:156    .text.u8g_SetCursorColor:0000000000000000 $t
+C:\Users\Zbigniew\AppData\Local\Temp\cc5M6vGe.s:162    .text.u8g_SetCursorColor:0000000000000000 u8g_SetCursorColor
+C:\Users\Zbigniew\AppData\Local\Temp\cc5M6vGe.s:182    .text.u8g_SetCursorPos:0000000000000000 $t
+C:\Users\Zbigniew\AppData\Local\Temp\cc5M6vGe.s:188    .text.u8g_SetCursorPos:0000000000000000 u8g_SetCursorPos
+C:\Users\Zbigniew\AppData\Local\Temp\cc5M6vGe.s:208    .text.u8g_EnableCursor:0000000000000000 $t
+C:\Users\Zbigniew\AppData\Local\Temp\cc5M6vGe.s:214    .text.u8g_EnableCursor:0000000000000000 u8g_EnableCursor
+C:\Users\Zbigniew\AppData\Local\Temp\cc5M6vGe.s:231    .text.u8g_EnableCursor:0000000000000008 $d
+C:\Users\Zbigniew\AppData\Local\Temp\cc5M6vGe.s:236    .text.u8g_DisableCursor:0000000000000000 $t
+C:\Users\Zbigniew\AppData\Local\Temp\cc5M6vGe.s:242    .text.u8g_DisableCursor:0000000000000000 u8g_DisableCursor
+
+UNDEFINED SYMBOLS
+u8g_GetColorIndex
+u8g_SetColorIndex
+u8g_draw_glyph
