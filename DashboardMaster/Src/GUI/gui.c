@@ -4,42 +4,57 @@
  *  Created on: 17.02.2019
  *      Author: user
  */
+#include <stdio.h>
+#include "../Inc/GUI/gui.h"
 
-#include "../GUI/gui.h"
-
-#include "../GUI/gui_data.h"
-
- #include "../Drivers/u8glib/inc/u8g.h"
- #include "../Drivers/u8glib/inc/u8g_arm.h"
- #include "../Drivers/u8glib/pictures.h"
- #include "../GUI/displays.h"
- #include "../GUI/displays.c"
-#include "LCD.h"
-
-
-#include "../GUI/ws_leds.h"
-#include "../GUI/ws_leds.c"
-#include "../PWM/pwm.h"
-#include "../PWM/pwm.c"
+#include "../Inc/GUI/gui_data.h"
+#include "../Inc/GUI/ws_leds.h"
 #include "string.h"
 
+#include "../Drivers/u8glib/inc/u8g.h"
+#include "../Drivers/u8glib/inc/u8g_arm.h"
+#include "../Drivers/u8glib/pictures.h"
+#include "../Inc/GUI/displays.h"
+#include "LCD.h"
+#include "tim.h"
+
+
+uint8_t gui_speed = 0;
+double gui_power = 0;
+double gui_battery = 100;
+uint8_t gui_brightness =100;
+uint8_t gui_charging = 0;
+uint8_t gui_gear = 1;
+int gui_trip = 3721;
+uint8_t gui_cruise_speed_set = 0;
+uint8_t gui_cruise_speed_limit = 0;
+uint8_t gui_cruise_mode = 0;
+uint8_t gui_leds_byte1 = 0;
+uint8_t gui_leds_byte2 = 0;
+uint8_t gui_picture_iteration = 0;
+uint8_t gui_statement = 0;
+uint8_t gui_h = 12;
+uint8_t gui_m = 10;
+uint8_t dbg_blink = 0;
+uint16_t TEST_counter = 0;
+uint16_t TEST_counter2 = 0;
+uint16_t TEST_counter3 = 0;
+uint16_t TEST_counter4 = 0;
+uint8_t TEST_flag = 0;
+uint8_t TEST_poprz_stan = 0;
 
 void gui_init()
 {
-	  displays_init(); //inicjalizacja wyœwielaczy
+	  displays_init(); //inicjalizacja wyswietlaczy
 	  Lcd_init();
 	  pwm_init();
 	  ws_set_brightness(gui_brightness);
 	  ws_senddata();
 	  set_backlight(0);
-
-
 }
 void gui_set_brightness(uint8_t x)
 {
 	gui_brightness = x;
-
-
 }
 
 
@@ -172,7 +187,7 @@ void gui_screen_main()
 	 }
 
 
-	 //co kazda klatke
+	//co kazda klatke
 	display_speed(gui_speed, gui_cruise_speed_set);
 
 	ws_set_leds(gui_leds_byte1 ,gui_leds_byte2);
@@ -343,16 +358,16 @@ void gui_display_statement(uint8_t number)
 
 
 
-				//WINCYJ KOMUNIKATÓW
-				//WINCYJ KOMUNIKATÓW
-				//WINCYJ KOMUNIKATÓW
-				//WINCYJ KOMUNIKATÓW
-				//WINCYJ KOMUNIKATÓW
-				//WINCYJ KOMUNIKATÓW
+				//WINCYJ KOMUNIKATï¿½W
+				//WINCYJ KOMUNIKATï¿½W
+				//WINCYJ KOMUNIKATï¿½W
+				//WINCYJ KOMUNIKATï¿½W
+				//WINCYJ KOMUNIKATï¿½W
+				//WINCYJ KOMUNIKATï¿½W
 
 
 	default:
-	    //jakiœ kod
+	    //jakiï¿½ kod
 	    break;
 	}
 

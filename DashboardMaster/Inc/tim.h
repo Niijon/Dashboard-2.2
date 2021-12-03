@@ -34,7 +34,8 @@ extern "C" {
 extern TIM_HandleTypeDef htim3;
 
 /* USER CODE BEGIN Private defines */
-
+void set_backlight(int bl);
+void pwm_init(void);
 /* USER CODE END Private defines */
 
 void MX_TIM3_Init(void);

@@ -196,7 +196,6 @@ int8_t u8g_font_GetFontXDescent(const void *font)
   return u8g_font_get_byte(font, 16);
 }
 
-
 /* return the data start for a font and the glyph pointer */
 static uint8_t *u8g_font_GetGlyphDataStart(const void *font, u8g_glyph_t g)
 {

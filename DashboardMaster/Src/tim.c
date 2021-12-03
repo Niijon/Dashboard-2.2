@@ -155,7 +155,20 @@ void HAL_TIM_Base_MspDeInit(TIM_HandleTypeDef* tim_baseHandle)
 }
 
 /* USER CODE BEGIN 1 */
+// PWM mode functions and handling
+void set_backlight(int bl)
+{
+	  TIM3->CCR1 = bl;
+	  TIM3->CCR2 = bl;
+	  TIM3->CCR3 = bl;
+}
 
+void pwm_init()
+{
+	  HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1); // Uruchamia generowanie PWM przez timer 4 na kanale 1
+	  HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_2); // Uruchamia generowanie PWM przez timer 4 na kanale 2
+	  HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_3); // Uruchamia generowanie PWM przez timer 4 na kanale 3
+}
 /* USER CODE END 1 */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

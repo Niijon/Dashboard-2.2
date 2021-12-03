@@ -5,9 +5,21 @@
  *      Author: user
  */
 
-#include "../GUI/ws_leds.h"
+#include "../Inc/GUI/ws_leds.h"
 #include "stm32f1xx_hal.h"
 #include <math.h>
+#include "usart.h"
+
+// Private variables
+uint8_t ws_spd = 0;
+uint8_t ws_spd_lim = 0;
+uint8_t ws_bat = 0;
+uint8_t ws_powr = 0;
+uint8_t ws_powr_mod =0;
+uint8_t ws_leds1 =0;
+uint8_t ws_leds2 =0;
+uint8_t ws_led_bright =0;
+uint8_t ws_mod=0;
 
 void ws_senddata(void)
 {

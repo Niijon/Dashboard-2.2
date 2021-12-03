@@ -10,15 +10,15 @@
 
 #include "stm32f1xx_hal.h"
 
-uint8_t ws_spd = 0;
-uint8_t ws_spd_lim = 0;
-uint8_t ws_bat = 0;
-uint8_t ws_powr = 0;
-uint8_t ws_powr_mod =0;
-uint8_t ws_leds1 =0;
-uint8_t ws_leds2 =0;
-uint8_t ws_led_bright =0;
-uint8_t ws_mod=0;
+extern uint8_t ws_spd;
+extern uint8_t ws_spd_lim ;
+extern uint8_t ws_bat;
+extern uint8_t ws_powr;
+extern uint8_t ws_powr_mod;
+extern uint8_t ws_leds1;
+extern uint8_t ws_leds2;
+extern uint8_t ws_led_bright;
+extern uint8_t ws_mod;
 
 void ws_senddata(void);
 void ws_set_leds(uint8_t byte1,uint8_t byte2);

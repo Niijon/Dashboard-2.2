@@ -22,11 +22,6 @@
 
 /* USER CODE BEGIN 0 */
 CAN_FilterTypeDef can_filter_template;
-CAN_RxHeaderTypeDef can_rx_header;
-CAN_TxHeaderTypeDef can_tx_header;
-uint8_t can_rx_data[8];
-uint8_t TxData[8];
-uint8_t count = 0;
 uint32_t TxMailbox;
 CanDataFrameInit CanFrame;
 /* USER CODE END 0 */
@@ -139,7 +134,7 @@ void CanInit(CAN_HandleTypeDef *chosen_network) {
 	}
 
   // Then we use HAL_CAN_ActivateNotification to enable receive and transmission
-	if (HAL_CAN_ActivateNotification(&chosen_network,
+	if (HAL_CAN_ActivateNotification(chosen_network,
 	CAN_IT_RX_FIFO0_MSG_PENDING | CAN_IT_TX_MAILBOX_EMPTY) != HAL_OK) {
 		Error_Handler();
 	}

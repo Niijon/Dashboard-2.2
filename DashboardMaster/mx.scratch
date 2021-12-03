@@ -3,10 +3,10 @@
   <FileVersion>3.0</FileVersion>
   <Workspace>
     <WorkspaceType>Single-project</WorkspaceType>
-    <WorkspacePath>/home/skw/Repositories/solary/Dashboard-2.2/DashboardMaster/</WorkspacePath>
+    <WorkspacePath>N:\PUTSolarDynamics\Klara\Dashboard\GITDashboard\DashboardMaster\</WorkspacePath>
     <underRoot>true</underRoot>
     <TrustZone>0</TrustZone>
-    <HAL_Driver>/home/skw/STM32Cube/Repository//STM32Cube_FW_F1_V1.8.4</HAL_Driver>
+    <HAL_Driver>C:\Users\Zbigniew\STM32Cube\Repository\STM32Cube_FW_F1_V1.8.4</HAL_Driver>
     <CMSIS>Drivers/CMSIS</CMSIS>
     <Toolchain>STM32CubeIDE</Toolchain>
     <IocFile>Dashboard_1.1.ioc</IocFile>
@@ -58,7 +58,7 @@
             <memory access="xrw" name="RAM" size="64" start="0x20000000"/>
             <memory access="rx" name="FLASH" size="512" start="0x8000000"/>
           </memories>
-          <startup>/home/skw/STM32Cube/Repository/STM32Cube_FW_F1_V1.8.4/Drivers/CMSIS/Device\ST\STM32F1xx\Source\Templates\gcc\startup_stm32f103xe.s</startup>
+          <startup>C:\Users\Zbigniew\STM32Cube\Repository\STM32Cube_FW_F1_V1.8.4\Drivers\CMSIS\Device\ST\STM32F1xx\Source\Templates\gcc\startup_stm32f103xe.s</startup>
           <LinkSettings>
             <LinkAdditionalLibs/>
           </LinkSettings>
@@ -78,10 +78,10 @@
           <Ldefines/>
           <Cincludes>
             <include>Inc</include>
-            <include>Drivers/STM32F1xx_HAL_Driver/Inc</include>
-            <include>Drivers/STM32F1xx_HAL_Driver/Inc/Legacy</include>
-            <include>Drivers/CMSIS/Device/ST/STM32F1xx/Include</include>
-            <include>Drivers/CMSIS/Include</include>
+            <include>Drivers\STM32F1xx_HAL_Driver\Inc</include>
+            <include>Drivers\STM32F1xx_HAL_Driver\Inc\Legacy</include>
+            <include>Drivers\CMSIS\Device\ST\STM32F1xx\Include</include>
+            <include>Drivers\CMSIS\Include</include>
           </Cincludes>
           <definestoremove>
             <Adefines/>
@@ -96,7 +96,12 @@
             <Aincludes>
               <include/>
             </Aincludes>
-            <Cincludes/>
+            <Cincludes>
+              <include>Drivers/STM32F1xx_HAL_Driver/Inc</include>
+              <include>Drivers/STM32F1xx_HAL_Driver/Inc/Legacy</include>
+              <include>Drivers/CMSIS/Device/ST/STM32F1xx/Include</include>
+              <include>Drivers/CMSIS/Include</include>
+            </Cincludes>
           </inctoremove>
         </config>
       </configs>

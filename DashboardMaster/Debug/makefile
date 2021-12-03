@@ -10,8 +10,10 @@ RM := rm -rf
 # All of the sources participating in the build are defined here
 -include sources.mk
 -include startup/subdir.mk
+-include Src/GUI/subdir.mk
 -include Src/subdir.mk
 -include Drivers/u8glib/src/subdir.mk
+-include Drivers/u8glib/subdir.mk
 -include Drivers/STM32F1xx_HAL_Driver/Src/subdir.mk
 -include subdir.mk
 -include objects.mk
